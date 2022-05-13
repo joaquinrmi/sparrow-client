@@ -8,6 +8,7 @@
     justify-content: center;
     border: none;
     border-radius: 200px;
+    cursor: pointer;
 }
 
 .button-standar.white
@@ -54,13 +55,14 @@
 {
     color: Color.$blue1;
     background-color: transparent;
-    border: 2px solid Color.$blue1;
-    transition: color 0.25s;
+    border: 1px solid Color.$blue1;
+    transition: color 0.25s, border 0.25s, background-color 0.25s;
 }
 
 .button-standar.blue-transparent:hover
 {
     color: Color.$blue2;
-    border: 2px solid Color.$blue2;
-    transition: color 0.25s;
+    background-color: Color.$gray2;
+    border: 1px solid Color.$blue2;
+    transition: color 0.25s, border 0.25s, background-color 0.25s;
 }
