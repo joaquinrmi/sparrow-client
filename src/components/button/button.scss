@@ -1,0 +1,66 @@
+@use "../../colors.scss";
+
+.button-standar
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 200px;
+}
+
+.button-standar.white
+{
+    color: $black-text;
+    background-color: #fff;
+    border: 2px solid $silver;
+    transition: background-color 0.25s;
+}
+
+.button-standar.white:hover
+{
+    background-color: $gray3;
+    transition: background-color 0.25s;
+}
+
+.button-standar.black
+{
+    color: $white-text;
+    background-color: $black1;
+    transition: background-color 0.25s;
+}
+
+.button-standar.black:hover
+{
+    background-color: $black2;
+    transition: background-color 0.25s;
+}
+
+.button-standar.blue
+{
+    color: $white-text;
+    background-color: $blue1;
+    transition: background-color 0.25s;
+}
+
+.button-standar.blue:hover
+{
+    background-color: $blue2;
+    transition: background-color 0.25s;
+}
+
+.button-standar.blue-transparent
+{
+    color: $blue1;
+    background-color: transparent;
+    border: 2px solid $blue1;
+    transition: color 0.25s;
+}
+
+.button-standar.blue-transparent:hover
+{
+    color: $blue2;
+    border: 2px solid $blue2;
+    transition: color 0.25s;
+}
