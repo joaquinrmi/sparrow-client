@@ -3,7 +3,7 @@ import UserSession from "./user_session";
 
 const SessionContext = React.createContext<UserSession>({
     logged: false,
-    data: {
+    user: {
         handle: "",
         name: "",
         picture: ""
