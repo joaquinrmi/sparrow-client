@@ -40,11 +40,23 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
         {
             element.classList.remove("active");
         });
+
+        inputElement.onchange = () =>
+        {
+            if(inputElement.value.length > 0)
+            {
+                element.classList.add("static");
+            }
+            else
+            {
+                element.classList.remove("static");
+            }
+        };
     },
     []);
 
     return <div id={props.id} className="form-input">
-        <span className="title">
+        <span className={`title ${props.value && props.value.length > 0 ? "static" : ""}`}>
             {props.title}
         </span>
         <div className="input-container">

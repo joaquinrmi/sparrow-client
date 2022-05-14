@@ -3,7 +3,6 @@
 .form-input
 {
     position: relative;
-    box-sizing: border-box;
     border: 1px solid Color.$silver;
     border-radius: 4px;
 
@@ -47,10 +46,14 @@
         color: Color.$blue1;
         transition: top 0.1s, font-size 0.25s, color 0.25s;
     }
+}
 
-    .input-container
+.form-input.static
+{
+    .title
     {
-        margin-top: 15px;
-        padding-bottom: 7px;
+        top: 8px;
+        font-size: 14px;
+        transition: color 0.25s;
     }
 }
