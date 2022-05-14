@@ -1,25 +1,56 @@
 import React, { MouseEventHandler } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./button.scss";
 
 export interface Props
 {
     children: React.ReactNode;
-    id?: string;
     stylePreset: ButtonStyle;
+
+    id?: string;
+    to?: string;
 
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button: React.FunctionComponent<Props> = (props) =>
 {
+    let navigate = useNavigate();
     let buttonClass = `button-standar ${props.stylePreset}`;
 
-    return <button onClick={props.onClick} id={props.id} className={buttonClass}>
+    let onClick: MouseEventHandler<HTMLButtonElement>;
+    if(props.to !== undefined)
+    {
+        onClick = (ev) =>
+        {
+            if(props.onClick !== undefined)
+            {
+                props.onClick(ev);
+            }
+
+            navigate(props.to as string);
+        };
+    }
+    else if(props.onClick !== undefined)
+    {
+        onClick = props.onClick;
+    }
+    else
+    {
+        onClick = () =>
+        {};
+    }
+
+    return <button
+        onClick={onClick}
+        id={props.id}
+        className={buttonClass}
+    >
         <span className="button-text">
             {props.children}
         </span>
-    </button>;
+    </button>
 };
 
 export enum ButtonStyle
