@@ -1,0 +1,56 @@
+@use "../../colors.scss" as Color;
+
+.form-input
+{
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid Color.$silver;
+    border-radius: 4px;
+
+    .title
+    {
+        top: 18px;
+        left: 0 ;
+        padding: 0 0 0 9px;
+        position: absolute;
+        font-size: 19px;
+        color: Color.$silverText;
+        transition: top 0.1s, font-size 0.25s, color 0.25s;
+    }
+
+    .input-container
+    {
+        display: flex;
+        flex-direction: row;
+        margin-top: 1em;
+        padding: 12px 8px 8px 8px;
+
+        input
+        {
+            flex: 1;
+            font-size: 17px;
+            color: Color.$blackText;
+            border: none;
+            outline: none;
+        }
+    }
+}
+
+.form-input.active
+{
+    border: 2px solid Color.$blue1;
+
+    .title
+    {
+        top: 8px;
+        font-size: 14px;
+        color: Color.$blue1;
+        transition: top 0.1s, font-size 0.25s, color 0.25s;
+    }
+
+    .input-container
+    {
+        margin-top: 15px;
+        padding-bottom: 7px;
+    }
+}
