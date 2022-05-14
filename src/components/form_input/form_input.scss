@@ -37,7 +37,8 @@
 
 .form-input.active
 {
-    border: 2px solid Color.$blue1;
+    border: 1px solid transparent;
+    outline: 2px solid Color.$blue1;
 
     .title
     {
