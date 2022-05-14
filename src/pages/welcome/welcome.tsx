@@ -24,13 +24,13 @@ const Welcome: React.FunctionComponent = () =>
 
                     <div className="button-list">
                         <div className="button-container">
-                            <Button stylePreset={ButtonStyle.Blue}>
+                            <Button stylePreset={ButtonStyle.Blue} to="/signup">
                                 Registrarse
                             </Button>
                         </div>
                         
                         <div className="button-container">
-                            <Button stylePreset={ButtonStyle.BlueTransparent}>
+                            <Button stylePreset={ButtonStyle.BlueTransparent} to="/login">
                                 Iniciar sesión
                             </Button>
                         </div>
