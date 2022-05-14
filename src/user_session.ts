@@ -1,10 +1,8 @@
+import SessionData from "./session_data";
 import UserData from "./user_data";
 
-interface UserSession
+interface UserSession extends SessionData
 {
-    logged: boolean;
-    data: UserData;
-
     login(data: UserData): void;
     logout(): void;
 }
