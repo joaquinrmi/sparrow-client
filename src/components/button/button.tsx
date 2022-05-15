@@ -7,6 +7,7 @@ export interface Props
 {
     children: React.ReactNode;
     stylePreset: ButtonStyle;
+    disabled?: boolean;
 
     id?: string;
     to?: string;
@@ -17,13 +18,18 @@ export interface Props
 const Button: React.FunctionComponent<Props> = (props) =>
 {
     let navigate = useNavigate();
-    let buttonClass = `button-standar ${props.stylePreset}`;
+    let buttonClass = `button-standar ${props.stylePreset} ${props.disabled ? "disable" : ""}`;
 
     let onClick: MouseEventHandler<HTMLButtonElement>;
     if(props.to !== undefined)
     {
         onClick = (ev) =>
         {
+            if((ev.target as HTMLButtonElement).classList.contains("disable"))
+            {
+                return;
+            }
+
             if(props.onClick !== undefined)
             {
                 props.onClick(ev);
@@ -34,7 +40,18 @@ const Button: React.FunctionComponent<Props> = (props) =>
     }
     else if(props.onClick !== undefined)
     {
-        onClick = props.onClick;
+        onClick = (ev) =>
+        {
+            if((ev.target as HTMLButtonElement).classList.contains("disable"))
+            {
+                return;
+            }
+
+            if(props.onClick)
+            {
+                props.onClick(ev);
+            }
+        };
     }
     else
     {

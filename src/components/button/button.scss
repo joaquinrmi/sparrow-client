@@ -9,6 +9,16 @@
     border: none;
     border-radius: 200px;
     cursor: pointer;
+
+    span
+    {
+        pointer-events: none;
+    }
+}
+
+.button-standar.disable
+{
+    cursor: auto;
 }
 
 .button-standar.white
@@ -48,6 +58,12 @@
 .button-standar.blue:hover
 {
     background-color: Color.$blue2;
+    transition: background-color 0.25s;
+}
+
+.button-standar.blue.disable
+{
+    background-color: Color.$blue3;
     transition: background-color 0.25s;
 }
 
