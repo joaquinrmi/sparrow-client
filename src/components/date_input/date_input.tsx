@@ -6,6 +6,7 @@ export interface Props
 {
     id: string;
     className?: string;
+    value?: Date;
 }
 
 const FULL_MONTHS = [
@@ -94,10 +95,21 @@ const DateInput: React.FunctionComponent<Props> = (props) =>
     },
     []);
 
+    let initYear = years[0];
+    let initMonth = months[0];
+    let initDay = days[0];
+
+    if(props.value)
+    {
+        initYear = `${props.value.getFullYear()}`;
+        initMonth = FULL_MONTHS[props.value.getMonth()];
+        initDay = `${props.value.getDate()}`;
+    }
+
     return <div id={props.id} className={props.className}>
-        <FormInput id={`${props.id}-month`} title="Mes" options={months} />
-        <FormInput id={`${props.id}-day`} title="Día" options={days} />
-        <FormInput id={`${props.id}-year`} title="Año" options={years} />
+        <FormInput id={`${props.id}-month`} title="Mes" options={months} value={initMonth} />
+        <FormInput id={`${props.id}-day`} title="Día" options={days} value={initDay} />
+        <FormInput id={`${props.id}-year`} title="Año" options={years} value={initYear} />
     </div>;
 };
 
