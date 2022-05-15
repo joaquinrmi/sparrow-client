@@ -7,9 +7,10 @@ export interface Props
     id: string;
     title: string;
     value?: string;
+    options?: Array<string>;
 }
 
-interface FormInputElement extends HTMLDivElement
+export interface FormInputElement extends HTMLDivElement
 {
     getValue(): string;
 }
@@ -55,13 +56,40 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
     },
     []);
 
-    return <div id={props.id} className="form-input">
-        <span className={`title ${props.value && props.value.length > 0 ? "static" : ""}`}>
+    let className = "form-input";
+
+    if(props.options !== undefined)
+    {
+        className += " static options";
+    }
+    else if(props.value !== undefined && props.value.length > 0)
+    {
+        className += " static";
+    }
+
+    return <div id={props.id} className={className}>
+        <span className={"title"}>
             {props.title}
         </span>
-        <div className="input-container">
-            <input id={`input-${props.id}`} type="text" defaultValue={props.value ? props.value : ""} />
-        </div>
+        {
+            props.options !== undefined ?
+            <div className="arrow-container">
+                <i className="fa-solid fa-angle-down"></i>
+            </div> :
+            null
+        }
+        {
+            props.options !== undefined ?
+            <select name="" id={`input-${props.id}`}>
+                {props.options.map((value, index) =>
+                {
+                    return <option key={`option-${index}`}>{value}</option>;
+                })}
+            </select> :
+            <div className="input-container">
+                <input id={`input-${props.id}`} type="text" defaultValue={props.value ? props.value : ""} />
+            </div>
+        }
     </div>;
 };
 

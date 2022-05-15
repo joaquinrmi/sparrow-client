@@ -8,10 +8,10 @@
 
     .title
     {
+        position: absolute;
         top: 18px;
         left: 0 ;
         padding: 0 0 0 9px;
-        position: absolute;
         font-size: 19px;
         color: Color.$silverText;
         transition: top 0.1s, font-size 0.25s, color 0.25s;
@@ -26,11 +26,45 @@
 
         input
         {
+            width: 100%;
             flex: 1;
             font-size: 17px;
             color: Color.$blackText;
             border: none;
             outline: none;
+        }
+    }
+
+    select
+    {
+        width: 100%;
+        margin-top: 1em;
+        padding: 12px 8px 8px 8px;
+        box-sizing: border-box;
+        font-size: 17px;
+        background-color: transparent;
+        border: none;
+        appearance: none;
+        cursor: pointer;
+
+        option
+        {
+            color: Color.$blackText;
+        }
+    }
+
+    .arrow-container
+    {
+        position: absolute;
+        top: 18px;
+        right: 12px;
+        pointer-events: none !important;
+
+        i
+        {
+            font-size: 20px;
+            color: Color.$silverText;
+            transition: color 0.1s;
         }
     }
 }
@@ -47,12 +81,22 @@
         color: Color.$blue1;
         transition: top 0.1s, font-size 0.25s, color 0.25s;
     }
+
+    .arrow-container
+    {
+        i
+        {
+            color: Color.$blue1;
+            transition: color 0.1s;
+        }
+    }
 }
 
 .form-input.static
 {
     .title
     {
+        position: absolute;
         top: 8px;
         font-size: 14px;
         transition: color 0.25s;
