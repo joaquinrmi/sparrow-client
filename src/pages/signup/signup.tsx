@@ -18,8 +18,4 @@ const Signup: React.FunctionComponent = () =>
     return <FirstPage />;
 };
 
-type SignupFormSet = {
-    [Prop in keyof SignupForm]?: SignupForm[Prop]
-};
-
 export default Signup;
