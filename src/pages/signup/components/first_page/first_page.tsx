@@ -5,9 +5,12 @@ import DateInput from "../../../../components/date_input";
 import Button, { ButtonStyle } from "../../../../components/button";
 
 import "./first_page.scss";
+import SignupForm from "../../signup_form";
 
 export interface Props
-{}
+{
+    signupData: SignupForm;
+}
 
 const FirstPage: React.FunctionComponent<Props> = (props) =>
 {
@@ -64,9 +67,9 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
                 <h1>Crea tu cuenta</h1>
 
                 <div className="form-elements">
-                    <FormInput id="signup-name" title="Nombre" />
+                    <FormInput id="signup-name" title="Nombre" value={props.signupData.name} />
 
-                    <FormInput id="signup-email" title="Correo electrónico" />
+                    <FormInput id="signup-email" title="Correo electrónico" value={props.signupData.email} />
 
                     <div className="birthdate-text">
                         <span className="birthdate-title">Fecha de nacimiento</span>
@@ -74,7 +77,7 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
                         <span>Esta información no se mostrará públicamente y, de hecho, no sirve para nada más que alargar el formulario.</span>
                     </div>
                     
-                    <DateInput id="signup-date-input" className="signup-date-form" />
+                    <DateInput id="signup-date-input" className="signup-date-form" value={props.signupData.birthdate} />
                 </div>
             </section>
 
