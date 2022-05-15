@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import FormInput, { FormInputElement } from "../../../../components/form_input/";
 import DateInput from "../../../../components/date_input";
 import Button, { ButtonStyle } from "../../../../components/button";
+import SignupForm from "../../signup_form";
+import SignupFormSet from "../../signup_form_set";
 
 import "./first_page.scss";
-import SignupForm from "../../signup_form";
 
 export interface Props
 {
     signupData: SignupForm;
+    changePage(page: number, data: SignupFormSet): void;
 }
 
 const FirstPage: React.FunctionComponent<Props> = (props) =>
