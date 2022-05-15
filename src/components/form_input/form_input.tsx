@@ -80,7 +80,7 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
         }
         {
             props.options !== undefined ?
-            <select name="" id={`input-${props.id}`}>
+            <select name="" id={`input-${props.id}`} defaultValue={props.value ? props.value : ""}>
                 {props.options.map((value, index) =>
                 {
                     return <option key={`option-${index}`}>{value}</option>;
