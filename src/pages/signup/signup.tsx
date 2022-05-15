@@ -28,8 +28,6 @@ const Signup: React.FunctionComponent = () =>
             const email = emailInput.getValue();
             const match = email.match(emailRegex);
 
-            console.log(match);
-
             if(match === null || match.length !== 1)
             {
                 setEnableNext(false);
