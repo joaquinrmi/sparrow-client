@@ -15,7 +15,7 @@ const Signup: React.FunctionComponent = () =>
         repassword: ""
     });
 
-    return <FirstPage />;
+    return <FirstPage signupData={signupData} />;
 };
 
 export default Signup;
