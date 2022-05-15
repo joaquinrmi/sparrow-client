@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import FormInput from "../../components/form_input/";
+import FormInput, { FormInputElement } from "../../components/form_input/";
 import DateInput from "../../components/date_input";
 import Button, { ButtonStyle } from "../../components/button";
 
@@ -8,6 +8,49 @@ import "./signup.scss";
 
 const Signup: React.FunctionComponent = () =>
 {
+    const [ enableNext, setEnableNext ] = useState(false);
+
+    useEffect(() =>
+    {
+        const nameInput = document.getElementById("signup-name") as FormInputElement;
+        const emailInput = document.getElementById("signup-email") as FormInputElement;
+
+        const emailRegex = /^[a-zA-Z\-_0-9]*@[a-zA-Z\-_0-9]*\.com$/;
+
+        const checkEnableNext = () =>
+        {
+            if(nameInput.getValue().trim().length === 0)
+            {
+                setEnableNext(false);
+                return;
+            }
+
+            const email = emailInput.getValue();
+            const match = email.match(emailRegex);
+
+            console.log(match);
+
+            if(match === null || match.length !== 1)
+            {
+                setEnableNext(false);
+                return;
+            }
+
+            setEnableNext(true);
+        };
+
+        nameInput.addEventListener("change", () =>
+        {
+            checkEnableNext();
+        });
+
+        emailInput.addEventListener("change", () =>
+        {
+            checkEnableNext();
+        });
+    },
+    []);
+
     return <div className="signup-page">
         <div className="form-modal">
             <header className="signup-form-top">
@@ -36,7 +79,9 @@ const Signup: React.FunctionComponent = () =>
 
             <footer className="signup-form-bottom">
                 <div className="button-container">
-                    <Button stylePreset={ButtonStyle.Blue}>Siguiente</Button>
+                    <Button stylePreset={ButtonStyle.Blue} disabled={!enableNext}>
+                        Siguiente
+                    </Button>
                 </div>
             </footer>
         </div>
