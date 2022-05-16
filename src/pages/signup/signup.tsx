@@ -42,6 +42,9 @@ const Signup: React.FunctionComponent = () =>
         });
     };
 
+    const sendForm = async (data: SignupFormSet) =>
+    {};
+
     let content: any;
     if(state.currentPage === 1)
     {
@@ -49,7 +52,7 @@ const Signup: React.FunctionComponent = () =>
     }
     else
     {
-        content = <SecondPage signupData={state.signupData} changePage={changePage} />;
+        content = <SecondPage signupData={state.signupData} changePage={changePage} sendForm={sendForm} />;
     }
 
     return <div className="signup-page">
