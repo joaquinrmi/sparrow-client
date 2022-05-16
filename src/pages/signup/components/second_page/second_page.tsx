@@ -20,7 +20,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
     return <div className="form-modal">
         <header className="signup-form-top">
             <div id="signup-close-button">
-                <i className="fa-solid fa-xmark"></i>
+                <i className="fa-solid fa-arrow-left"></i>
             </div>
         </header>
 
