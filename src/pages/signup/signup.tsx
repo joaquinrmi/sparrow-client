@@ -4,6 +4,7 @@ import SignupForm from "./signup_form";
 import SignupFormSet from "./signup_form_set";
 
 import "./signup.scss";
+import SecondPage from "./components/second_page";
 
 const Signup: React.FunctionComponent = () =>
 {
@@ -11,7 +12,7 @@ const Signup: React.FunctionComponent = () =>
         currentPage: number,
         signupData: SignupForm
     }>({
-        currentPage: 0,
+        currentPage: 1,
         signupData: {
             name: "",
             email: "",
@@ -24,9 +25,9 @@ const Signup: React.FunctionComponent = () =>
 
     const changePage = (page: number, data: SignupFormSet) =>
     {
-        if(page !== 0 && page !== 1)
+        if(page !== 1 && page !== 2)
         {
-            page = 0;
+            page = 1;
         }
 
         setSate((currentState) =>
@@ -41,7 +42,21 @@ const Signup: React.FunctionComponent = () =>
         });
     };
 
-    return <FirstPage signupData={state.signupData} changePage={changePage} />;
+    let content: any;
+    if(state.currentPage === 1)
+    {
+        content = <FirstPage signupData={state.signupData} changePage={changePage} />;
+    }
+    else
+    {
+        content = <SecondPage signupData={state.signupData} changePage={changePage} />;
+    }
+
+    return <div className="signup-page">
+        <div className="page-align">
+            {content}
+        </div>
+    </div>;
 };
 
 export default Signup;
