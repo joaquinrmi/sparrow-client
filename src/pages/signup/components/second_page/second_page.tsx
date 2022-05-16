@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import SignupForm from "../../signup_form";
 import SignupFormSet from "../../signup_form_set";
 import FormInput from "../../../../components/form_input/";
-import DateInput from "../../../../components/date_input";
 import Button, { ButtonStyle } from "../../../../components/button";
 
 import "./second_page.scss";
@@ -11,6 +10,7 @@ export interface Props
 {
     signupData: SignupForm;
     changePage(page: number, data: SignupFormSet): void;
+    sendForm(data: SignupFormSet): Promise<void>;
 }
 
 const SecondPage: React.FunctionComponent<Props> = (props) =>
