@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SignupForm from "../../signup_form";
 import SignupFormSet from "../../signup_form_set";
-import FormInput, { FormInputElement } from "../../../../components/form_input/";
+import FormInput, { FormInputType, FormInputElement } from "../../../../components/form_input/";
 import Button, { ButtonStyle } from "../../../../components/button";
 
 import "./second_page.scss";
@@ -78,9 +78,9 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
             <div className="form-elements">
                 <FormInput id="signup-handle" title="Nombre de usuario" value={props.signupData.handle} />
 
-                <FormInput id="signup-password" title="Contraseña" value={props.signupData.password} />
+                <FormInput id="signup-password" type={FormInputType.Password} title="Contraseña" value={props.signupData.password} />
 
-                <FormInput id="signup-repassword" title="Reingresa la contraseña" value={props.signupData.repassword} />
+                <FormInput id="signup-repassword" type={FormInputType.Password} title="Reingresa la contraseña" value={props.signupData.repassword} />
             </div>
         </section>
 
