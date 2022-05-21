@@ -24,6 +24,15 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
         const element = document.getElementById(props.id) as FormInputElement;
         const inputElement = document.getElementById(`input-${props.id}`) as HTMLInputElement;
 
+        if(inputElement.value.length > 0)
+        {
+            element.classList.add("static");
+        }
+        else
+        {
+            element.classList.remove("static");
+        }
+
         element.getValue = () =>
         {
             return inputElement.value;
@@ -55,8 +64,7 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                 element.classList.remove("static");
             }
         };
-    },
-    []);
+    });
 
     let className = "form-input";
 
