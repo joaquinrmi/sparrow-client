@@ -14,6 +14,8 @@ export interface Props
     changePage(page: number, data: SignupFormSet): void;
 }
 
+const EMAIL_REGEX = /^[a-zA-Z\-_0-9]*@[a-zA-Z\-_0-9]*\.com$/;
+
 const FirstPage: React.FunctionComponent<Props> = (props) =>
 {
     const [ enableNext, setEnableNext ] = useState(false);
@@ -22,8 +24,6 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
     {
         const nameInput = document.getElementById("signup-name") as FormInputElement;
         const emailInput = document.getElementById("signup-email") as FormInputElement;
-
-        const emailRegex = /^[a-zA-Z\-_0-9]*@[a-zA-Z\-_0-9]*\.com$/;
 
         const checkEnableNext = () =>
         {
@@ -34,7 +34,7 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
             }
 
             const email = emailInput.getValue();
-            const match = email.match(emailRegex);
+            const match = email.match(EMAIL_REGEX);
 
             if(match === null || match.length !== 1)
             {
@@ -45,6 +45,8 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
             setEnableNext(true);
         };
 
+        checkEnableNext();
+
         nameInput.addEventListener("change", () =>
         {
             checkEnableNext();
@@ -54,8 +56,7 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
         {
             checkEnableNext();
         });
-    },
-    []);
+    });
 
     return <div className="form-modal">
         <header className="signup-form-top">
