@@ -1,0 +1,27 @@
+@use "../../../../colors.scss" as Color;
+
+.form-modal
+{
+    .signup-form-top
+    {
+        #signup-go-back-button
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 34px;
+            height: 34px;
+            font-size: 1.4em;
+            color: Color.$blackText;
+            border-radius: 200px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #signup-go-back-button:hover
+        {
+            background-color: Color.$gray3;
+            transition: background-color 0.2s;
+        }
+    }
+}
