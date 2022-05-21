@@ -13,7 +13,7 @@ export interface Props
     sendForm(data: SignupFormSet): Promise<void>;
 }
 
-const HANDLE_ERROR_MESSAGE = `El nombre de usuario solo puede contener letras minúsculas, números y el signo "_" y una longitud entre 4 y 15 caracteres.`;
+const HANDLE_ERROR_MESSAGE = `El nombre de usuario solo puede contener letras minúsculas, números y los signos "_" y "." y una longitud entre 4 y 15 caracteres.`;
 const PASSWORD_ERROR_MESSAGE = "La contraseña debe tener entre 8 y 20 caracteres de longitud.";
 const REPASSWORD_ERROR_MESSAGE = "Las contraseñas con coinciden.";
 
@@ -30,7 +30,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
         const passwordInput = document.getElementById("signup-password") as FormInputElement;
         const repasswordInput = document.getElementById("signup-repassword") as FormInputElement;
 
-        const handleRegex = /^[a-zA-Z\-_0-9]*$/;
+        const handleRegex = /^[a-z\._0-9]*$/;
 
         const checkEnableButton = () =>
         {
@@ -46,7 +46,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
                 return;
             }
 
-            if(!handleInput.getValue().match(handleRegex))
+            if(handleInput.getValue().length < 4 || !handleInput.getValue().match(handleRegex))
             {
                 setEnableButton(false);
                 return;
@@ -59,9 +59,16 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
         {
             checkEnableButton();
 
-            if(handleInput.getValue().length > 0 && !handleInput.getValue().match(handleRegex))
+            if(handleInput.getValue().length > 0)
             {
-                setHandleError(HANDLE_ERROR_MESSAGE);
+                if(handleInput.getValue().length < 4 || !handleInput.getValue().match(handleRegex))
+                {
+                    setHandleError(HANDLE_ERROR_MESSAGE);
+                }
+                else
+                {
+                    setHandleError("");
+                }
             }
             else
             {
