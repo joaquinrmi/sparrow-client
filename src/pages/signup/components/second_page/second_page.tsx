@@ -74,7 +74,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
             {
                 setHandleError("");
             }
-        }
+        };
 
         passwordInput.onchange = () =>
         {
@@ -97,7 +97,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
             {
                 setRepasswordError("");
             }
-        }
+        };
 
         repasswordInput.onchange = () =>
         {
@@ -111,13 +111,24 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
             {
                 setRepasswordError("");
             }
-        }
+        };
+
+        const goBackButton = document.getElementById("signup-go-back-button") as HTMLDivElement;
+
+        goBackButton.onclick = () =>
+        {
+            props.changePage(1, {
+                handle: handleInput.getValue(),
+                password: passwordInput.getValue(),
+                repassword: repasswordInput.getValue()
+            });
+        };
     },
     []);
 
     return <div className="form-modal">
         <header className="signup-form-top">
-            <div id="signup-close-button">
+            <div id="signup-go-back-button">
                 <i className="fa-solid fa-arrow-left"></i>
             </div>
         </header>
