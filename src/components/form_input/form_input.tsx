@@ -9,6 +9,7 @@ export interface Props
     type?: FormInputType;
     value?: string;
     options?: Array<string>;
+    errorMessage?: string;
 }
 
 export interface FormInputElement extends HTMLDivElement
@@ -68,28 +69,44 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
         className += " static";
     }
 
-    return <div id={props.id} className={className}>
-        <span className={"title"}>
-            {props.title}
-        </span>
+    if(props.errorMessage !== undefined && props.errorMessage.length > 0)
+    {
+        className += " error";
+    }
+
+    return <div className="form-input-container">
+        <div id={props.id} className={className}>
+            <span className={"title"}>
+                {props.title}
+            </span>
+
+            {
+                props.options !== undefined ?
+                <div className="arrow-container">
+                    <i className="fa-solid fa-angle-down"></i>
+                </div> :
+                null
+            }
+            {
+                props.options !== undefined ?
+                <select name="" id={`input-${props.id}`} defaultValue={props.value ? props.value : ""}>
+                    {props.options.map((value, index) =>
+                    {
+                        return <option key={`option-${index}`}>{value}</option>;
+                    })}
+                </select> :
+                <div className="input-container">
+                    <input id={`input-${props.id}`} type={props.type !== undefined ? props.type : "text"} defaultValue={props.value ? props.value : ""} />
+                </div>
+            }
+        </div>
+
         {
-            props.options !== undefined ?
-            <div className="arrow-container">
-                <i className="fa-solid fa-angle-down"></i>
+            props.errorMessage !== undefined ?
+            <div className="input-error-message">
+                {props.errorMessage}
             </div> :
             null
-        }
-        {
-            props.options !== undefined ?
-            <select name="" id={`input-${props.id}`} defaultValue={props.value ? props.value : ""}>
-                {props.options.map((value, index) =>
-                {
-                    return <option key={`option-${index}`}>{value}</option>;
-                })}
-            </select> :
-            <div className="input-container">
-                <input id={`input-${props.id}`} type={props.type !== undefined ? props.type : "text"} defaultValue={props.value ? props.value : ""} />
-            </div>
         }
     </div>;
 };

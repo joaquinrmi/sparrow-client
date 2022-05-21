@@ -102,3 +102,35 @@
         transition: color 0.25s;
     }
 }
+
+.form-input.error
+{
+    border: 1px solid Color.$red1;
+
+    .title
+    {
+        position: absolute;
+        top: 8px;
+        font-size: 14px;
+        color: Color.$red1;
+        transition: color 0.25s;
+    }
+}
+
+.form-input.error.active
+{
+    outline: 2px solid Color.$red1;
+
+    .title
+    {
+        color: Color.$red1;
+    }
+}
+
+.input-error-message
+{
+    padding: 2px 10px 0 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: Color.$red1;
+}
