@@ -6,6 +6,7 @@ export interface Props
 {
     id: string;
     title: string;
+    password?: boolean;
     value?: string;
     options?: Array<string>;
 }
