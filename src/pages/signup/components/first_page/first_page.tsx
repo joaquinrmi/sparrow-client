@@ -14,11 +14,14 @@ export interface Props
     changePage(page: number, data: SignupFormSet): void;
 }
 
+const EMAIL_ERROR_MESSAGE = "Dirección de correo electrónico inválida.";
+
 const EMAIL_REGEX = /^[a-zA-Z\-_0-9]*@[a-zA-Z\-_0-9]*\.com$/;
 
 const FirstPage: React.FunctionComponent<Props> = (props) =>
 {
     const [ enableNext, setEnableNext ] = useState(false);
+    const [ emailError, setEmailError ] = useState("");
 
     useEffect(() =>
     {
@@ -55,6 +58,18 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
         emailInput.addEventListener("change", () =>
         {
             checkEnableNext();
+
+            const email = emailInput.getValue();
+            const match = email.match(EMAIL_REGEX);
+
+            if(email.length > 0 && (match === null || match.length !== 1))
+            {
+                setEmailError(EMAIL_ERROR_MESSAGE);
+            }
+            else
+            {
+                setEmailError("");
+            }
         });
     });
 
@@ -71,7 +86,7 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
             <div className="form-elements">
                 <FormInput id="signup-name" title="Nombre" value={props.signupData.name} />
 
-                <FormInput id="signup-email" title="Correo electrónico" value={props.signupData.email} type={FormInputType.Email} />
+                <FormInput id="signup-email" title="Correo electrónico" value={props.signupData.email} type={FormInputType.Email} errorMessage={emailError} />
 
                 <div className="birthdate-text">
                     <span className="birthdate-title">Fecha de nacimiento</span>
