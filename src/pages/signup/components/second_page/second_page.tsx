@@ -17,6 +17,31 @@ const HANDLE_ERROR_MESSAGE = `El nombre de usuario solo puede contener letras mi
 const PASSWORD_ERROR_MESSAGE = "La contraseña debe tener entre 8 y 20 caracteres de longitud.";
 const REPASSWORD_ERROR_MESSAGE = "Las contraseñas con coinciden.";
 
+const HANDLE_REGEX = /^[a-z\._0-9]*$/;
+
+const checkEnableButton = (handleInput: FormInputElement, passwordInput: FormInputElement, repasswordInput: FormInputElement, setEnableButton: Function) =>
+{
+    if(passwordInput.getValue().length < 8 || passwordInput.getValue().length > 20)
+    {
+        setEnableButton(false);
+        return;
+    }
+
+    if(passwordInput.getValue() !== repasswordInput.getValue())
+    {
+        setEnableButton(false);
+        return;
+    }
+
+    if(handleInput.getValue().length < 4 || !handleInput.getValue().match(HANDLE_REGEX))
+    {
+        setEnableButton(false);
+        return;
+    }
+
+    setEnableButton(true);
+};
+
 const SecondPage: React.FunctionComponent<Props> = (props) =>
 {
     const [ enableButton, setEnableButton ] = useState(false);
@@ -30,38 +55,22 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
         const passwordInput = document.getElementById("signup-password") as FormInputElement;
         const repasswordInput = document.getElementById("signup-repassword") as FormInputElement;
 
-        const handleRegex = /^[a-z\._0-9]*$/;
+        checkEnableButton(handleInput, passwordInput, repasswordInput, setEnableButton);
+    });
 
-        const checkEnableButton = () =>
-        {
-            if(passwordInput.getValue().length < 8 || passwordInput.getValue().length > 20)
-            {
-                setEnableButton(false);
-                return;
-            }
-
-            if(passwordInput.getValue() !== repasswordInput.getValue())
-            {
-                setEnableButton(false);
-                return;
-            }
-
-            if(handleInput.getValue().length < 4 || !handleInput.getValue().match(handleRegex))
-            {
-                setEnableButton(false);
-                return;
-            }
-
-            setEnableButton(true);
-        };
+    useEffect(() =>
+    {
+        const handleInput = document.getElementById("signup-handle") as FormInputElement;
+        const passwordInput = document.getElementById("signup-password") as FormInputElement;
+        const repasswordInput = document.getElementById("signup-repassword") as FormInputElement;
 
         handleInput.onchange = () =>
         {
-            checkEnableButton();
+            checkEnableButton(handleInput, passwordInput, repasswordInput, setEnableButton);
 
             if(handleInput.getValue().length > 0)
             {
-                if(handleInput.getValue().length < 4 || !handleInput.getValue().match(handleRegex))
+                if(handleInput.getValue().length < 4 || !handleInput.getValue().match(HANDLE_REGEX))
                 {
                     setHandleError(HANDLE_ERROR_MESSAGE);
                 }
@@ -78,7 +87,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
 
         passwordInput.onchange = () =>
         {
-            checkEnableButton();
+            checkEnableButton(handleInput, passwordInput, repasswordInput, setEnableButton);
 
             if(passwordInput.getValue().length < 8 || passwordInput.getValue().length > 20)
             {
@@ -101,7 +110,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
 
         repasswordInput.onchange = () =>
         {
-            checkEnableButton();
+            checkEnableButton(handleInput, passwordInput, repasswordInput, setEnableButton);
 
             if(repasswordInput.getValue().length > 0 && passwordInput.getValue() !== repasswordInput.getValue())
             {
