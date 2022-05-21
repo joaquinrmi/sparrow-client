@@ -80,12 +80,12 @@
                 flex-direction: row;
                 gap: 12px;
 
-                .form-input
+                .form-input-container
                 {
                     flex: 1;
                 }
 
-                .form-input:first-child
+                .form-input-container:first-child
                 {
                     flex: 2;
                 }
