@@ -6,7 +6,7 @@ export interface Props
 {
     id: string;
     title: string;
-    password?: boolean;
+    type?: FormInputType;
     value?: string;
     options?: Array<string>;
 }
@@ -88,10 +88,17 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                 })}
             </select> :
             <div className="input-container">
-                <input id={`input-${props.id}`} type="text" defaultValue={props.value ? props.value : ""} />
+                <input id={`input-${props.id}`} type={props.type !== undefined ? props.type : "text"} defaultValue={props.value ? props.value : ""} />
             </div>
         }
     </div>;
 };
+
+export enum FormInputType
+{
+    Text = "text",
+    Password = "password",
+    Email = "email"
+}
 
 export default FormInput;
