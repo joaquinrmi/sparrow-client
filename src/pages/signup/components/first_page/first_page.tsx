@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import FormInput, { FormInputElement } from "../../../../components/form_input/";
+import FormInput, { FormInputType, FormInputElement } from "../../../../components/form_input/";
 import DateInput, { DateInputElement } from "../../../../components/date_input";
 import Button, { ButtonStyle } from "../../../../components/button";
 import SignupForm from "../../signup_form";
@@ -71,7 +71,7 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
             <div className="form-elements">
                 <FormInput id="signup-name" title="Nombre" value={props.signupData.name} />
 
-                <FormInput id="signup-email" title="Correo electrónico" value={props.signupData.email} />
+                <FormInput id="signup-email" title="Correo electrónico" value={props.signupData.email} type={FormInputType.Email} />
 
                 <div className="birthdate-text">
                     <span className="birthdate-title">Fecha de nacimiento</span>
