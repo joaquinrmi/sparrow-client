@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import FormInput, { FormInputType, FormInputElement } from "../../../../components/form_input/";
 import DateInput, { DateInputElement } from "../../../../components/date_input";
@@ -75,9 +76,9 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
 
     return <div className="form-modal">
         <header className="signup-form-top">
-            <div id="signup-close-button">
+            <Link to="/" id="signup-close-button">
                 <i className="fa-solid fa-xmark"></i>
-            </div>
+            </Link>
         </header>
 
         <section className="signup-form-body">
