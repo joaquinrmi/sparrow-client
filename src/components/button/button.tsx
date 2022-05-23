@@ -6,6 +6,7 @@ import "./button.scss";
 export interface Props
 {
     children: React.ReactNode;
+    className?: string;
     stylePreset: ButtonStyle;
     disabled?: boolean;
 
@@ -18,7 +19,7 @@ export interface Props
 const Button: React.FunctionComponent<Props> = (props) =>
 {
     let navigate = useNavigate();
-    let buttonClass = `button-standar ${props.stylePreset} ${props.disabled ? "disable" : ""}`;
+    let buttonClass = `button-standar ${props.className ? props.className : ""} ${props.stylePreset} ${props.disabled ? "disable" : ""}`;
 
     let onClick: MouseEventHandler<HTMLButtonElement>;
     if(props.to !== undefined)
