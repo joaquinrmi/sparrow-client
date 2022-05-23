@@ -1,0 +1,46 @@
+$circleRadius: 12;
+$strokeDasharray: 2 * 3.1415 * $circleRadius;
+
+.loading
+{
+   animation-name: loading-rotation;
+   animation-duration: 1.5s;
+   animation-iteration-count: infinite;
+   animation-timing-function: linear;
+}
+
+.loading .animated-circle
+{
+   stroke-dashoffset: $strokeDasharray * 0.95 * 1px;
+   stroke-dasharray: $strokeDasharray * 1px;
+
+   animation-name: loading-worm;
+   animation-duration: 2s;
+   animation-iteration-count: infinite;
+   animation-timing-function: ease-in;
+   animation-direction: alternate;
+}
+
+@keyframes loading-rotation
+{
+   from
+   {
+      transform: rotate(0deg);
+   }
+   to
+   {
+      transform: rotate(360deg);
+   }
+}
+
+@keyframes loading-worm
+{
+   from
+   {
+      stroke-dashoffset: $strokeDasharray * 0.9 * 1px;
+   }
+   to
+   {
+      stroke-dashoffset: $strokeDasharray * 0.5 * 1px;
+   }
+}
