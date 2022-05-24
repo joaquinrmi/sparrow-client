@@ -19,7 +19,7 @@ const NavigationBar: React.FunctionComponent<Props> = (props) =>
 
         <NavigationItem to="/messages" icon="envelope" />
 
-        <NavigationItem to={`/${props.handle}`} icon="user" />
+        <NavigationItem to={`/${props.handle}`} subroutes icon="user" />
 
         <NavigationItem to="/settings" icon="gear" />
 
@@ -31,13 +31,16 @@ interface ItemProps
 {
     to: string;
     icon: string;
+    subroutes?: boolean;
     containerClassName?: string;
     linkClassName?: string;
 }
 
 const NavigationItem: React.FunctionComponent<ItemProps> = (props) =>
 {
-    let resolved = useResolvedPath(props.to);
+    let path = `${props.to}${props.subroutes ? "/*" : ""}`
+
+    let resolved = useResolvedPath(path);
     let match = useMatch({ path: resolved.pathname, end: true });
 
     return <div className={`nav-button-container ${props.containerClassName ? props.containerClassName : ""}`}>
