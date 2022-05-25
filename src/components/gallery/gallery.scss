@@ -1,0 +1,49 @@
+.gallery
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-top: 56.25%;
+
+    .gallery-vertical
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: 2px;
+        width: 100%;
+        height: 100%;
+
+        .gallery-horizontal
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+    }
+
+    .gallery-item-container
+    {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        img
+        {
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+    }
+}
