@@ -1,0 +1,183 @@
+@use "../../../../colors.scss" as Color;
+
+.top-information
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 53px;
+    padding: 0 1em;
+    box-sizing: border-box;
+
+    .user-name,
+    .title
+    {
+        font-size: 20px;
+        font-weight: 700;
+        color: Color.$blackText;
+    }
+
+    .cheep-count
+    {
+        font-size: 13px;
+        color: Color.$silverText;
+    }
+}
+
+.loading-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px 0 0 0;
+    flex: 1;
+}
+
+.profile-header
+{
+    .banner-container
+    {
+        flex: 1;
+        min-height: 20px;
+        background-color: Color.$gray1;
+    }
+
+    .banner-container::before
+    {
+        content: "";
+        display: block;
+        padding-top: 33.33%;
+    }
+
+    .picture-container
+    {
+        position: relative;
+
+        .picture
+        {
+            position: absolute;
+            width: 22.325%;
+            top: 0;
+            left: 1em;
+            margin-top: -11.1625%;
+            background-color: Color.$gray1;
+            border: 4px solid #fff;
+            box-sizing: border-box;
+            border-radius: 1000px;
+        }
+
+        .picture::before
+        {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+    }
+
+    .options-container
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        height: 80px;
+        padding: 12px 16px;
+        box-sizing: border-box;
+
+        .follow-button
+        {
+            height: 36px;
+            padding: 0 1.5em;
+
+            .button-text
+            {
+                font-size: 15px;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+.user-information
+{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 16px 16px 16px;
+
+    .user-id
+    {
+        display: flex;
+        flex-direction: column;
+
+        .user-name
+        {
+            font-size: 20px;
+            font-weight: 700;
+            color: Color.$blackText;
+        }
+
+        .user-handle
+        {
+            font-size: 15px;
+            color: Color.$silverText;
+        }
+    }
+
+    .description
+    {
+        font-size: 15px;
+        color: Color.$blackText;
+    }
+
+    .bottom-information
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .extra-information
+        {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .short-info
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
+                margin-right: 16px;
+                font-size: 15px;
+                color: Color.$silverText;
+            }
+        }
+
+        .counters
+        {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5em;
+
+            .counter-container
+            {
+                display: flex;
+                flex-direction: row;
+                gap: 4px;
+
+                .ammount
+                {
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: Color.$blackText;
+                }
+
+                .label
+                {
+                    font-size: 15px;
+                    color: Color.$silverText;
+                }
+            }
+        }
+    }
+}
