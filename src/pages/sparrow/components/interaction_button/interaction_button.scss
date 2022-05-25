@@ -1,0 +1,107 @@
+@use "../../../../colors.scss" as Color;
+
+.interaction-button
+{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 4px;
+    color: Color.$silverText;
+    cursor: pointer;
+
+    .icon-container
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        aspect-ratio: 1 / 1;
+        height: 100%;
+        border-radius: 1000px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .counter
+    {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 14px;
+        transition: color 0.2s;
+    }
+}
+
+.interaction-button.blue.active
+{
+    .icon-container,
+    .counter
+    {
+        color: Color.$blue1;
+    }
+}
+
+.interaction-button.blue:hover
+{
+    .icon-container
+    {
+        background-color: Color.$blue4;
+        color: Color.$blue1;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .counter
+    {
+        color: Color.$blue1;
+        transition: color 0.2s;
+    }
+}
+
+.interaction-button.green.active
+{
+    .icon-container,
+    .counter
+    {
+        color: Color.$green1;
+    }
+}
+
+.interaction-button.green:hover
+{
+    .icon-container
+    {
+        background-color: Color.$green2;
+        color: Color.$green1;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .counter
+    {
+        color: Color.$green1;
+        transition: color 0.2s;
+    }
+}
+
+.interaction-button.pink.active
+{
+    .icon-container,
+    .counter
+    {
+        color: Color.$pink1;
+    }
+}
+
+.interaction-button.pink:hover
+{
+    .icon-container
+    {
+        background-color: Color.$pink2;
+        color: Color.$pink1;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .counter
+    {
+        color: Color.$pink1;
+        transition: color 0.2s;
+    }
+}
