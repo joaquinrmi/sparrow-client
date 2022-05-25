@@ -7,9 +7,9 @@ interface CheepData
         picture: string;
     };
     dateCreated: Date;
-    quoteTarget: number;
-    content: string;
-    gallery: Array<string>;
+    quoteTarget?: number;
+    content?: string;
+    gallery?: Array<string>;
     commentCount: number;
     likeCount: number;
     recheepCount: number;
