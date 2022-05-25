@@ -1,0 +1,132 @@
+@use "../../colors.scss" as Color;
+
+.cheep
+{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 12px 16px 8px 16px;
+    box-sizing: border-box;
+    border-bottom: 1px solid Color.$gray2;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    .picture-container
+    {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        width: 48px;
+        height: 48px;
+        background-color: Color.$gray1;
+        border-radius: 1000px;
+        overflow: hidden;
+
+        .cheep-picture
+        {
+            flex: 1;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .veil
+        {
+            position: absolute;
+            width: 100%;
+            padding-top: 100%;
+            background-color: transparent;
+            transition: background-color 0.2s;
+        }
+    }
+
+    .picture-container:hover
+    {
+        .veil
+        {
+            background-color: rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+    }
+
+    .cheep-body
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        flex: 1;
+
+        .cheep-header
+        {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            font-size: 15px;
+
+            .author-name
+            {
+                font-weight: 700;
+                text-decoration: none;
+                color: Color.$blackText;
+            }
+
+            .author-name:hover
+            {
+                text-decoration: underline;
+                text-decoration-thickness: 2px;
+            }
+
+            .author-handle,
+            .cheep-date
+            {
+                text-decoration: none;
+                color: Color.$silverText;
+            }
+
+            .cheep-date:hover
+            {
+                text-decoration: underline;
+            }
+        }
+
+        .cheep-content
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .content-text
+            {
+                font-size: 15px;
+                color: Color.$blackText;
+            }
+
+            .interaction-container
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                margin-top: -8px;
+                margin-left: -8px;
+                overflow: hidden;
+                height: 35px;
+
+                .interaction-button-container
+                {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: stretch;
+                    flex: 1;
+                }
+            }
+        }
+    }
+}
+
+.cheep:hover
+{
+    background-color: Color.$gray4;
+    transition: background-color 0.2s;
+}
