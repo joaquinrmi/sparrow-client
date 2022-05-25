@@ -153,7 +153,26 @@
 
 .cheep.quote-form
 {
-    padding: 10px;
+    padding: 0;
+    
+    .cheep-body
+    {
+        .cheep-header
+        {
+            padding: 10px 10px 0 10px;
+        }
+
+        .cheep-content
+        {
+            padding: 0 10px 10px 10px;
+        }
+
+        .sub-container
+        {
+            border: none;
+            border-radius: 0;
+        }
+    }
 }
 
 .cheep.quote-form:hover

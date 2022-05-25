@@ -98,16 +98,16 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                     {props.data.content}
                 </span>
 
-                {props.data.quoteTarget ?
+                {!props.quote && props.data.gallery && props.data.gallery.length > 0 ?
                     <div className="sub-container">
-                        <Cheep data={props.data.quoteTarget} quote />
+                        <Gallery pictures={props.data.gallery} />
                     </div> :
                     null
                 }
 
-                {props.data.gallery && props.data.gallery.length > 0 ?
+                {!props.quote && props.data.quoteTarget ?
                     <div className="sub-container">
-                        <Gallery pictures={props.data.gallery} />
+                        <Cheep data={props.data.quoteTarget} quote />
                     </div> :
                     null
                 }
@@ -129,6 +129,13 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                     null
                 }
             </div>
+
+            {props.quote && props.data.gallery && props.data.gallery.length > 0 ?
+                <div className="sub-container">
+                    <Gallery pictures={props.data.gallery} />
+                </div> :
+                null
+            }
         </div>
     </div>;
 };
