@@ -11,6 +11,7 @@ import "./cheep.scss";
 export interface Props
 {
     data: CheepData;
+    quote?: boolean;
 }
 
 const Cheep: React.FunctionComponent<Props> = (props) =>
@@ -35,24 +36,38 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
     const navigate = useNavigate();
 
     const cheepLink = `/${props.data.author.handle}/status/${props.data.id}`;
+    const authorPicture = <>
+        <div className="cheep-picture" style={{
+            backgroundImage: `url(${props.data.author.picture})`
+        }} title={`Foto de perfil de @${props.data.author.name}`} />
 
-    return <div className="cheep" onClick={() =>
+        <div className="veil"></div>
+    </>;
+
+    return <div className={`cheep ${props.quote ? "quote-form" : ""}`} onClick={(ev) =>
     {
+        ev.stopPropagation();
         navigate(cheepLink);
     }}>
-        <Link className="picture-container" to={`/${props.data.author.handle}`} onClick={(ev) =>
-        {
-            ev.stopPropagation();
-        }}>
-            <div className="cheep-picture" style={{
-                backgroundImage: `url(${props.data.author.picture})`
-            }} title={`Foto de perfil de @${props.data.author.name}`} />
-
-            <div className="veil"></div>
-        </Link>
+        {!props.quote ?
+            <Link className="picture-container" to={`/${props.data.author.handle}`} onClick={(ev) =>
+            {
+                ev.stopPropagation();
+            }}>
+                {authorPicture}
+            </Link> :
+            null
+        }
 
         <div className="cheep-body">
             <div className="cheep-header">
+                {props.quote ?
+                    <div className="header-picture-container">
+                        {authorPicture}
+                    </div> :
+                    null
+                }
+
                 <Link className="author-name" to={`/${props.data.author.handle}`} onClick={(ev) =>
                 {
                     ev.stopPropagation();
@@ -82,19 +97,29 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                     {props.data.content}
                 </span>
 
-                <div className="interaction-container">
-                    <div className="interaction-button-container">
-                        <CommentButton cheepData={props.data} counter={true} />
-                    </div>
-                    
-                    <div className="interaction-button-container">
-                        <RecheepButton cheepId={props.data.id} active={props.data.recheepped} counter={props.data.recheepCount} />
-                    </div>
+                {props.data.quoteTarget ?
+                    <div className="quote">
+                        <Cheep data={props.data.quoteTarget} quote />
+                    </div> :
+                    null
+                }
 
-                    <div className="interaction-button-container">
-                        <LikeButton cheepId={props.data.id} active={props.data.liked} counter={props.data.likeCount} />
-                    </div>
-                </div>
+                {!props.quote ?
+                    <div className="interaction-container">
+                        <div className="interaction-button-container">
+                            <CommentButton cheepData={props.data} counter={true} />
+                        </div>
+                        
+                        <div className="interaction-button-container">
+                            <RecheepButton cheepId={props.data.id} active={props.data.recheepped} counter={props.data.recheepCount} />
+                        </div>
+
+                        <div className="interaction-button-container">
+                            <LikeButton cheepId={props.data.id} active={props.data.liked} counter={props.data.likeCount} />
+                        </div>
+                    </div> :
+                    null
+                }
             </div>
         </div>
     </div>;

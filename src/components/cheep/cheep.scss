@@ -11,6 +11,14 @@
     cursor: pointer;
     transition: background-color 0.2s;
 
+    .cheep-picture
+    {
+        flex: 1;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
     .picture-container
     {
         position: relative;
@@ -23,14 +31,6 @@
         background-color: Color.$gray1;
         border-radius: 1000px;
         overflow: hidden;
-
-        .cheep-picture
-        {
-            flex: 1;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
 
         .veil
         {
@@ -62,8 +62,21 @@
         {
             display: flex;
             flex-direction: row;
+            align-items: center;
             gap: 5px;
             font-size: 15px;
+
+            .header-picture-container
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: stretch;
+                width: 20px;
+                height: 20px;
+                border-radius: 1000px;
+                overflow: hidden;
+            }
 
             .author-name
             {
@@ -121,6 +134,13 @@
                     flex: 1;
                 }
             }
+
+            .quote
+            {
+                border: 1px solid Color.$gray1;
+                border-radius: 16px;
+                overflow: hidden;
+            }
         }
     }
 }
@@ -128,5 +148,16 @@
 .cheep:hover
 {
     background-color: Color.$gray4;
+    transition: background-color 0.2s;
+}
+
+.cheep.quote-form
+{
+    padding: 10px;
+}
+
+.cheep.quote-form:hover
+{
+    background-color: Color.$gray5;
     transition: background-color 0.2s;
 }
