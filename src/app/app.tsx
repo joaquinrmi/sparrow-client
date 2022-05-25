@@ -5,19 +5,35 @@ import Welcome from "../pages/welcome";
 import SessionData from "../session_data";
 import SessionContext from "../session_context";
 import Signup from "../pages/signup/";
+import Sparrow from "../pages/sparrow";
 
 import "./app.scss";
 
 const App: React.FunctionComponent = () =>
 {
     const [ userSession, setUserSession ] = useState<SessionData>({
-        logged: false,
+        logged: true,
         user: {
-            handle: "",
+            handle: "sparrow",
             name: "",
             picture: ""
         }
     });
+
+    let routes;
+    if(userSession.logged)
+    {
+        routes = <>
+            <Route path="/*" element={<Sparrow />} />
+        </>;
+    }
+    else
+    {
+        routes = <>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/signup" element={<Signup />} />
+        </>;
+    }
 
     return <SessionContext.Provider value={{
         ...userSession,
@@ -41,8 +57,7 @@ const App: React.FunctionComponent = () =>
         }
     }}>
         <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/signup" element={<Signup />} />
+            {routes}
         </Routes>
     </SessionContext.Provider>;
 };
