@@ -7,12 +7,14 @@
 
 .navigation-bar
 {
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
     width: 68px;
+    margin-top: 2px;
 
     .nav-button
     {

@@ -10,5 +10,10 @@
         flex: 1;
         display: flex;
         flex-direction: row;
+
+        .navigation-container
+        {
+            width: 68px;
+        }
     }
 }
