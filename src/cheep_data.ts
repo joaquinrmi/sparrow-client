@@ -14,6 +14,8 @@ interface CheepData
     likeCount: number;
     recheepCount: number;
     responseOf?: CheepData;
+    recheepped: boolean;
+    liked: boolean;
 }
 
 export default CheepData;
