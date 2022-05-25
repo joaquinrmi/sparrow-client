@@ -5,6 +5,7 @@ import MONTHS from "../../months";
 import CommentButton from "../../pages/sparrow/components/comment_button";
 import LikeButton from "../../pages/sparrow/components/like_button";
 import RecheepButton from "../../pages/sparrow/components/recheep_button";
+import Gallery from "../gallery";
 
 import "./cheep.scss";
 
@@ -98,8 +99,15 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                 </span>
 
                 {props.data.quoteTarget ?
-                    <div className="quote">
+                    <div className="sub-container">
                         <Cheep data={props.data.quoteTarget} quote />
+                    </div> :
+                    null
+                }
+
+                {props.data.gallery && props.data.gallery.length > 0 ?
+                    <div className="sub-container">
+                        <Gallery pictures={props.data.gallery} />
                     </div> :
                     null
                 }
