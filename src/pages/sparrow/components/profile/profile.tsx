@@ -2,20 +2,69 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
-import CheepList from "../../../../components/cheep_list";
+import CheepList, { CheepListStatus } from "../../../../components/cheep_list";
 import ProfileNavigation from "../profile_navigation";
 
 import ProfileData from "../../profile_data";
 import MONTHS from "../../../../months";
+import SetState from "../../../../set_state";
 
 import "./profile.scss";
 
 export interface Props
 {
     handle: string;
-    profileData: ProfileData;
-    setProfileData(profileData: ProfileData): void;
+    state: ProfileState;
+    setState: SetProfileState;
 }
+
+export interface ProfileState
+{
+    profileData: ProfileData;
+    cheepsStatus: CheepListStatus;
+    withRepliesStatus: CheepListStatus;
+    mediaStatus: CheepListStatus;
+    likesStatus: CheepListStatus;
+}
+
+export type SetProfileState = SetState<ProfileState>;
+
+export const DEFAULT_PROFILE_STATE: ProfileState = {
+    profileData: {
+        handle: "",
+        name: "",
+        picture: "",
+        banner: "",
+        description: "",
+        location: "",
+        birthdate: new Date(),
+        joinDate: new Date(),
+        website: "",
+        cheepCount: 0,
+        followersCount: 0,
+        followingCount: 0
+    },
+
+    cheepsStatus: {
+        loaded: false,
+        cheeps: []
+    },
+
+    withRepliesStatus: {
+        loaded: false,
+        cheeps: []
+    },
+
+    mediaStatus: {
+        loaded: false,
+        cheeps: []
+    },
+
+    likesStatus: {
+        loaded: false,
+        cheeps: []
+    },
+};
 
 const Profile: React.FunctionComponent<Props> = (props) =>
 {
@@ -23,7 +72,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
     {
         setTimeout(() =>
         {
-            props.setProfileData({
+            props.setState.profileData({
                 handle: "sparrow",
                 name: "Sparrow",
                 picture: "",
@@ -43,7 +92,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
     [ props.handle ]);
 
     let content: React.ReactNode;
-    if(props.profileData.handle.length === 0)
+    if(props.state.profileData.handle.length === 0)
     {
         content = <div className="loading-container">
             <Loading />
@@ -71,29 +120,29 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             <section className="user-information">
                 <div className="user-id">
                     <span className="user-name">
-                        {props.profileData.name}
+                        {props.state.profileData.name}
                     </span>
 
                     <span className="user-handle">
-                        @{props.profileData.handle}
+                        @{props.state.profileData.handle}
                     </span>
                 </div>
 
-                {props.profileData.description.length > 0 ? <div className="description">
-                    {props.profileData.description}
+                {props.state.profileData.description.length > 0 ? <div className="description">
+                    {props.state.profileData.description}
                 </div> : null}
 
                 <div className="bottom-information">
                     <div className="extra-information">
-                        {props.profileData.location.length > 0 ? <ShortInfo icon="location-dot">{props.profileData.location}</ShortInfo> : null}
-                        {props.profileData.birthdate !== undefined ? <ShortInfo icon="cake-candles">Fecha de nacimiento: {props.profileData.birthdate.getDate()} de {MONTHS[props.profileData.birthdate.getMonth()]} de {props.profileData.birthdate.getFullYear()}</ShortInfo> : null}
-                        {props.profileData.joinDate !== undefined ? <ShortInfo icon="calendar-days">Se unió en {MONTHS[props.profileData.joinDate.getMonth()]} de {props.profileData.joinDate.getFullYear()}</ShortInfo> : null}
+                        {props.state.profileData.location.length > 0 ? <ShortInfo icon="location-dot">{props.state.profileData.location}</ShortInfo> : null}
+                        {props.state.profileData.birthdate !== undefined ? <ShortInfo icon="cake-candles">Fecha de nacimiento: {props.state.profileData.birthdate.getDate()} de {MONTHS[props.state.profileData.birthdate.getMonth()]} de {props.state.profileData.birthdate.getFullYear()}</ShortInfo> : null}
+                        {props.state.profileData.joinDate !== undefined ? <ShortInfo icon="calendar-days">Se unió en {MONTHS[props.state.profileData.joinDate.getMonth()]} de {props.state.profileData.joinDate.getFullYear()}</ShortInfo> : null}
                     </div>
 
                     <div className="counters">
                         <div className="counter-container">
                             <span className="ammount">
-                                {props.profileData.followingCount}
+                                {props.state.profileData.followingCount}
                             </span>
 
                             <span className="label">
@@ -103,7 +152,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
                         <div className="counter-container">
                             <span className="ammount">
-                                {props.profileData.followersCount}
+                                {props.state.profileData.followersCount}
                             </span>
 
                             <span className="label">
@@ -114,24 +163,27 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 </div>
             </section>
 
-            <ProfileNavigation userHandle={props.profileData.handle} />
+            <ProfileNavigation userHandle={props.state.profileData.handle} />
 
             <Routes>
                 <Route path="/" element={<CheepList arguments={{
-                    userHandle: props.profileData.handle,
+                    userHandle: props.state.profileData.handle,
                     responses: false
-                }} />} />
+                }} dataStatus={props.state.cheepsStatus} setDataStatus={props.setState.cheepsStatus} />} />
+
                 <Route path="/with-replies" element={<CheepList arguments={{
-                    userHandle: props.profileData.handle,
+                    userHandle: props.state.profileData.handle,
                     responses: true
-                }} />} />
+                }} dataStatus={props.state.withRepliesStatus} setDataStatus={props.setState.withRepliesStatus} />} />
+
                 <Route path="/media" element={<CheepList arguments={{
-                    userHandle: props.profileData.handle,
+                    userHandle: props.state.profileData.handle,
                     onlyGallery: true
-                }} />} />
+                }} dataStatus={props.state.mediaStatus} setDataStatus={props.setState.mediaStatus} />} />
+
                 <Route path="/likes" element={<CheepList arguments={{
-                    userHandle: props.profileData.handle,
-                }} />} />
+                    userHandle: props.state.profileData.handle,
+                }} dataStatus={props.state.likesStatus} setDataStatus={props.setState.likesStatus} />} />
             </Routes>
         </>;
     }
@@ -139,7 +191,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
     return <>
         <div className="top-information">
             {
-                props.profileData.handle.length === 0 ?
+                props.state.profileData.handle.length === 0 ?
                 <>
                     <span className="title">
                         Perfil
@@ -147,11 +199,11 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 </> :
                 <>
                     <span className="user-name">
-                        {props.profileData.name}
+                        {props.state.profileData.name}
                     </span>
 
                     <span className="cheep-count">
-                        {props.profileData.cheepCount} Cheeps
+                        {props.state.profileData.cheepCount} Cheeps
                     </span>
                 </>
             }
