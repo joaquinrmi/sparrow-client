@@ -98,6 +98,11 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                     {props.data.content}
                 </span>
 
+                {props.quote && props.data.quoteTarget ?
+                    <span className="show-thread">Mostrar este hilo</span> :
+                    null
+                }
+
                 {!props.quote && props.data.gallery && props.data.gallery.length > 0 ?
                     <div className="sub-container">
                         <Gallery pictures={props.data.gallery} />
