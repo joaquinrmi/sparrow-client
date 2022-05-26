@@ -1,29 +1,5 @@
 @use "../../../../colors.scss" as Color;
 
-.top-information
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 53px;
-    padding: 0 1em;
-    box-sizing: border-box;
-
-    .user-name,
-    .title
-    {
-        font-size: 20px;
-        font-weight: 700;
-        color: Color.$blackText;
-    }
-
-    .cheep-count
-    {
-        font-size: 13px;
-        color: Color.$silverText;
-    }
-}
-
 .loading-container
 {
     display: flex;

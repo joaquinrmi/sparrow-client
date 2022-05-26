@@ -4,6 +4,7 @@ import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
 import CheepList, { CheepListStatus } from "../../../../components/cheep_list";
 import ProfileNavigation from "../profile_navigation";
+import PageHeader from "../../../../components/page_header";
 
 import ProfileData from "../../profile_data";
 import MONTHS from "../../../../months";
@@ -189,7 +190,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
     }
 
     return <>
-        <div className="top-information">
+        <PageHeader>
             {
                 props.state.profileData.handle.length === 0 ?
                 <>
@@ -207,7 +208,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                     </span>
                 </>
             }
-        </div>
+        </PageHeader>
 
         {content}
     </>;
