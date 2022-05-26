@@ -136,6 +136,11 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
     {
         setTimeout(() =>
         {
+            if(props.dataStatus.cheeps.length === 5)
+            {
+                return;
+            }
+            
             props.setDataStatus({
                 loaded: true,
                 cheeps: [
