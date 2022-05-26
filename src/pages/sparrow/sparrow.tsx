@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Navigate, useParams, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useParams, useNavigate, useLocation } from "react-router-dom";
 import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
@@ -118,7 +118,7 @@ const Sparrow: React.FunctionComponent = () =>
 
                         <Modal id="compose-modal" closeRequest={() =>
                         {
-                            navigate(currentPage);
+                            navigate(-1);
                         }}>
                             <CheepEditor />
                         </Modal>
