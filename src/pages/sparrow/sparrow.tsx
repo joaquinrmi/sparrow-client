@@ -12,10 +12,7 @@ import "./sparrow.scss";
 
 const Sparrow: React.FunctionComponent = () =>
 {
-    const [ currentPage, setCurrentPage ] = useState<CurrentPage>({
-        path: "/",
-        element: null
-    });
+    const [ currentPage, setCurrentPage ] = useState<string>("");
     
     const [ profileState, setProfileState ] = useState<ProfileState>(DEFAULT_PROFILE_STATE);
     const [ changeProfileState ] = useState<SetProfileState>({
@@ -55,7 +52,7 @@ const Sparrow: React.FunctionComponent = () =>
 
     const aside = <></>;
 
-    const changeCurrentPage = (newPage: CurrentPage) =>
+    const changeCurrentPage = (newPage: string) =>
     {
         setCurrentPage(newPage);
     };
@@ -71,58 +68,84 @@ const Sparrow: React.FunctionComponent = () =>
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />
                     
-                    <Route path="/home" element={<PageComponent path="/home" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
+                    <Route path="/home" element={<PageComponent name="home" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
                         {homePage}
                     </PageComponent>} />
 
-                    <Route path="/explore" element={<PageComponent path="/explore" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
+                    <Route path="/explore" element={<PageComponent name="explore" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
                         {explorePage}
                     </PageComponent>} />
 
-                    <Route path="/notifications" element={<PageComponent path="/notifications" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
+                    <Route path="/notifications" element={<PageComponent name="notifications" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
                         {notificationsPage}
                     </PageComponent>} />
 
-                    <Route path="/messages" element={<PageComponent path="/messages" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
+                    <Route path="/messages" element={<PageComponent name="messages" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
                         {messagesPage}
                     </PageComponent>} />
 
-                    <Route path="/settings" element={<PageComponent path="/settings" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
+                    <Route path="/settings" element={<PageComponent name="settings" aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage}>
                         {settingsPage}
                     </PageComponent>} />
 
-                    <Route path="/compose/cheep" element={<>
-                        <MainSection mainColumnChildren={currentPage.element} rightColumnChildren={aside} />
+                    <Route path="/compose/cheep/*" element={<>
+                        <MainSection mainColumnChildren={<>{(() =>
+                        {
+                            switch(currentPage)
+                            {
+                            case "":
+                                return homePage;
+
+                            case "home":
+                                return homePage;
+
+                            case "explore":
+                                return explorePage;
+
+                            case "notifications":
+                                return notificationsPage;
+
+                            case "messages":
+                                return messagesPage;
+
+                            case "settings":
+                                return settingsPage;
+
+                            default:
+                                return <Profile state={profileState} setState={changeProfileState} handle={currentPage} />;
+                            }
+                        })()}</>} rightColumnChildren={aside} />
 
                         <Modal id="compose-modal" closeRequest={() =>
                         {
-                            navigate(currentPage.path);
+                            navigate(currentPage);
                         }}>
                             <CheepEditor />
                         </Modal>
                     </>} />
 
-                    <Route path="/:userHandle/*" element={<UserPage profileState={profileState} setProfileState={changeProfileState} aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage} />} />
+                    <Route path="/:userHandle/*" element={<GetHandle>
+                        {(userHandle) =>
+                        {
+                            return <PageComponent name={userHandle} aside={aside} currentPage={currentPage} setCurrentPage={setCurrentPage}>
+                                <Profile state={profileState} setState={changeProfileState} handle={userHandle} />
+                            </PageComponent>;
+                        }}
+                    </GetHandle>} />
                 </Routes>
             </div>
         </div>;
     }}</SessionContext.Consumer>
 };
 
-type SetCurrentPage = (currentPage: CurrentPage) => void;
-
-interface CurrentPage
-{
-    path: string;
-    element: any;
-}
+type SetCurrentPage = (currentPage: string) => void;
 
 interface PageComponentProps
 {
     children?: React.ReactNode;
-    path: string;
+    name: string;
     aside: React.ReactNode;
-    currentPage: CurrentPage;
+    currentPage: string;
     setCurrentPage: SetCurrentPage;
 }
 
@@ -130,38 +153,25 @@ const PageComponent: React.FunctionComponent<PageComponentProps> = (props) =>
 {
     useEffect(() =>
     {
-        if(props.path !== props.currentPage.path)
+        if(props.name !== props.currentPage)
         {
-            props.setCurrentPage({
-                path: props.path,
-                element: props.children
-            });
+            props.setCurrentPage(props.name);
         }
     });
 
     return <MainSection mainColumnChildren={props.children} rightColumnChildren={props.aside} />;
 };
 
-interface UserPageProps
+interface GetHandleProps
 {
-    profileState: ProfileState;
-    setProfileState: SetProfileState;
-
-    aside: React.ReactNode;
-    currentPage: CurrentPage;
-    setCurrentPage: SetCurrentPage;
+    children(userHandle: string): React.ReactNode;
 }
 
-const UserPage: React.FunctionComponent<UserPageProps> = (props) =>
+const GetHandle: React.FunctionComponent<GetHandleProps> = (props) =>
 {
     const { userHandle } = useParams();
-    const path = `/${userHandle}`;
-
-    const profile = <Profile state={props.profileState} setState={props.setProfileState} handle={userHandle as string} />;
-
-    return <PageComponent path={path} aside={props.aside} currentPage={props.currentPage} setCurrentPage={props.setCurrentPage}>
-        {profile}
-    </PageComponent>;
+    
+    return <>{props.children(userHandle as string)}</>;
 };
 
 export default Sparrow;
