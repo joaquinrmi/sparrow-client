@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import { Routes, Route, Navigate, useParams, useNavigate } from "react-router-dom";
 import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
 import Profile from "./components/profile";
 
 import "./sparrow.scss";
+import ProfileData from "./profile_data";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -13,6 +14,23 @@ const Sparrow: React.FunctionComponent = () =>
         path: "/",
         element: null
     });
+
+    const [ profileData, setProfileData ] = useState<ProfileData>({
+        handle: "",
+        name: "",
+        picture: "",
+        banner: "",
+        description: "",
+        location: "",
+        birthdate: new Date(),
+        joinDate: new Date(),
+        website: "",
+        cheepCount: 0,
+        followersCount: 0,
+        followingCount: 0
+    });
+
+    const navigate = useNavigate();
 
     const homePage = <>A</>;
     const explorePage = <>B</>;
@@ -62,7 +80,7 @@ const Sparrow: React.FunctionComponent = () =>
                         <MainSection mainColumnChildren={currentPage.element} rightColumnChildren={aside} />
                     </>} />
 
-                    <Route path="/:userHandle/*" element={<UserPage aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage} />} />
+                    <Route path="/:userHandle/*" element={<UserPage aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage} profileData={profileData} setProfileData={setProfileData} />} />
                 </Routes>
             </div>
         </div>;
@@ -106,7 +124,9 @@ interface UserPageProps
 {
     aside: React.ReactNode;
     currentPage: CurrentPage;
+    profileData: ProfileData;
     setCurrentPage: SetCurrentPage;
+    setProfileData(profileData: ProfileData): void;
 }
 
 const UserPage: React.FunctionComponent<UserPageProps> = (props) =>
@@ -114,7 +134,7 @@ const UserPage: React.FunctionComponent<UserPageProps> = (props) =>
     const { userHandle } = useParams();
     const path = `/${userHandle}`;
 
-    const profile = <Profile handle={userHandle as string} />;
+    const profile = <Profile handle={userHandle as string} profileData={props.profileData} setProfileData={props.setProfileData} />;
 
     return <PageComponent path={path} aside={props.aside} currentPage={props.currentPage} setCurrentPage={props.setCurrentPage}>
         {profile}
