@@ -92,7 +92,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
     [ props.handle ]);
 
     let content: React.ReactNode;
-    if(props.state.profileData.handle.length === 0)
+    if(props.state.profileData.handle.length === 0 || props.handle !== props.state.profileData.handle)
     {
         content = <div className="loading-container">
             <Loading />
