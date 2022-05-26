@@ -6,6 +6,7 @@ import CommentButton from "../../pages/sparrow/components/comment_button";
 import LikeButton from "../../pages/sparrow/components/like_button";
 import RecheepButton from "../../pages/sparrow/components/recheep_button";
 import Gallery from "../gallery";
+import UserPicture from "../user_picture";
 
 import "./cheep.scss";
 
@@ -51,12 +52,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
         navigate(cheepLink);
     }}>
         {!props.quote ?
-            <Link className="picture-container" to={`/${props.data.author.handle}`} onClick={(ev) =>
-            {
-                ev.stopPropagation();
-            }}>
-                {authorPicture}
-            </Link> :
+            <UserPicture userHandle={props.data.author.handle} userName={props.data.author.name} picture={props.data.author.picture} /> :
             null
         }
 

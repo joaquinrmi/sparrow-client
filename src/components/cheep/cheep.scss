@@ -19,38 +19,6 @@
         background-size: cover;
     }
 
-    .picture-container
-    {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: stretch;
-        width: 48px;
-        height: 48px;
-        background-color: Color.$gray1;
-        border-radius: 1000px;
-        overflow: hidden;
-
-        .veil
-        {
-            position: absolute;
-            width: 100%;
-            padding-top: 100%;
-            background-color: transparent;
-            transition: background-color 0.2s;
-        }
-    }
-
-    .picture-container:hover
-    {
-        .veil
-        {
-            background-color: rgba(0, 0, 0, 0.1);
-            transition: background-color 0.2s;
-        }
-    }
-
     .cheep-body
     {
         display: flex;
