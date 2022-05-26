@@ -149,7 +149,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
         },
         2000);
     },
-    []);
+    [ props ]);
 
     let content: React.ReactNode;
     if(props.dataStatus.loaded)
