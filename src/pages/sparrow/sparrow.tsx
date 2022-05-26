@@ -3,10 +3,12 @@ import { Routes, Route, Navigate, useParams, useNavigate } from "react-router-do
 import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
-import Profile from "./components/profile";
+import Profile, { ProfileState, SetProfileState, DEFAULT_PROFILE_STATE } from "./components/profile";
+import Modal from "../../components/modal";
+import CheepEditor from "./components/cheep_editor";
+import UpdateState from "../../update_state";
 
 import "./sparrow.scss";
-import ProfileData from "./profile_data";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -14,20 +16,33 @@ const Sparrow: React.FunctionComponent = () =>
         path: "/",
         element: null
     });
+    
+    const [ profileState, setProfileState ] = useState<ProfileState>(DEFAULT_PROFILE_STATE);
+    const [ changeProfileState ] = useState<SetProfileState>({
+        profileData: (value) =>
+        {
+            UpdateState(setProfileState, { profileData: value });
+        },
 
-    const [ profileData, setProfileData ] = useState<ProfileData>({
-        handle: "",
-        name: "",
-        picture: "",
-        banner: "",
-        description: "",
-        location: "",
-        birthdate: new Date(),
-        joinDate: new Date(),
-        website: "",
-        cheepCount: 0,
-        followersCount: 0,
-        followingCount: 0
+        cheepsStatus: (value) =>
+        {
+            UpdateState(setProfileState, { cheepsStatus: value });
+        },
+
+        withRepliesStatus: (value) =>
+        {
+            UpdateState(setProfileState, { withRepliesStatus: value });
+        },
+
+        mediaStatus: (value) =>
+        {
+            UpdateState(setProfileState, { mediaStatus: value });
+        },
+
+        likesStatus: (value) =>
+        {
+            UpdateState(setProfileState, { likesStatus: value });
+        },
     });
 
     const navigate = useNavigate();
@@ -78,9 +93,16 @@ const Sparrow: React.FunctionComponent = () =>
 
                     <Route path="/compose/cheep" element={<>
                         <MainSection mainColumnChildren={currentPage.element} rightColumnChildren={aside} />
+
+                        <Modal id="compose-modal" closeRequest={() =>
+                        {
+                            navigate(currentPage.path);
+                        }}>
+                            <CheepEditor />
+                        </Modal>
                     </>} />
 
-                    <Route path="/:userHandle/*" element={<UserPage aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage} profileData={profileData} setProfileData={setProfileData} />} />
+                    <Route path="/:userHandle/*" element={<UserPage profileState={profileState} setProfileState={changeProfileState} aside={aside} currentPage={currentPage} setCurrentPage={changeCurrentPage} />} />
                 </Routes>
             </div>
         </div>;
@@ -122,11 +144,12 @@ const PageComponent: React.FunctionComponent<PageComponentProps> = (props) =>
 
 interface UserPageProps
 {
+    profileState: ProfileState;
+    setProfileState: SetProfileState;
+
     aside: React.ReactNode;
     currentPage: CurrentPage;
-    profileData: ProfileData;
     setCurrentPage: SetCurrentPage;
-    setProfileData(profileData: ProfileData): void;
 }
 
 const UserPage: React.FunctionComponent<UserPageProps> = (props) =>
@@ -134,7 +157,7 @@ const UserPage: React.FunctionComponent<UserPageProps> = (props) =>
     const { userHandle } = useParams();
     const path = `/${userHandle}`;
 
-    const profile = <Profile handle={userHandle as string} profileData={props.profileData} setProfileData={props.setProfileData} />;
+    const profile = <Profile state={props.profileState} setState={props.setProfileState} handle={userHandle as string} />;
 
     return <PageComponent path={path} aside={props.aside} currentPage={props.currentPage} setCurrentPage={props.setCurrentPage}>
         {profile}
