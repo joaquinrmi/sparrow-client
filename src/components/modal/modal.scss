@@ -22,3 +22,18 @@
         overflow: hidden;
     }
 }
+
+@media (max-width: 700px)
+{
+    .modal
+    {
+        background-color: #fff;
+        padding: 0;
+
+        .modal-body
+        {
+            background-color: transparent;
+            border-radius: none;
+        }
+    }
+}
