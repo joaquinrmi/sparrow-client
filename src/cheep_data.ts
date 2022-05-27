@@ -13,6 +13,7 @@ interface CheepData
     commentCount: number;
     likeCount: number;
     recheepCount: number;
+    withCommentsCount: number;
     responseOf?: CheepData;
     recheepped: boolean;
     liked: boolean;
