@@ -33,6 +33,7 @@ const cheep0: CheepData = {
     commentCount: 46,
     likeCount: 287,
     recheepCount: 7,
+    withCommentsCount: 0,
     recheepped: false,
     liked: true
 };
@@ -50,6 +51,7 @@ const cheep1: CheepData = {
     commentCount: 0,
     likeCount: 0,
     recheepCount: 1,
+    withCommentsCount: 0,
     recheepped: true,
     liked: false
 };
@@ -68,6 +70,7 @@ const cheep2: CheepData = {
     commentCount: 0,
     likeCount: 0,
     recheepCount: 0,
+    withCommentsCount: 0,
     recheepped: false,
     liked: false
 }
@@ -89,6 +92,7 @@ const cheep3: CheepData = {
     commentCount: 0,
     likeCount: 0,
     recheepCount: 0,
+    withCommentsCount: 0,
     recheepped: false,
     liked: false
 };
@@ -109,6 +113,7 @@ const cheep4: CheepData = {
     commentCount: 0,
     likeCount: 0,
     recheepCount: 0,
+    withCommentsCount: 0,
     recheepped: false,
     liked: false
 };
@@ -126,6 +131,7 @@ const cheep5: CheepData = {
     commentCount: 0,
     likeCount: 0,
     recheepCount: 0,
+    withCommentsCount: 0,
     recheepped: false,
     liked: false
 };
