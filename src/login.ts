@@ -5,7 +5,9 @@ async function login(form: LoginForm): Promise<UserData>
 {
     if(process.env.REACT_APP_SERVER)
     {
-        const response = await fetch(process.env.REACT_APP_SERVER, {
+        const loginURL = `${process.env.REACT_APP_SERVER}/api/user/login`;
+
+        const response = await fetch(loginURL, {
             method: "POST",
             headers:
             {
