@@ -1,0 +1,10 @@
+@use "../../colors.scss" as Color;
+
+.modal-form-body
+{
+    .error-message
+    {
+        font-size: 15px;
+        color: Color.$red1;
+    }
+}
