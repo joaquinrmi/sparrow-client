@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Welcome from "../pages/welcome";
 import SessionData from "../session_data";
@@ -12,7 +12,7 @@ import "./app.scss";
 const App: React.FunctionComponent = () =>
 {
     const [ userSession, setUserSession ] = useState<SessionData>({
-        logged: true,
+        logged: false,
         user: {
             handle: "sparrow",
             name: "",
@@ -32,6 +32,7 @@ const App: React.FunctionComponent = () =>
         routes = <>
             <Route path="/" element={<Welcome />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/*" element={<Navigate to="/" />} />
         </>;
     }
 
