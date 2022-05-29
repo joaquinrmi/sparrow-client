@@ -3,6 +3,7 @@ import SignupForm from "../../signup_form";
 import SignupFormSet from "../../signup_form_set";
 import FormInput, { FormInputType, FormInputElement } from "../../../../components/form_input/";
 import Button, { ButtonStyle } from "../../../../components/button";
+import ModalForm from "../../../../components/modal_form";
 
 import "./second_page.scss";
 
@@ -148,14 +149,14 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
         });
     };
 
-    return <div className="form-modal">
-        <header className="signup-form-top">
-            <div id="signup-go-back-button">
+    return <ModalForm>
+        <header className="modal-form-top">
+            <div id="signup-go-back-button" className="modal-form-close-button">
                 <i className="fa-solid fa-arrow-left"></i>
             </div>
         </header>
 
-        <section className="signup-form-body">
+        <section className="modal-form-body">
             <h1>Termina el registro</h1>
 
             <div className="form-elements">
@@ -167,14 +168,14 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
             </div>
         </section>
 
-        <footer className="signup-form-bottom">
+        <footer className="modal-form-bottom">
             <div className="button-container">
                 <Button stylePreset={ButtonStyle.Blue} disabled={!enableButton} onClick={sendForm}>
                     Crear cuenta
                 </Button>
             </div>
         </footer>
-    </div>;
+    </ModalForm>;
 };
 
 export default SecondPage;
