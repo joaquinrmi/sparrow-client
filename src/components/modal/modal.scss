@@ -6,16 +6,18 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
-    min-height: 100vh;
-    padding: 3.5%;
+    height: 100vh;
     box-sizing: border-box;
-    overflow: hidden;
     background-color: rgba(0, 0, 0, 0.4);
 
     .modal-body
     {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
         flex: 0 1 600px;
         background-color: #fff;
         border-radius: 16px;
@@ -23,10 +25,11 @@
     }
 }
 
-@media (max-width: 700px)
+@media (max-width: 650px)
 {
     .modal
     {
+        align-items: flex-start;
         background-color: #fff;
         padding: 0;
 
@@ -35,5 +38,13 @@
             background-color: transparent;
             border-radius: none;
         }
+    }
+}
+
+@media (max-height: 650px)
+{
+    .modal
+    {
+        align-items: stretch;
     }
 }
