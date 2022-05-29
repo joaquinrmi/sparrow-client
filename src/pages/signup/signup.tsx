@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FirstPage from "./components/first_page";
 import SignupForm from "./signup_form";
 import SignupFormSet from "./signup_form_set";
 import SecondPage from "./components/second_page";
 import LoadingPage from "../loading_page";
+import Modal from "../../components/modal";
 
 import login from "../../login";
 import SessionContext from "../../session_context";
@@ -62,6 +64,8 @@ const Signup: React.FunctionComponent = () =>
         });
     };
 
+    const navigate = useNavigate();
+
     return <SessionContext.Consumer>{(session) =>
     {
         let content: any;
@@ -81,11 +85,12 @@ const Signup: React.FunctionComponent = () =>
             content = <SecondPage signupData={state.signupData} changePage={changePage} sendForm={sendForm} />;
         }
 
-        return <div className="signup-page">
-            <div className="page-align">
-                {content}
-            </div>
-        </div>;
+        return <Modal id="signup-modal" closeRequest={() =>
+        {
+            navigate("/");
+        }}>
+            {content}
+        </Modal>;
     }}</SessionContext.Consumer>
 };
 
