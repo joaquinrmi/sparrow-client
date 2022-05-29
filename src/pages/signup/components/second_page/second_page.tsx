@@ -135,6 +135,19 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
     },
     []);
 
+    const sendForm = async () =>
+    {
+        const handleInput = document.getElementById("signup-handle") as FormInputElement;
+        const passwordInput = document.getElementById("signup-password") as FormInputElement;
+        const repasswordInput = document.getElementById("signup-repassword") as FormInputElement;
+        
+        props.sendForm({
+            handle: handleInput.getValue(),
+            password: passwordInput.getValue(),
+            repassword: repasswordInput.getValue()
+        });
+    };
+
     return <div className="form-modal">
         <header className="signup-form-top">
             <div id="signup-go-back-button">
@@ -156,7 +169,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
 
         <footer className="signup-form-bottom">
             <div className="button-container">
-                <Button stylePreset={ButtonStyle.Blue} disabled={!enableButton}>
+                <Button stylePreset={ButtonStyle.Blue} disabled={!enableButton} onClick={sendForm}>
                     Crear cuenta
                 </Button>
             </div>
