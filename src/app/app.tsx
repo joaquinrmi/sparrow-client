@@ -24,6 +24,7 @@ const App: React.FunctionComponent = () =>
     if(userSession.logged)
     {
         routes = <>
+            <Route path="/signup" element={<Navigate to="/" />} />
             <Route path="/*" element={<Sparrow />} />
         </>;
     }
