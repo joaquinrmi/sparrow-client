@@ -5,6 +5,7 @@ import Welcome from "../pages/welcome";
 import SessionData from "../session_data";
 import SessionContext from "../session_context";
 import Signup from "../pages/signup/";
+import Login from "../pages/login";
 import Sparrow from "../pages/sparrow";
 
 import "./app.scss";
@@ -25,6 +26,7 @@ const App: React.FunctionComponent = () =>
     {
         routes = <>
             <Route path="/signup" element={<Navigate to="/" />} />
+            <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/*" element={<Sparrow />} />
         </>;
     }
@@ -33,6 +35,7 @@ const App: React.FunctionComponent = () =>
         routes = <>
             <Route path="/" element={<Welcome />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/*" element={<Navigate to="/" />} />
         </>;
     }
