@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Navigate, useParams, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useParams, useNavigate } from "react-router-dom";
 import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
@@ -7,6 +7,7 @@ import Profile, { ProfileState, SetProfileState, DEFAULT_PROFILE_STATE } from ".
 import Modal from "../../components/modal";
 import CheepEditor from "./components/cheep_editor";
 import UpdateState from "../../update_state";
+import CheepPage, { CheepPageState, SetCheepPageState } from "../cheep_page";
 
 import "./sparrow.scss";
 
@@ -39,6 +40,14 @@ const Sparrow: React.FunctionComponent = () =>
         likesStatus: (value) =>
         {
             UpdateState(setProfileState, { likesStatus: value });
+        },
+    });
+
+    const [ cheepPageState, setCheepPageState ] = useState<CheepPageState>({});
+    const [ changeCheepPageState ] = useState<SetCheepPageState>({
+        cheepData: (value) =>
+        {
+            UpdateState(setCheepPageState, { cheepData: value });
         },
     });
 
@@ -112,6 +121,11 @@ const Sparrow: React.FunctionComponent = () =>
                                 return settingsPage;
 
                             default:
+                                if(currentPage.substring(0, 7) === "cheepid")
+                                {
+                                    return <CheepPage cheepId={Number(currentPage.substring(7))} state={cheepPageState} setState={changeCheepPageState} />
+                                }
+
                                 return <Profile state={profileState} setState={changeProfileState} handle={currentPage} />;
                             }
                         })()}</>} rightColumnChildren={aside} />
@@ -123,6 +137,15 @@ const Sparrow: React.FunctionComponent = () =>
                             <CheepEditor />
                         </Modal>
                     </>} />
+
+                    <Route path="/:userHandle/status/:cheepId" element={<GetCheepId>
+                        {(cheepId) =>
+                        {
+                            return <PageComponent name={`cheepid${cheepId}`} aside={aside} currentPage={currentPage} setCurrentPage={setCurrentPage}>
+                                <CheepPage cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />
+                            </PageComponent>;
+                        }}
+                    </GetCheepId>} />
 
                     <Route path="/:userHandle/*" element={<GetHandle>
                         {(userHandle) =>
@@ -172,6 +195,18 @@ const GetHandle: React.FunctionComponent<GetHandleProps> = (props) =>
     const { userHandle } = useParams();
     
     return <>{props.children(userHandle as string)}</>;
+};
+
+interface GetCheepIdProps
+{
+    children(cheepId: number): React.ReactNode;
+}
+
+const GetCheepId: React.FunctionComponent<GetCheepIdProps> = (props) =>
+{
+    const { cheepId } = useParams();
+
+    return <>{props.children(Number(cheepId))}</>;
 };
 
 export default Sparrow;
