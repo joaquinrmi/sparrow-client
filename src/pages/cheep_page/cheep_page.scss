@@ -1,0 +1,147 @@
+@use "../../colors.scss" as Color;
+
+.cheep-page
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid Color.$gray2;
+
+    .cheep-page-body
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        box-sizing: border-box;
+
+        .author-header
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+
+            .author-info-container
+            {
+                display: flex;
+                flex-direction: column;
+
+                .author-name
+                {
+                    font-size: 15px;
+                    font-weight: 700;
+                    text-decoration: none;
+                    color: Color.$blackText;
+                }
+
+                .author-name:hover
+                {
+                    text-decoration: underline;
+                    text-decoration-thickness: 2px;
+                }
+
+                .author-handle
+                {
+                    font-size: 15px;
+                    text-decoration: none;
+                    color: Color.$silverText;
+                }
+            }
+        }
+
+        .cheep-content
+        {
+            font-size: 23px;
+        }
+
+        .sub-container
+        {
+            border: 1px solid Color.$gray1;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .date-container
+        {
+            .cheep-date
+            {
+                font-size: 15px;
+                text-decoration: none;
+                color: Color.$silverText;
+            }
+
+            .cheep-date:hover
+            {
+                text-decoration: underline;
+            }
+        }
+
+        .cheep-page-bottom
+        {
+            display: flex;
+            flex-direction: column;
+
+            .counters-container
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 12px 0;
+                min-height: 53px;
+                box-sizing: border-box;
+                border-top: 1px solid Color.$gray2;
+
+                .counters-list
+                {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 1em;
+                    flex: 1;
+                    
+                    .cheep-counter
+                    {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 8px;
+                        text-decoration: none;
+
+                        .counter-value
+                        {
+                            font-size: 15px;
+                            font-weight: 700;
+                            color: Color.$blackText;
+                        }
+
+                        .counter-message
+                        {
+                            font-size: 15px;
+                            color: Color.$silverText;
+                        }
+                    }
+
+                    .cheep-counter:hover
+                    {
+                        .counter-message
+                        {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .buttons-container
+            {
+                height: 48px;
+                box-sizing: border-box;
+                border-top: 1px solid Color.$gray2;
+            }
+
+            .reply-container
+            {
+                border-top: 1px solid Color.$gray2;
+            }
+        }
+    }
+}
