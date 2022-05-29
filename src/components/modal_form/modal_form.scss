@@ -1,0 +1,121 @@
+@use "../../colors.scss" as Color;
+
+.modal-form
+{
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 650px;
+    min-height: 0;
+    background-color: #fff;
+    border-radius: 16px;
+
+    .modal-form-top
+    {
+        padding: 0.5em 0.5em 1em 0.5em;
+        box-sizing: border-box;
+
+        .modal-form-close-button
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 34px;
+            height: 34px;
+            font-size: 1.4em;
+            color: Color.$blackText;
+            border-radius: 200px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+
+        .modal-form-close-button:hover
+        {
+            background-color: Color.$gray3;
+            transition: background-color 0.2s;
+        }
+    }
+
+    .modal-form-body
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+        flex: 1 1;
+        padding: 0 5em 2em 5em;
+        box-sizing: border-box;
+        overflow-y: auto;
+
+        h1
+        {
+            margin: 0;
+            font-size: 31px;
+            color: Color.$blackText;
+        }
+
+        .form-elements
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+
+            .birthdate-text
+            {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                font-size: 14px;
+                color: Color.$silverText;
+
+                .birthdate-title
+                {
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: Color.$blackText;
+                }
+            }
+
+            .modal-form-date
+            {
+                display: flex;
+                flex-direction: row;
+                gap: 12px;
+
+                .form-input-container
+                {
+                    flex: 1;
+                }
+
+                .form-input-container:first-child
+                {
+                    flex: 2;
+                }
+            }
+        }
+    }
+
+    .modal-form-bottom
+    {
+        padding: 1.5em 5em;
+
+        .button-container
+        {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            height: 52px;
+
+            button
+            {
+                flex: 1;
+
+                .button-text
+                {
+                    font-size: 17px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}
