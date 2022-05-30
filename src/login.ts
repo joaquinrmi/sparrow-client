@@ -13,7 +13,8 @@ async function login(form: LoginForm): Promise<UserData>
             {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(form)
+            body: JSON.stringify(form),
+            credentials: "include"
         });
 
         if(response.status === 200)
