@@ -86,9 +86,7 @@ const Signup: React.FunctionComponent = () =>
         }
 
         return <Modal id="signup-modal" closeRequest={() =>
-        {
-            navigate("/");
-        }}>
+        {}}>
             {content}
         </Modal>;
     }}</SessionContext.Consumer>
