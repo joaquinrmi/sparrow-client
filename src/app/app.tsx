@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Welcome from "../pages/welcome";
@@ -7,11 +7,15 @@ import SessionContext from "../session_context";
 import Signup from "../pages/signup/";
 import Login from "../pages/login";
 import Sparrow from "../pages/sparrow";
+import LoadingPage from "../pages/loading_page";
+import restoreSession from "../restore_session";
+import UserData from "../user_data";
 
 import "./app.scss";
 
 const App: React.FunctionComponent = () =>
 {
+    const [ loading, setLoading ] = useState<boolean>(true);
     const [ userSession, setUserSession ] = useState<SessionData>({
         logged: false,
         user: {
@@ -20,6 +24,38 @@ const App: React.FunctionComponent = () =>
             picture: ""
         }
     });
+
+    useEffect(() =>
+    {
+        if(loading)
+        {
+            (async () =>
+            {
+                let userData: UserData | undefined;
+                try
+                {
+                    userData = await restoreSession();
+                }
+                catch(err)
+                {}
+
+                setLoading(false);
+
+                if(userData)
+                {
+                    setUserSession({
+                        logged: true,
+                        user: userData
+                    });
+                }
+            })();
+        }
+    });
+
+    if(loading)
+    {
+        return <LoadingPage />;
+    }
 
     let routes;
     if(userSession.logged)
