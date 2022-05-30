@@ -113,9 +113,9 @@ const Login: React.FunctionComponent = () =>
                                 if(err.status === 401)
                                 {
                                     setErrorMessage("Combinación usuario-contraseña incorrecta.");
-                                    setLoading(false);
                                     setHandleError("Revisa el nombre de usuario.");
                                     setPasswordError("Revisa la contraseña.");
+                                    setLoading(false);
                                 }
 
                                 return;
