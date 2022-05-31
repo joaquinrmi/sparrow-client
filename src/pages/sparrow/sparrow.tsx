@@ -52,6 +52,8 @@ const Sparrow: React.FunctionComponent = () =>
     });
 
     const [ currentRoute, setCurrentRoute ] = useState<string>("");
+    const [ userHandle, setUserHandle ] = useState<string>("");
+    const [ cheepId, setCheepId ] = useState<number>(0);
 
     const navigate = useNavigate();
 
@@ -83,19 +85,9 @@ const Sparrow: React.FunctionComponent = () =>
                         <CheepEditor />
                     </Modal>,
 
-                    cheep: <MainSection mainColumnChildren={<GetCheepId>
-                        {(cheepId) =>
-                        {
-                            return <CheepPage cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />;
-                        }}
-                    </GetCheepId>} rightColumnChildren={aside} />,
+                    cheep: <CheepPage cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />,
 
-                    profile: <GetHandle>
-                        {(userHandle) =>
-                        {
-                            return <MainSection mainColumnChildren={<Profile state={profileState} setState={changeProfileState} handle={userHandle} />} rightColumnChildren={aside} />;
-                        }}
-                    </GetHandle>
+                    profile: <MainSection mainColumnChildren={<Profile state={profileState} setState={changeProfileState} handle={userHandle} />} rightColumnChildren={aside} />
                 }} />
 
                 <Routes>
@@ -128,13 +120,25 @@ const Sparrow: React.FunctionComponent = () =>
                         <CheepEditor />
                     </Modal>} />
                     
-                    <Route path="/:userHandle/status/:cheepId/*" element={<RouteSetter onMatch={() => {
-                        setCurrentRoute("cheep");
-                    }} />} />
+                    <Route path="/:userHandle/status/:cheepId/*" element={<GetCheepId>{
+                        (cheepId) =>
+                        {
+                            return <RouteSetter onMatch={() => {
+                                setCheepId(cheepId);
+                                setCurrentRoute("cheep");
+                            }} />;
+                        }
+                    }</GetCheepId>} />
 
-                    <Route path="/:userHandle/*" element={<RouteSetter onMatch={() => {
-                        setCurrentRoute("profile");
-                    }} />} />
+                    <Route path="/:userHandle/*" element={<GetHandle>{
+                        (userHandle) =>
+                        {
+                            return <RouteSetter onMatch={() => {
+                                setUserHandle(userHandle);
+                                setCurrentRoute("profile");
+                            }} />
+                        }
+                    }</GetHandle>} />
                 </Routes>
             </div>
         </div>;
