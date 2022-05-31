@@ -71,24 +71,34 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 {
     useEffect(() =>
     {
-        setTimeout(() =>
+        (async () =>
         {
-            props.setState.profileData({
-                handle: "sparrow",
-                name: "Sparrow",
-                picture: "",
-                banner: "",
-                description: "Una copia barata de Twitter.",
-                location: "Argentina",
-                birthdate: new Date(),
-                joinDate: new Date(),
-                website: "https://joaquinrmi.github.io/porfolio/",
-                cheepCount: 104,
-                followersCount: 0,
-                followingCount: 0
+            const getProfileURL = `${process.env.REACT_APP_SERVER}/api/profile/get?handle=${props.handle}`;
+
+            const response = await fetch(getProfileURL, {
+                method: "GET"
             });
-        },
-        2000);
+
+            if(response.status === 200)
+            {
+                const data = await response.json();
+
+                props.setState.profileData({
+                    handle: data.handle,
+                    name: data.name,
+                    picture: data.picture,
+                    banner: data.banner,
+                    description: data.description || "",
+                    location: data.location || "",
+                    birthdate: new Date(data.birthdate),
+                    joinDate: new Date(data.joinDate),
+                    website: data.website,
+                    cheepCount: data.cheepCount,
+                    followersCount: data.followers,
+                    followingCount: data.following
+                });
+            }
+        })();
     },
     [ props.handle ]);
 
