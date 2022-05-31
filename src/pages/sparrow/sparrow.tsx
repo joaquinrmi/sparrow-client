@@ -8,8 +8,10 @@ import Modal from "../../components/modal";
 import CheepEditor from "./components/cheep_editor";
 import UpdateState from "../../update_state";
 import CheepPage, { CheepPageState, SetCheepPageState } from "../cheep_page";
+import Router from "../../components/router";
 
 import "./sparrow.scss";
+import RouteSetter from "../../components/route_setter";
 
 const Sparrow: React.FunctionComponent = () =>
 {    
@@ -49,13 +51,9 @@ const Sparrow: React.FunctionComponent = () =>
         },
     });
 
-    const navigate = useNavigate();
+    const [ currentRoute, setCurrentRoute ] = useState<string>("");
 
-    const homePage = <>A</>;
-    const explorePage = <>B</>;
-    const notificationsPage = <>C</>;
-    const messagesPage = <>D</>;
-    const settingsPage = <>E</>;
+    const navigate = useNavigate();
 
     const aside = <></>;
 
@@ -67,28 +65,61 @@ const Sparrow: React.FunctionComponent = () =>
                     <NavigationBar handle={userSession.user.handle} />
                 </div>
 
+                <Router currentRoute={currentRoute} routes={{
+                    home: <MainSection mainColumnChildren={<>A</>} rightColumnChildren={aside} />,
+
+                    explore: <MainSection mainColumnChildren={<>B</>} rightColumnChildren={aside} />,
+
+                    notifications: <MainSection mainColumnChildren={<>C</>} rightColumnChildren={aside} />,
+
+                    messages: <MainSection mainColumnChildren={<>D</>} rightColumnChildren={aside} />,
+
+                    settings: <MainSection mainColumnChildren={<>E</>} rightColumnChildren={aside} />,
+
+                    compose: <Modal id="compose-modal" closeRequest={() =>
+                    {
+                        navigate(-1);
+                    }}>
+                        <CheepEditor />
+                    </Modal>,
+
+                    cheep: <MainSection mainColumnChildren={<GetCheepId>
+                        {(cheepId) =>
+                        {
+                            return <CheepPage cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />;
+                        }}
+                    </GetCheepId>} rightColumnChildren={aside} />,
+
+                    profile: <GetHandle>
+                        {(userHandle) =>
+                        {
+                            return <MainSection mainColumnChildren={<Profile state={profileState} setState={changeProfileState} handle={userHandle} />} rightColumnChildren={aside} />;
+                        }}
+                    </GetHandle>
+                }} />
+
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />
 
-                    <Route path="/home" element={<PageComponent name="home" aside={aside}>
-                        {homePage}
-                    </PageComponent>} />
+                    <Route path="/home" element={<RouteSetter onMatch={() => {
+                        setCurrentRoute("home");
+                    }} />} />
 
-                    <Route path="/explore" element={<PageComponent name="explore" aside={aside}>
-                        {explorePage}
-                    </PageComponent>} />
-
-                    <Route path="/notifications" element={<PageComponent name="notifications" aside={aside}>
-                        {notificationsPage}
-                    </PageComponent>} />
-
-                    <Route path="/messages" element={<PageComponent name="messages" aside={aside}>
-                        {messagesPage}
-                    </PageComponent>} />
-
-                    <Route path="/settings" element={<PageComponent name="settings" aside={aside}>
-                        {settingsPage}
-                    </PageComponent>} />
+                    <Route path="/explore" element={<RouteSetter onMatch={() => {
+                        setCurrentRoute("explore");
+                    }} />} />
+                    
+                    <Route path="/notifications" element={<RouteSetter onMatch={() => {
+                        setCurrentRoute("notifications");
+                    }} />} />
+                    
+                    <Route path="/messages" element={<RouteSetter onMatch={() => {
+                        setCurrentRoute("messages");
+                    }} />} />
+                    
+                    <Route path="/settings" element={<RouteSetter onMatch={() => {
+                        setCurrentRoute("settings");
+                    }} />} />
 
                     <Route path="/compose/cheep/*" element={<Modal id="compose-modal" closeRequest={() =>
                     {
@@ -96,40 +127,18 @@ const Sparrow: React.FunctionComponent = () =>
                     }}>
                         <CheepEditor />
                     </Modal>} />
+                    
+                    <Route path="/:userHandle/status/:cheepId/*" element={<RouteSetter onMatch={() => {
+                        setCurrentRoute("cheep");
+                    }} />} />
 
-                    <Route path="/:userHandle/status/:cheepId" element={<GetCheepId>
-                        {(cheepId) =>
-                        {
-                            return <PageComponent name={`cheepid${cheepId}`} aside={aside}>
-                                <CheepPage cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />
-                            </PageComponent>;
-                        }}
-                    </GetCheepId>} />
-
-                    <Route path="/:userHandle/*" element={<GetHandle>
-                        {(userHandle) =>
-                        {
-                            return <PageComponent name={userHandle} aside={aside}>
-                                <Profile state={profileState} setState={changeProfileState} handle={userHandle} />
-                            </PageComponent>;
-                        }}
-                    </GetHandle>} />
+                    <Route path="/:userHandle/*" element={<RouteSetter onMatch={() => {
+                        setCurrentRoute("profile");
+                    }} />} />
                 </Routes>
             </div>
         </div>;
     }}</SessionContext.Consumer>
-};
-
-interface PageComponentProps
-{
-    children?: React.ReactNode;
-    name: string;
-    aside: React.ReactNode;
-}
-
-const PageComponent: React.FunctionComponent<PageComponentProps> = (props) =>
-{
-    return <MainSection mainColumnChildren={props.children} rightColumnChildren={props.aside} />;
 };
 
 interface GetHandleProps
