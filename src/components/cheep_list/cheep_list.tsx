@@ -30,20 +30,13 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 
         (async () =>
         {
-            const searchCheepsURL = `${process.env.REACT_APP_SERVER}/api/cheep/search${parseCheepQuery(props.arguments)}`;
-
-            const response = await fetch(searchCheepsURL, {
-                method: "GET",
-                credentials: "include"
-            });
-
-            if(response.status === 200)
+            try
             {
-                const cheeps = (await response.json()).cheeps as Array<CheepData>;
+                const { cheeps, nextTime } = await loadCheeps(props.arguments);
 
                 stateManager.loadCheepList(props.name, props.arguments, cheeps);
             }
-            else
+            catch(err)
             {
                 stateManager.loadCheepList(props.name, props.arguments, []);
             }
@@ -70,6 +63,25 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
         {content}
     </div>;
 };
+
+async function loadCheeps(query: SearchCheepsQuery): Promise<{ cheeps: Array<CheepData>, nextTime: number }>
+{
+    const searchCheepsURL = `${process.env.REACT_APP_SERVER}/api/cheep/search${parseCheepQuery(query)}`;
+
+    const response = await fetch(searchCheepsURL, {
+        method: "GET",
+        credentials: "include"
+    });
+
+    if(response.status === 200)
+    {
+        return await response.json();
+    }
+    else
+    {
+        throw new Error();
+    }
+}
 
 function parseCheepQuery(query: SearchCheepsQuery): string
 {
