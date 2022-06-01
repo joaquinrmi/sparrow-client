@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
-import CheepList, { CheepListStatus } from "../../../../components/cheep_list";
+import CheepList from "../../../../components/cheep_list";
 import ProfileNavigation from "../profile_navigation";
 import PageHeader from "../../../../components/page_header";
 
@@ -22,10 +22,6 @@ export interface Props
 export interface ProfileState
 {
     profileData: ProfileData;
-    cheepsStatus: CheepListStatus;
-    withRepliesStatus: CheepListStatus;
-    mediaStatus: CheepListStatus;
-    likesStatus: CheepListStatus;
 }
 
 export type SetProfileState = SetState<ProfileState>;
@@ -44,27 +40,7 @@ export const DEFAULT_PROFILE_STATE: ProfileState = {
         cheepCount: 0,
         followersCount: 0,
         followingCount: 0
-    },
-
-    cheepsStatus: {
-        loaded: false,
-        cheeps: []
-    },
-
-    withRepliesStatus: {
-        loaded: false,
-        cheeps: []
-    },
-
-    mediaStatus: {
-        loaded: false,
-        cheeps: []
-    },
-
-    likesStatus: {
-        loaded: false,
-        cheeps: []
-    },
+    }
 };
 
 const Profile: React.FunctionComponent<Props> = (props) =>
@@ -177,24 +153,24 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             <ProfileNavigation userHandle={props.state.profileData.handle} />
 
             <Routes>
-                <Route path="/" element={<CheepList arguments={{
+                <Route path="/" element={<CheepList name="profileCheeps" arguments={{
                     userHandle: props.state.profileData.handle,
                     responses: false
-                }} dataStatus={props.state.cheepsStatus} setDataStatus={props.setState.cheepsStatus} />} />
+                }} />} />
 
-                <Route path="/with-replies" element={<CheepList arguments={{
+                <Route path="/with-replies" element={<CheepList name="profileWithReplies" arguments={{
                     userHandle: props.state.profileData.handle,
                     responses: true
-                }} dataStatus={props.state.withRepliesStatus} setDataStatus={props.setState.withRepliesStatus} />} />
+                }} />} />
 
-                <Route path="/media" element={<CheepList arguments={{
+                <Route path="/media" element={<CheepList name="profileMedia" arguments={{
                     userHandle: props.state.profileData.handle,
                     onlyGallery: true
-                }} dataStatus={props.state.mediaStatus} setDataStatus={props.setState.mediaStatus} />} />
+                }} />} />
 
-                <Route path="/likes" element={<CheepList arguments={{
+                <Route path="/likes" element={<CheepList name="profileLikes" arguments={{
                     userHandle: props.state.profileData.handle,
-                }} dataStatus={props.state.likesStatus} setDataStatus={props.setState.likesStatus} />} />
+                }} />} />
             </Routes>
         </>;
     }
