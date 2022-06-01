@@ -12,7 +12,7 @@ class StateManager
         this.setState = setState;
     }
 
-    loadCheepList(listName: CheepListName, query: SearchCheepsQuery, cheeps: Array<CheepData>): void
+    loadCheepList(listName: CheepListName, query: SearchCheepsQuery, nextTime: number, cheeps: Array<CheepData>): void
     {
         if(this.setState)
         {
@@ -22,6 +22,7 @@ class StateManager
 
                 newState.cheepLists[listName] = {
                     query: query,
+                    nextTime: nextTime,
                     cheeps: cheeps
                 };
 
