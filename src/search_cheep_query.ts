@@ -5,6 +5,7 @@ interface SearchCheepsQuery
     userHandle?: string;
     responses?: boolean;
     onlyGallery?: boolean;
+    likes?: boolean;
 }
 
 export default SearchCheepsQuery;
