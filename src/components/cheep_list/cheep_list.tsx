@@ -34,11 +34,11 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
             {
                 const { cheeps, nextTime } = await loadCheeps(props.arguments);
 
-                stateManager.loadCheepList(props.name, props.arguments, cheeps);
+                stateManager.loadCheepList(props.name, props.arguments, nextTime, cheeps);
             }
             catch(err)
             {
-                stateManager.loadCheepList(props.name, props.arguments, []);
+                stateManager.loadCheepList(props.name, props.arguments, 0, []);
             }
         })();
     },
