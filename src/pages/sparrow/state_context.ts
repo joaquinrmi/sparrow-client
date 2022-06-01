@@ -5,12 +5,12 @@ import StateManager from "./state_manager";
 const StateContext = createContext<[ SparrowState, StateManager ]>([
     {
         cheepLists: {
-            home: { query: {}, cheeps: [] },
-            explore: { query: {}, cheeps: [] },
-            profileCheeps: { query: {}, cheeps: [] },
-            profileWithReplies: { query: {}, cheeps: [] },
-            profileMedia: { query: {}, cheeps: [] },
-            profileLikes: { query: {}, cheeps: [] },
+            home: { query: {}, nextTime: 0, cheeps: [] },
+            explore: { query: {}, nextTime: 0, cheeps: [] },
+            profileCheeps: { query: {}, nextTime: 0, cheeps: [] },
+            profileWithReplies: { query: {}, nextTime: 0, cheeps: [] },
+            profileMedia: { query: {}, nextTime: 0, cheeps: [] },
+            profileLikes: { query: {}, nextTime: 0, cheeps: [] },
         }
     },
     new StateManager()
