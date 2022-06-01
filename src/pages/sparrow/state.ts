@@ -16,6 +16,7 @@ interface SparrowState
 export interface CheepListState
 {
     query: SearchCheepsQuery;
+    nextTime: number;
     cheeps: Array<CheepData>;
 }
 
