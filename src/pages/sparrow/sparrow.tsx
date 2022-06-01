@@ -20,27 +20,7 @@ const Sparrow: React.FunctionComponent = () =>
         profileData: (value) =>
         {
             UpdateState(setProfileState, { profileData: value });
-        },
-
-        cheepsStatus: (value) =>
-        {
-            UpdateState(setProfileState, { cheepsStatus: value });
-        },
-
-        withRepliesStatus: (value) =>
-        {
-            UpdateState(setProfileState, { withRepliesStatus: value });
-        },
-
-        mediaStatus: (value) =>
-        {
-            UpdateState(setProfileState, { mediaStatus: value });
-        },
-
-        likesStatus: (value) =>
-        {
-            UpdateState(setProfileState, { likesStatus: value });
-        },
+        }
     });
 
     const [ cheepPageState, setCheepPageState ] = useState<CheepPageState>({});
