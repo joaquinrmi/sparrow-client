@@ -12,9 +12,23 @@ import Router from "../../components/router";
 
 import "./sparrow.scss";
 import RouteSetter from "../../components/route_setter";
+import StateContext from "./state_context";
+import SparrowState from "./state";
+import StateManager from "./state_manager";
 
 const Sparrow: React.FunctionComponent = () =>
-{    
+{
+    const [ state, setState ] = useState<SparrowState>({
+        cheepLists: {
+            home: { query: {}, cheeps: [] },
+            explore: { query: {}, cheeps: [] },
+            profileCheeps: { query: {}, cheeps: [] },
+            profileWithReplies: { query: {}, cheeps: [] },
+            profileMedia: { query: {}, cheeps: [] },
+            profileLikes: { query: {}, cheeps: [] },
+        }
+    });
+
     const [ profileState, setProfileState ] = useState<ProfileState>(DEFAULT_PROFILE_STATE);
     const [ changeProfileState ] = useState<SetProfileState>({
         profileData: (value) =>
@@ -39,7 +53,9 @@ const Sparrow: React.FunctionComponent = () =>
 
     const aside = <></>;
 
-    return <SessionContext.Consumer>{(userSession) =>
+    return <StateContext.Provider value={[
+        state, new StateManager(setState)
+    ]}><SessionContext.Consumer>{(userSession) =>
     {
         return <div className="sparrow">
             <div className="sparrow-content">
@@ -122,7 +138,7 @@ const Sparrow: React.FunctionComponent = () =>
                 </Routes>
             </div>
         </div>;
-    }}</SessionContext.Consumer>
+    }}</SessionContext.Consumer></StateContext.Provider>;
 };
 
 interface GetHandleProps
