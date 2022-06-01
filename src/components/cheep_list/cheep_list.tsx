@@ -1,171 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Cheep from "../cheep/";
 import Loading from "../loading";
 
 import SearchCheepsQuery from "../../search_cheep_query";
 import CheepData from "../../cheep_data";
+import StateContext from "../../pages/sparrow/state_context";
+import { CheepListName } from "../../pages/sparrow/state";
 
 import "./cheep_list.scss";
 
 export interface Props
 {
+    name: CheepListName;
     arguments: SearchCheepsQuery;
-    dataStatus: CheepListStatus;
-    setDataStatus(dataStatus: CheepListStatus): void;
 }
-
-export interface CheepListStatus
-{
-    loaded: boolean;
-    cheeps: Array<CheepData>;
-}
-
-const cheep0: CheepData = {
-    id: 0,
-    author: {
-        handle: "sparrow",
-        name: "Sparrow",
-        picture: "https://www.revistaestilo.net/binrepository/trollface2_ES1218446_MG282389852.jpg",
-    },
-    dateCreated: new Date(),
-    content: "Hola mundo!",
-    gallery: [],
-    commentCount: 46,
-    likeCount: 287,
-    recheepCount: 7,
-    withCommentsCount: 0,
-    recheepped: false,
-    liked: true
-};
-
-const cheep1: CheepData = {
-    id: 1,
-    author: {
-        handle: "anhiladddo",
-        name: "Pepe Sánchez",
-        picture: "https://www.nombresdeperros.eu/wp-content/uploads/2020/12/cachorro-blanco-de-nombre-Toby.jpg"
-    },
-    dateCreated: new Date(),
-    content: "Un lorem ipsum para hinchar las bolas.",
-    gallery: [],
-    commentCount: 0,
-    likeCount: 0,
-    recheepCount: 1,
-    withCommentsCount: 0,
-    recheepped: true,
-    liked: false
-};
-
-const cheep2: CheepData = {
-    id: 2,
-    author: {
-        handle: "sparrow",
-        name: "Sparrow",
-        picture: "https://www.revistaestilo.net/binrepository/trollface2_ES1218446_MG282389852.jpg"
-    },
-    dateCreated: new Date(),
-    content: "Ejemplo de citado.",
-    gallery: [],
-    quoteTarget: cheep1,
-    commentCount: 0,
-    likeCount: 0,
-    recheepCount: 0,
-    withCommentsCount: 0,
-    recheepped: false,
-    liked: false
-}
-
-const cheep3: CheepData = {
-    id: 3,
-    author: {
-        handle: "sparrow",
-        name: "Sparrow",
-        picture: "https://www.revistaestilo.net/binrepository/trollface2_ES1218446_MG282389852.jpg",
-    },
-    dateCreated: new Date(),
-    content: "Ejemplo de galería",
-    gallery: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Eiche_bei_Graditz.jpg/1200px-Eiche_bei_Graditz.jpg",
-        "https://www.elagoradiario.com/wp-content/uploads/2021/04/Pino-Castrej%C3%B3n-1140x600.jpg",
-        "https://www.fundacionaquae.org/wp-content/uploads/2021/12/fresno-e1639053075597.jpg"
-    ],
-    commentCount: 0,
-    likeCount: 0,
-    recheepCount: 0,
-    withCommentsCount: 0,
-    recheepped: false,
-    liked: false
-};
-
-const cheep4: CheepData = {
-    id: 4,
-    author: {
-        handle: "sparrow",
-        name: "Sparrow",
-        picture: "https://www.revistaestilo.net/binrepository/trollface2_ES1218446_MG282389852.jpg",
-    },
-    dateCreated: new Date(),
-    content: "Cita con galería",
-    gallery: [
-        "https://geology.com/rocks/pictures/quartz-diorite.jpg"
-    ],
-    quoteTarget: cheep3,
-    commentCount: 0,
-    likeCount: 0,
-    recheepCount: 0,
-    withCommentsCount: 0,
-    recheepped: false,
-    liked: false
-};
-
-const cheep5: CheepData = {
-    id: 5,
-    author: {
-        handle: "sparrow",
-        name: "Sparrow",
-        picture: "https://www.revistaestilo.net/binrepository/trollface2_ES1218446_MG282389852.jpg"
-    },
-    dateCreated: new Date(),
-    content: "Cita de una cita",
-    quoteTarget: cheep2,
-    commentCount: 0,
-    likeCount: 0,
-    recheepCount: 0,
-    withCommentsCount: 0,
-    recheepped: false,
-    liked: false
-};
 
 const CheepList: React.FunctionComponent<Props> = (props) =>
 {
+    const [ state, stateManager ] = useContext(StateContext);
+
     useEffect(() =>
     {
-        setTimeout(() =>
+        (async () =>
         {
-            if(props.dataStatus.cheeps.length === 5)
-            {
-                return;
-            }
-            
-            props.setDataStatus({
-                loaded: true,
-                cheeps: [
-                    cheep5,
-                    cheep4,
-                    cheep3,
-                    cheep2,
-                    cheep0
-                ]
+            const searchCheepsURL = `${process.env.REACT_APP_SERVER}/api/cheep/search${parseCheepQuery(props.arguments)}`;
+
+            const response = await fetch(searchCheepsURL, {
+                method: "GET",
+                credentials: "include"
             });
-        },
-        2000);
+
+            if(response.status === 200)
+            {
+                const cheeps = await response.json() as Array<CheepData>;
+
+                stateManager.loadCheepList(props.name, props.arguments, cheeps);
+            }
+            else
+            {
+                stateManager.loadCheepList(props.name, props.arguments, []);
+            }
+        })();
     },
-    [ props ]);
+    [ props.arguments ]);
+
+    const listState = state.cheepLists[props.name];
 
     let content: React.ReactNode;
-    if(props.dataStatus.loaded)
+    if(compareQuery(props.arguments, listState.query))
     {
-        content = <>{props.dataStatus.cheeps.map((data, index) =>
+        content = <>{listState.cheeps.map((data, index) =>
         {
             return <Cheep key={`${index}-cheep`} data={data} />;
         })}</>;
@@ -181,5 +65,43 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
         {content}
     </div>;
 };
+
+function parseCheepQuery(query: SearchCheepsQuery): string
+{
+    let elements = new Array<string>();
+
+    for(const arg in query)
+    {
+        elements.push(`${arg}=${query[arg as keyof SearchCheepsQuery]}`);
+    }
+
+    if(elements.length > 0)
+    {
+        return "?" + elements.join("&");
+    }
+
+    return "";
+}
+
+function compareQuery(first: SearchCheepsQuery, second: SearchCheepsQuery): boolean
+{
+    for(let key in first)
+    {
+        if(first[key as keyof SearchCheepsQuery] !== second[key as keyof SearchCheepsQuery])
+        {
+            return false;
+        }
+    }
+
+    for(let key in second)
+    {
+        if(first[key as keyof SearchCheepsQuery] !== second[key as keyof SearchCheepsQuery])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 export default CheepList;
