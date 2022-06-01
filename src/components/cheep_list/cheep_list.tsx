@@ -19,8 +19,15 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
 
+    const listState = state.cheepLists[props.name];
+
     useEffect(() =>
     {
+        if(compareQuery(props.arguments, listState.query))
+        {
+            return;
+        }
+
         (async () =>
         {
             const searchCheepsURL = `${process.env.REACT_APP_SERVER}/api/cheep/search${parseCheepQuery(props.arguments)}`;
@@ -32,7 +39,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 
             if(response.status === 200)
             {
-                const cheeps = await response.json() as Array<CheepData>;
+                const cheeps = (await response.json()).cheeps as Array<CheepData>;
 
                 stateManager.loadCheepList(props.name, props.arguments, cheeps);
             }
@@ -43,8 +50,6 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
         })();
     },
     [ props.arguments ]);
-
-    const listState = state.cheepLists[props.name];
 
     let content: React.ReactNode;
     if(compareQuery(props.arguments, listState.query))
