@@ -153,22 +153,22 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             <ProfileNavigation userHandle={props.state.profileData.handle} />
 
             <Routes>
-                <Route path="/" element={<CheepList name="profileCheeps" arguments={{
+                <Route path="/:userHandle/" element={<CheepList name="profileCheeps" arguments={{
                     userHandle: props.state.profileData.handle,
                     responses: false
                 }} />} />
 
-                <Route path="/with-replies" element={<CheepList name="profileWithReplies" arguments={{
+                <Route path="/:userHandle/with-replies" element={<CheepList name="profileWithReplies" arguments={{
                     userHandle: props.state.profileData.handle,
                     responses: true
                 }} />} />
 
-                <Route path="/media" element={<CheepList name="profileMedia" arguments={{
+                <Route path="/:userHandle/media" element={<CheepList name="profileMedia" arguments={{
                     userHandle: props.state.profileData.handle,
                     onlyGallery: true
                 }} />} />
 
-                <Route path="/likes" element={<CheepList name="profileLikes" arguments={{
+                <Route path="/:userHandle/likes" element={<CheepList name="profileLikes" arguments={{
                     userHandle: props.state.profileData.handle,
                 }} />} />
             </Routes>
