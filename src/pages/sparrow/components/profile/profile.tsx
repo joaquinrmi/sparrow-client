@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
@@ -11,6 +11,7 @@ import MONTHS from "../../../../months";
 import SetState from "../../../../set_state";
 
 import "./profile.scss";
+import SessionContext from "../../../../session_context";
 
 export interface Props
 {
@@ -45,6 +46,8 @@ export const DEFAULT_PROFILE_STATE: ProfileState = {
 
 const Profile: React.FunctionComponent<Props> = (props) =>
 {
+    const userSession = useContext(SessionContext);
+
     useEffect(() =>
     {
         (async () =>
@@ -97,9 +100,15 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
                 <div className="options-container">
                     <div className="follow-button-container">
-                        <Button className="follow-button" stylePreset={ButtonStyle.Black}>
-                            Seguir
-                        </Button>
+                        {userSession.user.handle === props.handle ?
+                            <Button className="follow-button" stylePreset={ButtonStyle.White}>
+                                Editar perfil
+                            </Button> :
+
+                            <Button className="follow-button" stylePreset={ButtonStyle.Black}>
+                                Seguir
+                            </Button>
+                        }
                     </div>
                 </div>
             </header>
