@@ -3,6 +3,9 @@ import SearchCheepsQuery from "../../search_cheep_query";
 
 interface SparrowState
 {
+    location: {
+        profile: LocationState;
+    };
     cheepLists: {
         home: CheepListState;
         explore: CheepListState;
@@ -13,12 +16,19 @@ interface SparrowState
     };
 }
 
+export interface LocationState
+{
+    currentRoute: string;
+}
+
 export interface CheepListState
 {
     query: SearchCheepsQuery;
     nextTime: number;
     cheeps: Array<CheepData>;
 }
+
+export type LocationName = keyof SparrowState["location"];
 
 export type CheepListName = keyof SparrowState["cheepLists"];
 
