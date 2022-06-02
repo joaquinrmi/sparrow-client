@@ -5,13 +5,16 @@ import Loading from "../../../../components/loading";
 import CheepList from "../../../../components/cheep_list";
 import ProfileNavigation from "../profile_navigation";
 import PageHeader from "../../../../components/page_header";
+import Router from "../../../../components/router";
+import RouteSetter from "../../../../components/route_setter";
 
 import ProfileData from "../../profile_data";
 import MONTHS from "../../../../months";
 import SetState from "../../../../set_state";
+import SessionContext from "../../../../session_context";
+import StateContext from "../../state_context";
 
 import "./profile.scss";
-import SessionContext from "../../../../session_context";
 
 export interface Props
 {
@@ -46,6 +49,7 @@ export const DEFAULT_PROFILE_STATE: ProfileState = {
 
 const Profile: React.FunctionComponent<Props> = (props) =>
 {
+    const [ state, stateManager ] = useContext(StateContext);
     const userSession = useContext(SessionContext);
 
     useEffect(() =>
@@ -161,24 +165,46 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
             <ProfileNavigation userHandle={props.state.profileData.handle} />
 
-            <Routes>
-                <Route path="/:userHandle/" element={<CheepList name="profileCheeps" arguments={{
+            <Router currentRoute={state.location["profile"].currentRoute} routes={{
+                cheeps: <CheepList name="profileCheeps" arguments={{
                     userHandle: props.state.profileData.handle,
                     responses: false
-                }} />} />
+                }} />,
 
-                <Route path="/:userHandle/with-replies" element={<CheepList name="profileWithReplies" arguments={{
+                withReplies: <CheepList name="profileWithReplies" arguments={{
                     userHandle: props.state.profileData.handle,
                     responses: true
-                }} />} />
+                }} />,
 
-                <Route path="/:userHandle/media" element={<CheepList name="profileMedia" arguments={{
+                media: <CheepList name="profileMedia" arguments={{
                     userHandle: props.state.profileData.handle,
                     onlyGallery: true
+                }} />,
+
+                likes: <CheepList name="profileLikes" arguments={{
+                    userHandle: props.state.profileData.handle,
+                }} />
+            }} />
+
+            <Routes>
+                <Route path="/:userHandle/" element={<RouteSetter id="cheeps" onMatch={() =>
+                {
+                    stateManager.navigate("profile", "cheeps");
                 }} />} />
 
-                <Route path="/:userHandle/likes" element={<CheepList name="profileLikes" arguments={{
-                    userHandle: props.state.profileData.handle,
+                <Route path="/:userHandle/with-replies" element={<RouteSetter id="withReplies" onMatch={() =>
+                {
+                    stateManager.navigate("profile", "withReplies");
+                }} />} />
+
+                <Route path="/:userHandle/media" element={<RouteSetter id="media" onMatch={() =>
+                {
+                    stateManager.navigate("profile", "media");
+                }} />} />
+
+                <Route path="/:userHandle/likes" element={<RouteSetter id="likes" onMatch={() =>
+                {
+                    stateManager.navigate("profile", "likes");
                 }} />} />
             </Routes>
         </>;
