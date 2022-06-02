@@ -94,23 +94,23 @@ const Sparrow: React.FunctionComponent = () =>
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />
 
-                    <Route path="/home" element={<RouteSetter onMatch={() => {
+                    <Route path="/home" element={<RouteSetter id="home" onMatch={() => {
                         setCurrentRoute("home");
                     }} />} />
 
-                    <Route path="/explore" element={<RouteSetter onMatch={() => {
+                    <Route path="/explore" element={<RouteSetter id="explore" onMatch={() => {
                         setCurrentRoute("explore");
                     }} />} />
                     
-                    <Route path="/notifications" element={<RouteSetter onMatch={() => {
+                    <Route path="/notifications" element={<RouteSetter id="notifications" onMatch={() => {
                         setCurrentRoute("notifications");
                     }} />} />
                     
-                    <Route path="/messages" element={<RouteSetter onMatch={() => {
+                    <Route path="/messages" element={<RouteSetter id="messages" onMatch={() => {
                         setCurrentRoute("messages");
                     }} />} />
                     
-                    <Route path="/settings" element={<RouteSetter onMatch={() => {
+                    <Route path="/settings" element={<RouteSetter id="settings" onMatch={() => {
                         setCurrentRoute("settings");
                     }} />} />
 
@@ -124,7 +124,7 @@ const Sparrow: React.FunctionComponent = () =>
                     <Route path="/:userHandle/status/:cheepId/*" element={<GetCheepId>{
                         (cheepId) =>
                         {
-                            return <RouteSetter onMatch={() => {
+                            return <RouteSetter id="cheep" onMatch={() => {
                                 setCheepId(cheepId);
                                 setCurrentRoute("cheep");
                             }} />;
@@ -134,7 +134,7 @@ const Sparrow: React.FunctionComponent = () =>
                     <Route path="/:userHandle/*" element={<GetHandle>{
                         (userHandle) =>
                         {
-                            return <RouteSetter onMatch={() => {
+                            return <RouteSetter id="profile" onMatch={() => {
                                 setUserHandle(userHandle);
                                 setCurrentRoute("profile");
                             }} />
