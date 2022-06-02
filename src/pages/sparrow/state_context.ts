@@ -4,6 +4,11 @@ import StateManager from "./state_manager";
 
 const StateContext = createContext<[ SparrowState, StateManager ]>([
     {
+        location: {
+            profile: {
+                currentRoute: ""
+            }
+        },
         cheepLists: {
             home: { query: {}, nextTime: 0, cheeps: [] },
             explore: { query: {}, nextTime: 0, cheeps: [] },
