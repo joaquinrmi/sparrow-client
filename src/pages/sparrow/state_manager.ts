@@ -1,7 +1,7 @@
 import React from "react";
 import CheepData from "../../cheep_data";
 import SearchCheepsQuery from "../../search_cheep_query";
-import SparrowState, { CheepListName } from "./state";
+import SparrowState, { CheepListName, LocationName } from "./state";
 
 class StateManager
 {
@@ -10,6 +10,21 @@ class StateManager
     constructor(setState?: React.Dispatch<React.SetStateAction<SparrowState>>)
     {
         this.setState = setState;
+    }
+
+    navigate(locationName: LocationName, route: string): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.location[locationName].currentRoute = route;
+
+                return newState;
+            });
+        }
     }
 
     loadCheepList(listName: CheepListName, query: SearchCheepsQuery, nextTime: number, cheeps: Array<CheepData>): void
