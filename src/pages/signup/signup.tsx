@@ -85,7 +85,7 @@ const Signup: React.FunctionComponent = () =>
             content = <SecondPage signupData={state.signupData} changePage={changePage} sendForm={sendForm} />;
         }
 
-        return <Modal id="signup-modal" closeRequest={() =>
+        return <Modal id="signup-modal" className="signup-modal" closeRequest={() =>
         {}}>
             {content}
         </Modal>;
