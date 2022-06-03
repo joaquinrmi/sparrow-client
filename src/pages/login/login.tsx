@@ -63,7 +63,7 @@ const Login: React.FunctionComponent = () =>
 
     return <SessionContext.Consumer>{(session) =>
     {
-        return <Modal id="login-modal" closeRequest={() =>
+        return <Modal id="login-modal" className="login-modal" closeRequest={() =>
         {}}>
             <ModalForm height="650px">
                 <div className="modal-form-top">

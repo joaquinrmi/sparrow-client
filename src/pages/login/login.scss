@@ -8,3 +8,11 @@
         color: Color.$red1;
     }
 }
+
+@media (max-height: 650px)
+{
+    .login-modal
+    {
+        align-items: stretch;
+    }
+}
