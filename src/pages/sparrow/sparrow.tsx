@@ -9,12 +9,13 @@ import CheepEditor from "./components/cheep_editor";
 import UpdateState from "../../update_state";
 import CheepPage, { CheepPageState, SetCheepPageState } from "../cheep_page";
 import Router from "../../components/router";
-
-import "./sparrow.scss";
 import RouteSetter from "../../components/route_setter";
 import StateContext from "./state_context";
 import SparrowState from "./state";
 import StateManager from "./state_manager";
+import CheepEditorModal from "./components/cheep_editor_modal";
+
+import "./sparrow.scss";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -114,12 +115,7 @@ const Sparrow: React.FunctionComponent = () =>
                         setCurrentRoute("settings");
                     }} />} />
 
-                    <Route path="/compose/cheep/*" element={<Modal id="compose-modal" closeRequest={() =>
-                    {
-                        navigate(-1);
-                    }}>
-                        <CheepEditor />
-                    </Modal>} />
+                    <Route path="/compose/cheep/*" element={<CheepEditorModal />} />
                     
                     <Route path="/:userHandle/status/:cheepId/*" element={<GetCheepId>{
                         (cheepId) =>
