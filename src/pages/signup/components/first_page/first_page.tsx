@@ -75,7 +75,7 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
         });
     });
 
-    return <ModalForm>
+    return <ModalForm height="650px">
         <header className="modal-form-top">
             <Link to="/" id="signup-close-button" className="modal-form-close-button">
                 <i className="fa-solid fa-xmark"></i>
