@@ -27,7 +27,7 @@ const Modal: React.FunctionComponent<Props> = (props) =>
     },
     []);
 
-    return <div id={props.id} className="modal">
+    return <div id={props.id} className={`modal ${props.className ? props.className : ""}`}>
         <div className="modal-body">
             {props.children}
         </div>
