@@ -12,7 +12,10 @@
     background-color: Color.$gray1;
     border-radius: 1000px;
     overflow: hidden;
+}
 
+a.user-picture-container
+{
     .veil
     {
         position: absolute;
@@ -23,7 +26,7 @@
     }
 }
 
-.user-picture-container:hover
+a.user-picture-container:hover
 {
     .veil
     {
