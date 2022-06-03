@@ -1,4 +1,29 @@
-@media (max-height: 278px)
+.cheep-editor-modal
+{
+    align-items: flex-start;
+    box-sizing: border-box;
+
+    .modal-body
+    {
+        position: relative;
+        top: 5vh;
+        max-height: 90vh;
+    }
+}
+
+@media (max-width: 650px)
+{
+    .cheep-editor-modal
+    {
+        .modal-body
+        {
+            top: 0;
+            max-height: 100vh;
+        }
+    }
+}
+
+@media (max-height: 278px) and (max-width: 650px)
 {
     .cheep-editor-modal
     {
