@@ -65,7 +65,7 @@ const Login: React.FunctionComponent = () =>
     {
         return <Modal id="login-modal" closeRequest={() =>
         {}}>
-            <ModalForm>
+            <ModalForm height="650px">
                 <div className="modal-form-top">
                     <Link to="/" className="modal-form-close-button">
                         <i className="fa-solid fa-xmark"></i>
