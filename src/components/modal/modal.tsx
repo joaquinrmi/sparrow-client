@@ -5,7 +5,9 @@ import "./modal.scss";
 export interface Props
 {
     children?: React.ReactNode;
+    className?: string;
     id: string;
+
     closeRequest(): void;
 }
 
