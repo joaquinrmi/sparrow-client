@@ -7,6 +7,7 @@ import ProfileNavigation from "../profile_navigation";
 import PageHeader from "../../../../components/page_header";
 import Router from "../../../../components/router";
 import RouteSetter from "../../../../components/route_setter";
+import ButtonContainer from "../../../../components/button_container";
 
 import ProfileData from "../../profile_data";
 import MONTHS from "../../../../months";
@@ -103,7 +104,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 </div>
 
                 <div className="options-container">
-                    <div className="follow-button-container">
+                    <ButtonContainer>
                         {userSession.user.handle === props.handle ?
                             <Button className="follow-button" stylePreset={ButtonStyle.White}>
                                 Editar perfil
@@ -113,7 +114,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                                 Seguir
                             </Button>
                         }
-                    </div>
+                    </ButtonContainer>
                 </div>
             </header>
 
