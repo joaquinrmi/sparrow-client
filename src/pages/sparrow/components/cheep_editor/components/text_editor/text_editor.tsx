@@ -33,18 +33,21 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
                 return;
             }
 
+            console.log(text);
+
+            if(text.length === 1 && text.charCodeAt(0) === 10)
+            {
+                editable.innerText = "";
+                editorContent.innerText = "";
+                placeholder.classList.add("show");
+                return;
+            }
+
             const parsered = parseText(text);
 
             if(parsered.length > 0)
             {
-                if(parsered.length === 1 && parsered.charCodeAt(0) === 10)
-                {
-                    placeholder.classList.add("show");
-                }
-                else
-                {
-                    placeholder.classList.remove("show");
-                }                
+                placeholder.classList.remove("show");            
             }
             else
             {
