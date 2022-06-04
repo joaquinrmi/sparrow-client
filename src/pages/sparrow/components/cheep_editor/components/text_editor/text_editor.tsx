@@ -58,7 +58,7 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
     </div>;
 };
 
-const searchHashtag = /\s#[a-zA-Z0-9_]*|^#[a-zA-Z0-9_]*/g;
+const searchHashtag = /\s#[a-zA-Z0-9_]+|^#[a-zA-Z0-9_]+/g;
 
 function parseText(text: string): string
 {
@@ -70,7 +70,7 @@ function parseText(text: string): string
     for(let i = 0; i < found.length; ++i)
     {
         const element = found[i];
-        if(element.index === undefined || element[0].slice(-1) === "#")
+        if(element.index === undefined)
         {
             continue;
         }
