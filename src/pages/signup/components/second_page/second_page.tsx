@@ -149,7 +149,7 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
         });
     };
 
-    return <ModalForm height="650px">
+    return <ModalForm className="signup-form-modal">
         <header className="modal-form-top">
             <div id="signup-go-back-button" className="modal-form-close-button">
                 <i className="fa-solid fa-arrow-left"></i>
