@@ -5,6 +5,7 @@ import "./text_editor.scss";
 export interface Props
 {
     id: string;
+    maxLength: number;
 
     setStatus(status: number): void;
 }
@@ -17,6 +18,15 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
         const placeholder = editor.querySelector(".placeholder") as HTMLDivElement;
         const editorContent = editor.querySelector(".editor-content") as HTMLDivElement;
         const editable = editor.querySelector(".editor-editable") as HTMLTextAreaElement;
+
+        editable.addEventListener("keydown", (ev) =>
+        {
+            if(editable.value.length >= props.maxLength)
+            {
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+        });
 
         editable.addEventListener("input", (ev) =>
         {
@@ -43,7 +53,7 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
             }
 
             editorContent.innerHTML = parsered;
-            props.setStatus(text.length * 100 / 280);
+            props.setStatus(text.length * 100 / props.maxLength);
         });
     },
     [ props.id ]);
