@@ -16,33 +16,17 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
         const editor = document.getElementById(props.id) as HTMLDivElement;
         const placeholder = editor.querySelector(".placeholder") as HTMLDivElement;
         const editorContent = editor.querySelector(".editor-content") as HTMLDivElement;
-        const editable = editor.querySelector(".editor-editable") as HTMLDivElement;
+        const editable = editor.querySelector(".editor-editable") as HTMLTextAreaElement;
 
         editable.addEventListener("input", (ev) =>
         {
-            const selection = window.getSelection();
+            const text = editable.value;
 
-            if(!selection)
-            {
-                return;
-            }
-
-            const text = editable.innerText;
-
-            if(!text)
+            if(!text || text.length === 0)
             {
                 placeholder.classList.add("show");
                 props.setStatus(0);
-                return;
-            }
-
-            if(text.length === 1 && text.charCodeAt(0) === 10)
-            {
-                editable.innerText = "";
-                editorContent.innerText = "";
-                placeholder.classList.add("show");
-
-                props.setStatus(0);
+                editorContent.innerHTML = "";
 
                 return;
             }
@@ -70,7 +54,7 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
         </div>
 
         <div className="editor-content"></div>
-        <div className="editor-editable" contentEditable></div>
+        <textarea className="editor-editable"></textarea>
     </div>;
 };
 

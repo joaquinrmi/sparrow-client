@@ -43,15 +43,21 @@
     .editor-editable
     {
         position: absolute;
+        display: block;
         top: 0;
         left: 0;
         min-width: 0;
         width: 100%;
         height: 100%;
+        padding: 0;
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
         font-size: 19px;
         color: rgba(0, 0, 0, 0);
-        word-wrap: break-word;
         caret-color: Color.$blackText;
+        border: none;
+        resize: none;
+        background-color: transparent;
     }
 
     .editor-editable:focus
