@@ -174,7 +174,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                 <div className="buttons-container"></div>
 
                 <div className="reply-container">
-                    <CheepEditor />
+                    <CheepEditor id="cheep-editor-page" />
                 </div>
             </div>
         </section>;
