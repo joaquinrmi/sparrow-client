@@ -19,13 +19,8 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
         const editorContent = editor.querySelector(".editor-content") as HTMLDivElement;
         const editable = editor.querySelector(".editor-editable") as HTMLTextAreaElement;
 
-        editable.addEventListener("keydown", (ev) =>
+        editable.addEventListener("keypress", (ev) =>
         {
-            if(ev.key === "Backspace" || ev.key === "Delete")
-            {
-                return;
-            }
-            
             if(editable.value.length >= props.maxLength)
             {
                 ev.preventDefault();
