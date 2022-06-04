@@ -1,0 +1,56 @@
+@use "../../../../../../colors.scss" as Color;
+
+.text-editor
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 1;
+    cursor: text;
+
+    .placeholder
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 19px;
+        color: Color.$silverText;
+        opacity: 0;
+    }
+
+    .placeholder.show
+    {
+        opacity: 1;
+    }
+
+    .editor-content
+    {
+        flex: 1;
+        font-size: 19px;
+        color: Color.$blackText;
+        white-space: pre-line;
+
+        .hashtag
+        {
+            color: Color.$blue1;
+        }
+    }
+
+    .editor-editable
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 19px;
+        color: rgba(0, 0, 0, 0);
+        caret-color: Color.$blackText;
+    }
+
+    .editor-editable:focus
+    {
+        outline: none;
+    }
+}
