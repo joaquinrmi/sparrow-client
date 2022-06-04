@@ -55,8 +55,14 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                     </div>
 
                     <footer className="editor-bottom">
-                        <div className="loading-container">
-                            <Loading static status={status} radius={10} thickness={2} />
+                        <div className="options-container">
+                            <div className="editor-button">
+                                <i className="fa-solid fa-image"></i>
+                            </div>
+
+                            <div className="status-container">
+                                <Loading static status={status} radius={10} thickness={2} />
+                            </div>
                         </div>
 
                         <ButtonContainer className="cheep-button-container">

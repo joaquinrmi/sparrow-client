@@ -50,7 +50,62 @@
             {
                 display: flex;
                 flex-direction: row;
+                gap: 10px;
                 width: 100%;
+
+                .options-container
+                {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    flex: 1;
+
+                    .editor-button
+                    {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                        width: 36px;
+                        height: 36px;
+                        cursor: pointer;
+                        border-radius: 1000px;
+                        transition: background-color 0.2s;
+
+                        i
+                        {
+                            font-size: 16px;
+                            color: Color.$blue1;
+                        }
+                    }
+
+                    .editor-button:hover
+                    {
+                        background-color: Color.$blue4;
+                        transition: background-color 0.2s;
+                    }
+
+                    .editor-button.disabled
+                    {
+                        i
+                        {
+                            color: Color.$blue3;
+                        }
+                    }
+
+                    .editor-button.disabled:hover
+                    {
+                        background-color: transparent;
+                    }
+
+                    .status-container
+                    {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        margin-left: auto;
+                    }
+                }
 
                 .cheep-button-container
                 {
