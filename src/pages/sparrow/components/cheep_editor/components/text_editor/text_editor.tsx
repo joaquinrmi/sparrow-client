@@ -70,7 +70,7 @@ function parseText(text: string): string
     for(let i = 0; i < found.length; ++i)
     {
         const element = found[i];
-        if(!element.index || element[0].slice(-1) === "#")
+        if(element.index === undefined || element[0].slice(-1) === "#")
         {
             continue;
         }
