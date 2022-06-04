@@ -3,22 +3,37 @@ $strokeDasharray: 2 * 3.1415 * $circleRadius;
 
 .loading
 {
+   .status-circle
+   {
+      stroke-dasharray: $strokeDasharray * 1px;
+   }
+}
+
+.loading.static
+{
+   .status-circle
+   {
+      transform-origin: center;
+      transform: rotateZ(-90deg);
+   }
+}
+
+.loading.animated
+{
    animation-name: loading-rotation;
    animation-duration: 1.5s;
    animation-iteration-count: infinite;
    animation-timing-function: linear;
-}
 
-.loading .animated-circle
-{
-   stroke-dashoffset: $strokeDasharray * 0.95 * 1px;
-   stroke-dasharray: $strokeDasharray * 1px;
-
-   animation-name: loading-worm;
-   animation-duration: 2s;
-   animation-iteration-count: infinite;
-   animation-timing-function: ease-in;
-   animation-direction: alternate;
+   .status-circle
+   {
+      stroke-dashoffset: $strokeDasharray * 0.95 * 1px;
+      animation-name: loading-worm;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in;
+      animation-direction: alternate;
+   }
 }
 
 @keyframes loading-rotation
