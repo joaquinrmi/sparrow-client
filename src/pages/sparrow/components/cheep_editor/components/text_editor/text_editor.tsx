@@ -21,6 +21,11 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
 
         editable.addEventListener("keydown", (ev) =>
         {
+            if(ev.key === "Backspace" || ev.key === "Delete")
+            {
+                return;
+            }
+            
             if(editable.value.length >= props.maxLength)
             {
                 ev.preventDefault();
@@ -30,7 +35,13 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
 
         editable.addEventListener("input", (ev) =>
         {
-            const text = editable.value;
+            let text = editable.value;
+
+            if(text.length > props.maxLength)
+            {
+                text = text.substring(0, props.maxLength);
+                editable.value = text;
+            }
 
             if(!text || text.length === 0)
             {
