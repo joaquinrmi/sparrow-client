@@ -5,6 +5,8 @@ import "./text_editor.scss";
 export interface Props
 {
     id: string;
+
+    setStatus(status: number): void;
 }
 
 const TextEditor: React.FunctionComponent<Props> = (props) =>
@@ -30,16 +32,18 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
             if(!text)
             {
                 placeholder.classList.add("show");
+                props.setStatus(0);
                 return;
             }
-
-            console.log(text);
 
             if(text.length === 1 && text.charCodeAt(0) === 10)
             {
                 editable.innerText = "";
                 editorContent.innerText = "";
                 placeholder.classList.add("show");
+
+                props.setStatus(0);
+
                 return;
             }
 
@@ -47,7 +51,7 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
 
             if(parsered.length > 0)
             {
-                placeholder.classList.remove("show");            
+                placeholder.classList.remove("show");
             }
             else
             {
@@ -55,6 +59,7 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
             }
 
             editorContent.innerHTML = parsered;
+            props.setStatus(text.length * 100 / 280);
         });
     },
     [ props.id ]);
