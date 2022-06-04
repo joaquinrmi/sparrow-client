@@ -1,0 +1,62 @@
+@use "../../../../colors.scss" as Color;
+
+.cheep-editor
+{
+    min-height: 278px;
+}
+
+.editor-body
+{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 18px 8px 18px;
+    box-sizing: border-box;
+    overflow-y: auto;
+
+    .editor-columns
+    {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        flex: 1;
+
+        .editor-left
+        {
+            flex: 0;
+        }
+
+        .editor-right
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+            padding: 1em 0 0 0;
+            box-sizing: border-box;
+
+            .text-editor-container
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                flex: 1;
+                min-width: 0;
+                border-bottom: 1px solid Color.$gray2;
+            }
+
+            .editor-bottom
+            {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+
+                .cheep-button-container
+                {
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+}
