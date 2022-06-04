@@ -13,7 +13,7 @@ const CheepEditorModal: React.FunctionComponent = () =>
     {
         navigate(-1);
     }}>
-        <CheepEditor />
+        <CheepEditor id="cheep-editor-modal" />
     </Modal>;
 };
 
