@@ -4,8 +4,6 @@ import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
 import Profile, { ProfileState, SetProfileState, DEFAULT_PROFILE_STATE } from "./components/profile";
-import Modal from "../../components/modal";
-import CheepEditor from "./components/cheep_editor";
 import UpdateState from "../../update_state";
 import CheepPage, { CheepPageState, SetCheepPageState } from "../cheep_page";
 import Router from "../../components/router";
@@ -80,12 +78,7 @@ const Sparrow: React.FunctionComponent = () =>
 
                     settings: <MainSection mainColumnChildren={<>E</>} rightColumnChildren={aside} />,
 
-                    compose: <Modal id="compose-modal" closeRequest={() =>
-                    {
-                        navigate(-1);
-                    }}>
-                        <CheepEditor />
-                    </Modal>,
+                    compose: <CheepEditorModal />,
 
                     cheep: <CheepPage cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />,
 
