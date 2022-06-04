@@ -58,68 +58,41 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
     </div>;
 };
 
-const withSpace = /\s/;
-const hashtagValidChars = /[a-zA-Z0-9_]/;
+const searchHashtag = /\s#[a-zA-Z0-9_]*|^#[a-zA-Z0-9_]*/g;
 
 function parseText(text: string): string
 {
     let result = "";
+    
+    const found = [ ...text.matchAll(searchHashtag) ];
 
-    for(let i = 0; i < text.length; ++i)
+    let lastIndex = 0;
+    for(let i = 0; i < found.length; ++i)
     {
-        if(text.charAt(i) === "#" && (i === 0 || text.charAt(i - 1).match(withSpace) !== null))
+        const element = found[i];
+        if(!element.index || element[0].slice(-1) === "#")
         {
-            if(i === text.length - 1)
-            {
-                result += "#";
-                continue;
-            }
+            continue;
+        }
+        
+        let start = element.index;
+        let toAdd: string;
 
-            let hashtag = "#";
-            for(let j = i + 1; j < text.length; ++j)
-            {
-                if(text.charAt(j).match(hashtagValidChars) !== null)
-                {
-                    hashtag += text.charAt(j);
-                }
-                else
-                {
-                    if(hashtag.length > 1)
-                    {
-                        result += `<span class="hashtag">${hashtag}</span>`;
-                        i = j - 1;
-                    }
-                    else
-                    {
-                        result += `#${text.charAt(j)}`;
-                        i = j;
-                    }
-
-                    break;
-                }
-
-                if(j === text.length - 1)
-                {
-                    if(hashtag.length > 1)
-                    {
-                        result += `<span class="hashtag">${hashtag}</span>`;
-                        i = j;
-                    }
-                    else
-                    {
-                        result += `#${text.charAt(j)}`;
-                        i = j;
-                    }
-                }
-            }
+        if(element[0].charCodeAt(0) === 32)
+        {
+            start += 1;
+            toAdd = element[0].substring(1);
         }
         else
         {
-            result += text.charAt(i);
+            toAdd = element[0];
         }
+
+        result += `${text.substring(lastIndex, start)}<span class="hashtag">${toAdd}</span>`;
+        lastIndex = start + toAdd.length;
     }
 
-    return result;
+    return result + text.substring(lastIndex);
 }
 
 export default TextEditor;
