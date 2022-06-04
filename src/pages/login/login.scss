@@ -1,5 +1,10 @@
 @use "../../colors.scss" as Color;
 
+.login-form-modal
+{
+    flex: 0 1 650px;
+}
+
 .modal-form-body
 {
     .error-message
