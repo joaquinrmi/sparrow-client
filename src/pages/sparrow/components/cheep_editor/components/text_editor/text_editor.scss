@@ -7,8 +7,68 @@
     flex-direction: row;
     align-items: stretch;
     flex: 1;
+    padding-bottom: 1em;
+    box-sizing: border-box;
     min-width: 0;
     cursor: text;
+
+    .text-editor-content
+    {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        flex: 1;
+
+        .editor-content
+        {
+            flex: 1;
+            min-width: 0;
+            font-size: 19px;
+            color: Color.$blackText;
+            white-space: pre-line;
+            word-wrap: break-word;
+
+            .hashtag
+            {
+                color: Color.$blue1;
+            }
+        }
+
+        .editable-container
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: stretch;
+            width: 100%;
+            height: 100%;
+
+            .editor-editable
+            {
+                flex: 1 1 100%;
+                min-width: 0;
+                padding: 0;
+                margin: 0;
+                font-family: 'Roboto', sans-serif;
+                font-size: 19px;
+                color: rgba(0, 0, 0, 0);
+                caret-color: Color.$blackText;
+                border: none;
+                resize: none;
+                background-color: transparent;
+                overflow-y: hidden;
+            }
+        }
+
+        .editor-editable:focus
+        {
+            outline: none;
+        }
+    }
 
     .placeholder
     {
@@ -23,45 +83,5 @@
     .placeholder.show
     {
         opacity: 1;
-    }
-
-    .editor-content
-    {
-        flex: 1;
-        min-width: 0;
-        font-size: 19px;
-        color: Color.$blackText;
-        white-space: pre-line;
-        word-wrap: break-word;
-
-        .hashtag
-        {
-            color: Color.$blue1;
-        }
-    }
-
-    .editor-editable
-    {
-        position: absolute;
-        display: block;
-        top: 0;
-        left: 0;
-        min-width: 0;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        font-family: 'Roboto', sans-serif;
-        font-size: 19px;
-        color: rgba(0, 0, 0, 0);
-        caret-color: Color.$blackText;
-        border: none;
-        resize: none;
-        background-color: transparent;
-    }
-
-    .editor-editable:focus
-    {
-        outline: none;
     }
 }

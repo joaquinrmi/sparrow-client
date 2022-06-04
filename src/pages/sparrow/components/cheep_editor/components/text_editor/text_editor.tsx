@@ -53,8 +53,12 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
             ¿Qué te pasa?
         </div>
 
-        <div className="editor-content"></div>
-        <textarea className="editor-editable"></textarea>
+        <div className="text-editor-content">
+            <div className="editor-content"></div>
+            <div className="editable-container">
+                <textarea className="editor-editable"></textarea>
+            </div>
+        </div>
     </div>;
 };
 
