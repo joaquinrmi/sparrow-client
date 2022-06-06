@@ -5,10 +5,12 @@ import UserPicture from "../../../../components/user_picture";
 import SessionContext from "../../../../session_context";
 import Button, { ButtonStyle } from "../../../../components/button";
 import ButtonContainer from "../../../../components/button_container";
-import TextEditor from "./components/text_editor";
+import TextEditor, { TextEditorElement } from "./components/text_editor";
 import Loading from "../../../../components/loading";
 import Gallery from "../../../../components/gallery";
 import uploadImage from "../../../../upload_image";
+import CreateCheepData from "./create_cheep_data";
+import postCheep from "./post_cheep";
 
 import "./cheep_editor.scss";
 
@@ -23,6 +25,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
     const [ status, setStatus ] = useState<number>(0);
     const [ gallery, setGallery ] = useState<Array<string>>([]);
     const [ loadingPictures, setLoadingPictures ] = useState<boolean>(false);
+    const [ loadingCheep, setLoadingCheep ] = useState<boolean>(false);
 
     const userSession = useContext(SessionContext);
     const navigation = useNavigate();
@@ -156,7 +159,41 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                         </div>
 
                         <ButtonContainer className="cheep-button-container">
-                            <Button stylePreset={ButtonStyle.Blue} disabled={!buttonEnabled}>
+                            <Button stylePreset={ButtonStyle.Blue} disabled={!buttonEnabled} onClick={async () =>
+                            {
+                                if(loadingCheep)
+                                {
+                                    return;
+                                }
+
+                                setLoadingCheep(true);
+
+                                const editor = document.getElementById(`${props.id}-editor`) as TextEditorElement;
+
+                                const data: CreateCheepData = {};
+
+                                if(editor.getText().length > 0)
+                                {
+                                    data.content = editor.getText();
+                                }
+
+                                if(gallery.length > 0)
+                                {
+                                    data.gallery = gallery;
+                                }
+
+                                let cheepId: number;
+                                try
+                                {
+                                    cheepId = await postCheep(data);
+                                }
+                                catch(err)
+                                {
+                                    console.log(err);
+                                }
+
+                                setLoadingCheep(false);
+                            }}>
                                 Cheepear
                             </Button>
                         </ButtonContainer>
