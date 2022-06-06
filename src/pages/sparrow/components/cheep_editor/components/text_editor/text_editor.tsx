@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import parseText, { tokensToHTML } from "../../../../../../parse_text";
 
 import "./text_editor.scss";
 
@@ -62,9 +63,9 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
                 return;
             }
 
-            const parsered = parseText(text);
+            const tokens = parseText(text);
 
-            if(parsered.length > 0)
+            if(tokens.length > 0)
             {
                 placeholder.classList.remove("show");
             }
@@ -73,7 +74,7 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
                 placeholder.classList.add("show");
             }
 
-            editorContent.innerHTML = parsered;
+            editorContent.innerHTML = tokensToHTML(tokens);
             props.setStatus(text.length * 100 / props.maxLength);
         });
     },
@@ -92,42 +93,5 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
         </div>
     </div>;
 };
-
-const searchHashtag = /\s#[a-zA-Z0-9_]+|^#[a-zA-Z0-9_]+/g;
-
-function parseText(text: string): string
-{
-    let result = "";
-    
-    const found = [ ...text.matchAll(searchHashtag) ];
-
-    let lastIndex = 0;
-    for(let i = 0; i < found.length; ++i)
-    {
-        const element = found[i];
-        if(element.index === undefined)
-        {
-            continue;
-        }
-        
-        let start = element.index;
-        let toAdd: string;
-
-        if(element[0].charCodeAt(0) === 32)
-        {
-            start += 1;
-            toAdd = element[0].substring(1);
-        }
-        else
-        {
-            toAdd = element[0];
-        }
-
-        result += `${text.substring(lastIndex, start)}<span class="hashtag">${toAdd}</span>`;
-        lastIndex = start + toAdd.length;
-    }
-
-    return result + text.substring(lastIndex);
-}
 
 export default TextEditor;
