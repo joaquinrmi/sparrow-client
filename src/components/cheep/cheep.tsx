@@ -5,6 +5,7 @@ import MONTHS from "../../months";
 import CommentButton from "../../pages/sparrow/components/comment_button";
 import LikeButton from "../../pages/sparrow/components/like_button";
 import RecheepButton from "../../pages/sparrow/components/recheep_button";
+import parseText, { TokenType } from "../../parse_text";
 import Gallery from "../gallery";
 import UserPicture from "../user_picture";
 
@@ -91,7 +92,22 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
             <div className="cheep-content">
                 <span className="content-text">
-                    {props.data.content}
+                    {props.data.content ?
+                        parseText(props.data.content).map((token, index) =>
+                        {
+                            switch(token.type)
+                            {
+                            case TokenType.Plain:
+                                return <>{token.value}</>;
+
+                            case TokenType.Hashtag:
+                                return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
+                                    {token.value}
+                                </Link>;
+                            }
+                        }) :
+                        null
+                    }
                 </span>
 
                 {props.quote && props.data.quoteTarget ?
