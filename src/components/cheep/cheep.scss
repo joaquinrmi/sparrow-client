@@ -81,7 +81,19 @@
             .content-text
             {
                 font-size: 15px;
+                white-space: pre-wrap;
                 color: Color.$blackText;
+
+                .hashtag
+                {
+                    color: Color.$blue1;
+                    text-decoration: none;
+                }
+
+                .hashtag:hover
+                {
+                    text-decoration: underline;
+                }
             }
 
             .show-thread
