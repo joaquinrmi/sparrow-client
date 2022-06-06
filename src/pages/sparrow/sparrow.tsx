@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, Navigate, useParams, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
@@ -12,9 +12,10 @@ import StateContext from "./state_context";
 import SparrowState from "./state";
 import StateManager from "./state_manager";
 import CheepEditorModal from "./components/cheep_editor_modal";
+import StatusModal from "../../components/status_modal";
+import StatusMessageContext from "../../status_message_context";
 
 import "./sparrow.scss";
-import StatusModal from "../../components/status_modal";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -60,9 +61,14 @@ const Sparrow: React.FunctionComponent = () =>
 
     return <StateContext.Provider value={[
         state, new StateManager(setState)
-    ]}><SessionContext.Consumer>{(userSession) =>
+    ]}>
+    <SessionContext.Consumer>{(userSession) =>
     {
-        return <div className="sparrow">
+        return <StatusMessageContext.Provider value={(message: string) =>
+        {
+            setStatusMessage(message);
+        }}>
+        <div className="sparrow">
             <div className="sparrow-content">
                 <div className="navigation-container">
                     <NavigationBar handle={userSession.user.handle} />
@@ -133,8 +139,8 @@ const Sparrow: React.FunctionComponent = () =>
                 </Routes>
             </div>
             
-            <StatusModal id="sparrow-status-modal" message="" />
-        </div>;
+            <StatusModal id="sparrow-status-modal" message={statusMessage} />
+        </div></StatusMessageContext.Provider>;
     }}</SessionContext.Consumer></StateContext.Provider>;
 };
 
