@@ -132,7 +132,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                         <div className="options-container">
                             <div className={`editor-button ${gallery.length === 4 ? "disabled" : ""}`} onClick={() =>
                             {
-                                if(loadingPictures)
+                                if(loadingPictures || gallery.length === 4)
                                 {
                                     return;
                                 }
