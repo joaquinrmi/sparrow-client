@@ -102,8 +102,8 @@ function processCheep(data: any): CheepData
         recheepCount: data.recheepCount,
         withCommentsCount: data.withCommentCount,
         responseOf: data.responseOf ? processCheep(data.responseOf) : undefined,
-        recheepped: data.recheeped,
-        liked: data.liked
+        recheepped: data.userRecheeppedIt,
+        liked: data.userLikesIt
     };
 }
 
