@@ -32,7 +32,7 @@ const StatusModal: React.FunctionComponent<Props> = (props) =>
             },
             300);
         },
-        10_000);
+        6_000);
     },
     [ props.message ]);
 
