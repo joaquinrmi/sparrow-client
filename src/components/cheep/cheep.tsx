@@ -20,6 +20,7 @@ export interface Props
 const Cheep: React.FunctionComponent<Props> = (props) =>
 {
     const [ cheepDate, setCheepDate ] = useState<string>(formatDate(props.data.dateCreated));
+    const [ like, setLike ] = useState<boolean>(props.data.liked);
 
     useEffect(() =>
     {
@@ -140,7 +141,13 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                         </div>
 
                         <div className="interaction-button-container">
-                            <LikeButton cheepId={props.data.id} active={props.data.liked} counter={props.data.likeCount} />
+                            <LikeButton cheepId={props.data.id} active={like} counter={props.data.likeCount} onClick={() =>
+                            {
+                                setLike((state) =>
+                                {
+                                    return !state;
+                                });
+                            }} />
                         </div>
                     </div> :
                     null
