@@ -14,6 +14,7 @@ import StateManager from "./state_manager";
 import CheepEditorModal from "./components/cheep_editor_modal";
 
 import "./sparrow.scss";
+import StatusModal from "../../components/status_modal";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -53,7 +54,7 @@ const Sparrow: React.FunctionComponent = () =>
     const [ userHandle, setUserHandle ] = useState<string>("");
     const [ cheepId, setCheepId ] = useState<number>(0);
 
-    const navigate = useNavigate();
+    const [ statusMessage, setStatusMessage ] = useState<string>("");
 
     const aside = <></>;
 
@@ -131,6 +132,8 @@ const Sparrow: React.FunctionComponent = () =>
                     }</GetHandle>} />
                 </Routes>
             </div>
+            
+            <StatusModal id="sparrow-status-modal" message="" />
         </div>;
     }}</SessionContext.Consumer></StateContext.Provider>;
 };
