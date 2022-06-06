@@ -139,7 +139,10 @@ const Sparrow: React.FunctionComponent = () =>
                 </Routes>
             </div>
             
-            <StatusModal id="sparrow-status-modal" message={statusMessage} />
+            <StatusModal id="sparrow-status-modal" message={statusMessage} onClose={() =>
+            {
+                setStatusMessage("");
+            }} />
         </div></StatusMessageContext.Provider>;
     }}</SessionContext.Consumer></StateContext.Provider>;
 };
