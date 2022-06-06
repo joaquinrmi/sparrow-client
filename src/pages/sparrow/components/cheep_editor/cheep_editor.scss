@@ -36,14 +36,28 @@
             padding: 1em 0 0 0;
             box-sizing: border-box;
 
-            .text-editor-container
+            .editor-elements
             {
                 display: flex;
-                flex-direction: row;
-                align-items: stretch;
-                flex: 1;
-                min-width: 0;
+                flex-direction: column;
                 border-bottom: 1px solid Color.$gray2;
+
+                .text-editor-container
+                {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: stretch;
+                    flex: 1;
+                    min-width: 0;
+                    min-height: 148px;
+                }
+
+                .gallery-container
+                {
+                    border: 1px solid Color.$gray3;
+                    border-radius: 16px;
+                    overflow: hidden;
+                }
             }
 
             .editor-bottom
@@ -76,6 +90,11 @@
                         {
                             font-size: 16px;
                             color: Color.$blue1;
+                        }
+
+                        input
+                        {
+                            display: none;
                         }
                     }
 
