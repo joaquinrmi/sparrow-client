@@ -11,8 +11,10 @@ import Gallery from "../../../../components/gallery";
 import uploadImage from "../../../../upload_image";
 import CreateCheepData from "./create_cheep_data";
 import postCheep from "./post_cheep";
+import StatusMessageContext from "../../../../status_message_context";
 
 import "./cheep_editor.scss";
+import ResponseErrorType from "../../../../response_error_type";
 
 export interface Props
 {
@@ -28,6 +30,8 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
     const [ loadingCheep, setLoadingCheep ] = useState<boolean>(false);
 
     const userSession = useContext(SessionContext);
+    const statusMessageContext = useContext(StatusMessageContext);
+
     const navigation = useNavigate();
 
     useEffect(() =>
@@ -186,10 +190,25 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                 try
                                 {
                                     cheepId = await postCheep(data);
+                                    statusMessageContext("¡Se publicó el cheep!");
+                                    navigation(-1);
                                 }
-                                catch(err)
+                                catch(err: any)
                                 {
-                                    console.log(err);
+                                    switch(err.error)
+                                    {
+                                    case ResponseErrorType.InvalidCheepContent:
+                                        statusMessageContext("El cheep no puede estar vacío.");
+                                        break;
+
+                                    case ResponseErrorType.InvalidForm:
+                                        statusMessageContext("El contenido el cheep es inválido.");
+                                        break;
+
+                                    case ResponseErrorType.InternalServerError:
+                                        statusMessageContext("Ocurrió un error en el servidor.");
+                                        break;
+                                    }
                                 }
 
                                 setLoadingCheep(false);
