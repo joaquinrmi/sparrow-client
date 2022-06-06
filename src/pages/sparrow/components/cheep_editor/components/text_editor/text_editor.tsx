@@ -10,14 +10,29 @@ export interface Props
     setStatus(status: number): void;
 }
 
+export interface TextEditorElement extends HTMLDivElement
+{
+    getText(): string;
+}
+
 const TextEditor: React.FunctionComponent<Props> = (props) =>
 {
     useEffect(() =>
     {
-        const editor = document.getElementById(props.id) as HTMLDivElement;
+        const editor = document.getElementById(props.id) as TextEditorElement;
         const placeholder = editor.querySelector(".placeholder") as HTMLDivElement;
         const editorContent = editor.querySelector(".editor-content") as HTMLDivElement;
         const editable = editor.querySelector(".editor-editable") as HTMLTextAreaElement;
+
+        editor.getText = () =>
+        {
+            if(editable.value === undefined)
+            {
+                return "";
+            }
+            
+            return editable.value;
+        };
 
         editable.addEventListener("keypress", (ev) =>
         {
