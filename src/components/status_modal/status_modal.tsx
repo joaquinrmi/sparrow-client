@@ -7,6 +7,8 @@ export interface Props
     children?: React.ReactNode;
     id: string;
     message: string;
+
+    onClose(): void;
 }
 
 const StatusModal: React.FunctionComponent<Props> = (props) =>
@@ -29,6 +31,7 @@ const StatusModal: React.FunctionComponent<Props> = (props) =>
             setTimeout(() =>
             {
                 modal.classList.add("hide");
+                props.onClose();
             },
             300);
         },
