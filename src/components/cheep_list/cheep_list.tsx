@@ -75,12 +75,36 @@ async function loadCheeps(query: SearchCheepsQuery): Promise<{ cheeps: Array<Che
 
     if(response.status === 200)
     {
-        return await response.json();
+        const { cheeps, nextTime } = (await response.json()) as { cheeps: Array<any>, nextTime: number };
+
+        return {
+            cheeps: cheeps.map((cheepData) => processCheep(cheepData)),
+            nextTime: nextTime
+        };
     }
     else
     {
         throw new Error();
     }
+}
+
+function processCheep(data: any): CheepData
+{
+    return {
+        id: data.id,
+        author: data.author,
+        dateCreated: new Date(data.dateCreated),
+        content: data.content,
+        gallery: data.gallery || [],
+        quoteTarget: data.quoteTarget ? processCheep(data.quoteTarget) : undefined,
+        commentCount: data.commentCount,
+        likeCount: data.likeCount,
+        recheepCount: data.recheepCount,
+        withCommentsCount: data.withCommentCount,
+        responseOf: data.responseOf ? processCheep(data.responseOf) : undefined,
+        recheepped: data.recheeped,
+        liked: data.liked
+    };
 }
 
 function parseCheepQuery(query: SearchCheepsQuery): string
