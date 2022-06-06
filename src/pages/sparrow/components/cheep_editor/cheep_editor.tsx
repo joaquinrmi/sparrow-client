@@ -113,10 +113,17 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                             }} />
                         </div>
 
-                        {gallery.length > 0 ?
+                        {gallery.length > 0 || loadingPictures ?
                             <div className="gallery-container">
                                 <Gallery pictures={gallery} />
-                            </div>:
+
+                                {loadingPictures ?
+                                    <div className="loading-pictures">
+                                        <Loading />
+                                    </div> :
+                                    null
+                                }
+                            </div> :
                             null
                         }
                     </div>
