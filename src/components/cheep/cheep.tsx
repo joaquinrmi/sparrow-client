@@ -98,7 +98,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                             switch(token.type)
                             {
                             case TokenType.Plain:
-                                return <>{token.value}</>;
+                                return <span key={`${index}-text`}>{token.value}</span>;
 
                             case TokenType.Hashtag:
                                 return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
