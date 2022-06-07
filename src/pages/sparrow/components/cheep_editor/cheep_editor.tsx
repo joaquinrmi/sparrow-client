@@ -26,7 +26,7 @@ export interface Props
 
 const CheepEditor: React.FunctionComponent<Props> = (props) =>
 {
-    const [ buttonEnabled, setButtonEnabled ] = useState<boolean>(false);
+    const [ buttonEnabled, setButtonEnabled ] = useState<boolean>(props.targetCheep !== undefined);
     const [ status, setStatus ] = useState<number>(0);
     const [ gallery, setGallery ] = useState<Array<string>>([]);
     const [ loadingPictures, setLoadingPictures ] = useState<boolean>(false);
@@ -81,6 +81,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
             }
 
             setLoadingPictures(false);
+            setButtonEnabled(true);
             setGallery((currentGallery) =>
             {
                 return [
