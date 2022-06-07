@@ -45,6 +45,21 @@ class StateManager
             });
         }
     }
+
+    setEditorTargetCheep(targetCheep?: CheepData): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.cheepEditor.targetCheep = targetCheep;
+
+                return newState;
+            });
+        }
+    }
 }
 
 export default StateManager;
