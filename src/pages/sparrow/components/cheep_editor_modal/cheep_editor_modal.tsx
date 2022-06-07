@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../../../components/modal";
+import StateContext from "../../state_context";
 import CheepEditor from "../cheep_editor/cheep_editor";
 
 import "./cheep_editor_modal.scss";
@@ -12,6 +13,7 @@ export interface Props
 
 const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
 {
+    const [ state, stateManager ] = useContext(StateContext);
     const navigate = useNavigate();
 
     useEffect(() =>
@@ -22,6 +24,8 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
             {
                 props.onClose();
             }
+
+            stateManager.setEditorTargetCheep(undefined);
         };
     });
 
@@ -29,7 +33,7 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
     {
         navigate(-1);
     }}>
-        <CheepEditor id="cheep-editor-modal" />
+        <CheepEditor id="cheep-editor-modal" targetCheep={state.cheepEditor.targetCheep} />
     </Modal>;
 };
 
