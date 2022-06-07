@@ -21,9 +21,18 @@ const LikeButton: React.FunctionComponent<Props> = (props) =>
             props.onClick();
         }
 
-        const likeURL = `${process.env.REACT_APP_SERVER}/api/cheep/like?cheepId=${props.cheepId}`;
+        let url: string;
 
-        await fetch(likeURL, {
+        if(props.active)
+        {
+            url = `${process.env.REACT_APP_SERVER}/api/cheep/unlike?cheepId=${props.cheepId}`;
+        }
+        else
+        {
+            url = `${process.env.REACT_APP_SERVER}/api/cheep/like?cheepId=${props.cheepId}`;
+        }
+
+        await fetch(url, {
             method: "POST",
             credentials: "include"
         });
