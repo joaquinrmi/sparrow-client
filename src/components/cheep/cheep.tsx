@@ -137,7 +137,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                         </div>
                         
                         <div className="interaction-button-container">
-                            <RecheepButton cheepId={props.data.id} active={props.data.recheepped} counter={props.data.recheepCount} />
+                            <RecheepButton cheepData={props.data} active={props.data.recheepped} counter={props.data.recheepCount} />
                         </div>
 
                         <div className="interaction-button-container">
