@@ -32,7 +32,8 @@ const Sparrow: React.FunctionComponent = () =>
             profileWithReplies: { query: {}, nextTime: 0, cheeps: [] },
             profileMedia: { query: {}, nextTime: 0, cheeps: [] },
             profileLikes: { query: {}, nextTime: 0, cheeps: [] },
-        }
+        },
+        cheepEditor: {}
     });
 
     const [ profileState, setProfileState ] = useState<ProfileState>(DEFAULT_PROFILE_STATE);
