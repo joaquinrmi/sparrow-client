@@ -73,6 +73,14 @@
                         background-color: rgba(0, 0, 0, 0.3);
                     }
                 }
+
+                .quote-container
+                {
+                    border: 1px solid Color.$gray3;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    margin-bottom: 12px;
+                }
             }
 
             .editor-bottom
