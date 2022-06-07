@@ -14,6 +14,9 @@ interface SparrowState
         profileMedia: CheepListState;
         profileLikes: CheepListState;
     };
+    cheepEditor: {
+        targetCheep?: CheepData;
+    };
 }
 
 export interface LocationState
