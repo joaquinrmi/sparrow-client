@@ -12,13 +12,16 @@ import uploadImage from "../../../../upload_image";
 import CreateCheepData from "./create_cheep_data";
 import postCheep from "./post_cheep";
 import StatusMessageContext from "../../../../status_message_context";
+import ResponseErrorType from "../../../../response_error_type";
+import CheepData from "../../../../cheep_data";
+import Cheep from "../../../../components/cheep";
 
 import "./cheep_editor.scss";
-import ResponseErrorType from "../../../../response_error_type";
 
 export interface Props
 {
     id: string;
+    targetCheep?: CheepData;
 }
 
 const CheepEditor: React.FunctionComponent<Props> = (props) =>
@@ -130,6 +133,13 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                     </div> :
                                     null
                                 }
+                            </div> :
+                            null
+                        }
+
+                        {props.targetCheep ?
+                            <div className="quote-container">
+                                <Cheep data={props.targetCheep} quote />
                             </div> :
                             null
                         }
