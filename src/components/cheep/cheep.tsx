@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CheepData from "../../cheep_data";
 import MONTHS from "../../months";
@@ -6,6 +6,7 @@ import CommentButton from "../../pages/sparrow/components/comment_button";
 import LikeButton from "../../pages/sparrow/components/like_button";
 import RecheepButton from "../../pages/sparrow/components/recheep_button";
 import parseText, { TokenType } from "../../parse_text";
+import SessionContext from "../../session_context";
 import Gallery from "../gallery";
 import UserPicture from "../user_picture";
 
@@ -24,11 +25,15 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
     const [ like, setLike ] = useState<boolean>(props.data.liked);
     const [ recheep, setRecheep ] = useState<boolean>(props.data.recheepped);
 
+    const userSession = useContext(SessionContext);
+
+    const cheepData = props.data.quoteTarget && props.data.content === null && props.data.gallery?.length === 0 ? props.data.quoteTarget : props.data;
+
     useEffect(() =>
     {
         let interval = setInterval(() =>
         {
-            setCheepDate(formatDate(props.data.dateCreated));
+            setCheepDate(formatDate(cheepData.dateCreated));
         },
         2 * 60 * 1000);
 
@@ -41,11 +46,11 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
-    const cheepLink = `/${props.data.author.handle}/status/${props.data.id}`;
+    const cheepLink = `/${cheepData.author.handle}/status/${cheepData.id}`;
     const authorPicture = <>
         <div className="cheep-picture" style={{
-            backgroundImage: `url(${props.data.author.picture})`
-        }} title={`Foto de perfil de @${props.data.author.name}`} />
+            backgroundImage: `url(${cheepData.author.picture})`
+        }} title={`Foto de perfil de @${cheepData.author.name}`} />
 
         <div className="veil"></div>
     </>;
@@ -55,119 +60,137 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
         ev.stopPropagation();
         navigate(cheepLink);
     }}>
-        {!props.quote ?
-            <UserPicture userHandle={props.data.author.handle} userName={props.data.author.name} picture={props.data.author.picture} /> :
+        {cheepData !== props.data ?
+            <div className="recheep-info">
+                <div className="icon">
+                    <i className="fa-solid fa-retweet"></i>
+                </div>
+
+                <Link className="message" to={`/${props.data.author.handle}`} onClick={(ev) =>
+                {
+                    ev.stopPropagation();
+                }}>
+                    {props.data.author.name === userSession.user.name ? "Recheepeaste" : `${props.data.author.name} lo recheepeó`}
+                </Link>
+            </div> :
             null
         }
 
-        <div className="cheep-body">
-            <div className="cheep-header">
-                {props.quote ?
-                    <div className="header-picture-container">
-                        {authorPicture}
-                    </div> :
-                    null
-                }
-
-                <Link className="author-name" to={`/${props.data.author.handle}`} onClick={(ev) =>
-                {
-                    ev.stopPropagation();
-                }}>
-                    {props.data.author.name}
-                </Link>
-
-                <Link className="author-handle" to={`/${props.data.author.handle}`} onClick={(ev) =>
-                {
-                    ev.stopPropagation();
-                }}>
-                    @{props.data.author.handle}
-                </Link>
-
-                <span className="separator">·</span>
-
-                <Link className="cheep-date" to={cheepLink} onClick={(ev) =>
-                {
-                    ev.stopPropagation();
-                }}>
-                    {cheepDate}
-                </Link>
-            </div>
-
-            <div className="cheep-content">
-                <span className="content-text">
-                    {props.data.content ?
-                        parseText(props.data.content).map((token, index) =>
-                        {
-                            switch(token.type)
-                            {
-                            case TokenType.Plain:
-                                return <span key={`${index}-text`}>{token.value}</span>;
-
-                            case TokenType.Hashtag:
-                                return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
-                                    {token.value}
-                                </Link>;
-                            }
-                        }) :
-                        null
-                    }
-                </span>
-
-                {props.quote && props.data.quoteTarget ?
-                    <span className="show-thread">Mostrar este hilo</span> :
-                    null
-                }
-
-                {!props.quote && props.data.gallery && props.data.gallery.length > 0 ?
-                    <div className="sub-container">
-                        <Gallery pictures={props.data.gallery} />
-                    </div> :
-                    null
-                }
-
-                {!props.quote && props.data.quoteTarget ?
-                    <div className="sub-container">
-                        <Cheep id={`quote-${props.id}`} data={props.data.quoteTarget} quote />
-                    </div> :
-                    null
-                }
-
-                {!props.quote ?
-                    <div className="interaction-container">
-                        <div className="interaction-button-container">
-                            <CommentButton id={`comment-${props.id}`} cheepData={props.data} counter={true} />
-                        </div>
-                        
-                        <div className="interaction-button-container">
-                            <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={recheep} counter={props.data.recheepCount} onRecheep={() =>
-                            {
-                                setRecheep((state) =>
-                                {
-                                    return !state;
-                                });
-                            }} />
-                        </div>
-
-                        <div className="interaction-button-container">
-                            <LikeButton id={`like-${props.id}`} cheepId={props.data.id} active={like} counter={props.data.likeCount} onClick={() =>
-                            {
-                                setLike((state) =>
-                                {
-                                    return !state;
-                                });
-                            }} />
-                        </div>
-                    </div> :
-                    null
-                }
-            </div>
-
-            {props.quote && props.data.gallery && props.data.gallery.length > 0 ?
-                <div className="sub-container">
-                    <Gallery pictures={props.data.gallery} />
-                </div> :
+        <div className="cheep-cheep">
+            {!props.quote ?
+                <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} /> :
                 null
             }
+
+            <div className="cheep-body">
+                <div className="cheep-header">
+                    {props.quote ?
+                        <div className="header-picture-container">
+                            {authorPicture}
+                        </div> :
+                        null
+                    }
+
+                    <Link className="author-name" to={`/${cheepData.author.handle}`} onClick={(ev) =>
+                    {
+                        ev.stopPropagation();
+                    }}>
+                        {cheepData.author.name}
+                    </Link>
+
+                    <Link className="author-handle" to={`/${cheepData.author.handle}`} onClick={(ev) =>
+                    {
+                        ev.stopPropagation();
+                    }}>
+                        @{cheepData.author.handle}
+                    </Link>
+
+                    <span className="separator">·</span>
+
+                    <Link className="cheep-date" to={cheepLink} onClick={(ev) =>
+                    {
+                        ev.stopPropagation();
+                    }}>
+                        {cheepDate}
+                    </Link>
+                </div>
+
+                <div className="cheep-content">
+                    <span className="content-text">
+                        {cheepData.content ?
+                            parseText(cheepData.content).map((token, index) =>
+                            {
+                                switch(token.type)
+                                {
+                                case TokenType.Plain:
+                                    return <span key={`${index}-text`}>{token.value}</span>;
+
+                                case TokenType.Hashtag:
+                                    return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
+                                        {token.value}
+                                    </Link>;
+                                }
+                            }) :
+                            null
+                        }
+                    </span>
+
+                    {props.quote && cheepData.quoteTarget ?
+                        <span className="show-thread">Mostrar este hilo</span> :
+                        null
+                    }
+
+                    {!props.quote && cheepData.gallery && cheepData.gallery.length > 0 ?
+                        <div className="sub-container">
+                            <Gallery pictures={cheepData.gallery} />
+                        </div> :
+                        null
+                    }
+
+                    {!props.quote && cheepData.quoteTarget ?
+                        <div className="sub-container">
+                            <Cheep id={`quote-${props.id}`} data={cheepData.quoteTarget} quote />
+                        </div> :
+                        null
+                    }
+
+                    {!props.quote ?
+                        <div className="interaction-container">
+                            <div className="interaction-button-container">
+                                <CommentButton id={`comment-${props.id}`} cheepData={props.data} counter={true} />
+                            </div>
+                            
+                            <div className="interaction-button-container">
+                                <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={recheep} counter={cheepData.recheepCount} onRecheep={() =>
+                                {
+                                    setRecheep((state) =>
+                                    {
+                                        return !state;
+                                    });
+                                }} />
+                            </div>
+
+                            <div className="interaction-button-container">
+                                <LikeButton id={`like-${props.id}`} cheepId={cheepData.id} active={like} counter={cheepData.likeCount} onClick={() =>
+                                {
+                                    setLike((state) =>
+                                    {
+                                        return !state;
+                                    });
+                                }} />
+                            </div>
+                        </div> :
+                        null
+                    }
+                </div>
+
+                {props.quote && cheepData.gallery && cheepData.gallery.length > 0 ?
+                    <div className="sub-container">
+                        <Gallery pictures={cheepData.gallery} />
+                    </div> :
+                    null
+                }
+            </div>
         </div>
     </div>;
 };

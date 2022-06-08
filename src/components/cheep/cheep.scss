@@ -3,129 +3,168 @@
 .cheep
 {
     display: flex;
-    flex-direction: row;
-    gap: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
     padding: 12px 16px 8px 16px;
     box-sizing: border-box;
     border-bottom: 1px solid Color.$gray2;
     cursor: pointer;
     transition: background-color 0.2s;
 
-    .cheep-picture
-    {
-        flex: 1;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-
-    .cheep-body
+    .recheep-info
     {
         display: flex;
-        flex-direction: column;
-        gap: 5px;
-        flex: 1;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
 
-        .cheep-header
+        .icon
         {
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 5px;
             font-size: 15px;
-
-            .header-picture-container
-            {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: stretch;
-                width: 20px;
-                height: 20px;
-                border-radius: 1000px;
-                overflow: hidden;
-            }
-
-            .author-name
-            {
-                font-weight: 700;
-                text-decoration: none;
-                color: Color.$blackText;
-            }
-
-            .author-name:hover
-            {
-                text-decoration: underline;
-                text-decoration-thickness: 2px;
-            }
-
-            .author-handle,
-            .cheep-date
-            {
-                text-decoration: none;
-                color: Color.$silverText;
-            }
-
-            .cheep-date:hover
-            {
-                text-decoration: underline;
-            }
+            color: Color.$silverText;
         }
 
-        .cheep-content
+        .message
+        {
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            color: Color.$silverText;
+        }
+
+        .message:hover
+        {
+            text-decoration: underline;
+        }
+    }
+
+    .cheep-cheep
+    {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        box-sizing: border-box;
+
+        .cheep-picture
+        {
+            flex: 1;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .cheep-body
         {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 5px;
+            flex: 1;
 
-            .content-text
+            .cheep-header
             {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
                 font-size: 15px;
-                white-space: pre-wrap;
-                color: Color.$blackText;
 
-                .hashtag
+                .header-picture-container
                 {
-                    color: Color.$blue1;
-                    text-decoration: none;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: stretch;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 1000px;
+                    overflow: hidden;
                 }
 
-                .hashtag:hover
+                .author-name
+                {
+                    font-weight: 700;
+                    text-decoration: none;
+                    color: Color.$blackText;
+                }
+
+                .author-name:hover
+                {
+                    text-decoration: underline;
+                    text-decoration-thickness: 2px;
+                }
+
+                .author-handle,
+                .cheep-date
+                {
+                    text-decoration: none;
+                    color: Color.$silverText;
+                }
+
+                .cheep-date:hover
                 {
                     text-decoration: underline;
                 }
             }
 
-            .show-thread
-            {
-                font-size: 15px;
-                color: Color.$blue1;
-            }
-
-            .interaction-container
+            .cheep-content
             {
                 display: flex;
-                flex-direction: row;
-                align-items: stretch;
-                margin-top: -8px;
-                margin-left: -8px;
-                overflow: hidden;
-                height: 35px;
+                flex-direction: column;
+                gap: 12px;
 
-                .interaction-button-container
+                .content-text
+                {
+                    font-size: 15px;
+                    white-space: pre-wrap;
+                    color: Color.$blackText;
+
+                    .hashtag
+                    {
+                        color: Color.$blue1;
+                        text-decoration: none;
+                    }
+
+                    .hashtag:hover
+                    {
+                        text-decoration: underline;
+                    }
+                }
+
+                .show-thread
+                {
+                    font-size: 15px;
+                    color: Color.$blue1;
+                }
+
+                .interaction-container
                 {
                     display: flex;
                     flex-direction: row;
                     align-items: stretch;
-                    flex: 1;
-                }
-            }
+                    margin-top: -8px;
+                    margin-left: -8px;
+                    overflow: hidden;
+                    height: 35px;
 
-            .sub-container
-            {
-                border: 1px solid Color.$gray1;
-                border-radius: 16px;
-                overflow: hidden;
+                    .interaction-button-container
+                    {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: stretch;
+                        flex: 1;
+                    }
+                }
+
+                .sub-container
+                {
+                    border: 1px solid Color.$gray1;
+                    border-radius: 16px;
+                    overflow: hidden;
+                }
             }
         }
     }
@@ -141,22 +180,25 @@
 {
     padding: 0;
     
-    .cheep-body
+    .cheep-cheep
     {
-        .cheep-header
+        .cheep-body
         {
-            padding: 10px 10px 0 10px;
-        }
+            .cheep-header
+            {
+                padding: 10px 10px 0 10px;
+            }
 
-        .cheep-content
-        {
-            padding: 0 10px 10px 10px;
-        }
+            .cheep-content
+            {
+                padding: 0 10px 10px 10px;
+            }
 
-        .sub-container
-        {
-            border: none;
-            border-radius: 0;
+            .sub-container
+            {
+                border: none;
+                border-radius: 0;
+            }
         }
     }
 }
