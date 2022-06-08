@@ -61,7 +61,7 @@ class StateManager
         }
     }
 
-    openRecheepMenu(targetCheep: CheepData, onClick: () => void): void
+    openRecheepMenu(targetCheep: CheepData, position: [ number, number ], onClick: () => void): void
     {
         if(this.setState)
         {
@@ -71,6 +71,8 @@ class StateManager
 
                 newState.recheepMenu = {
                     targetCheep: targetCheep,
+                    positionX: position[0],
+                    positionY: position[1],
                     onClick: onClick
                 };
 
