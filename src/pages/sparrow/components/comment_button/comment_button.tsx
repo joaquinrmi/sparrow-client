@@ -4,13 +4,14 @@ import InteractionButton, { InteractionColor } from "../interaction_button";
 
 export interface Props
 {
+    id: string;
     cheepData: CheepData;
     counter?: boolean;
 }
 
 const CommentButton: React.FunctionComponent<Props> = (props) =>
 {
-    return <InteractionButton color={InteractionColor.Blue} icon="comment" counter={props.counter ? props.cheepData.commentCount : undefined} onClick={(event) =>
+    return <InteractionButton id={props.id} color={InteractionColor.Blue} icon="comment" counter={props.counter ? props.cheepData.commentCount : undefined} onClick={(event) =>
     {
         event.stopPropagation();
     }} />;
