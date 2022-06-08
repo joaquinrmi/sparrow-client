@@ -21,7 +21,7 @@ interface SparrowState
         targetCheep: CheepData;
         positionX: number;
         positionY: number;
-        onClick(): void;
+        onRecheep(): void;
     };
 }
 
