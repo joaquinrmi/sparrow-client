@@ -14,6 +14,7 @@ import StateManager from "./state_manager";
 import CheepEditorModal from "./components/cheep_editor_modal";
 import StatusModal from "../../components/status_modal";
 import StatusMessageContext from "../../status_message_context";
+import RecheepMenu from "./components/recheep_menu";
 
 import "./sparrow.scss";
 
@@ -88,7 +89,7 @@ const Sparrow: React.FunctionComponent = () =>
 
                     compose: <CheepEditorModal />,
 
-                    cheep: <CheepPage cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />,
+                    cheep: <CheepPage id="cheep-page" cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />,
 
                     profile: <MainSection mainColumnChildren={<Profile state={profileState} setState={changeProfileState} handle={userHandle} />} rightColumnChildren={aside} />
                 }} />
@@ -144,6 +145,11 @@ const Sparrow: React.FunctionComponent = () =>
             {
                 setStatusMessage("");
             }} />
+
+            {state.recheepMenu ?
+                <RecheepMenu targetCheep={state.recheepMenu.targetCheep} positionX={state.recheepMenu.positionX} positionY={state.recheepMenu.positionY} onRecheep={state.recheepMenu.onRecheep} /> :
+                null
+            }
         </div></StatusMessageContext.Provider>;
     }}</SessionContext.Consumer></StateContext.Provider>;
 };
