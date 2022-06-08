@@ -22,6 +22,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 {
     const [ cheepDate, setCheepDate ] = useState<string>(formatDate(props.data.dateCreated));
     const [ like, setLike ] = useState<boolean>(props.data.liked);
+    const [ recheep, setRecheep ] = useState<boolean>(props.data.recheepped);
 
     useEffect(() =>
     {
@@ -138,7 +139,13 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                         </div>
                         
                         <div className="interaction-button-container">
-                            <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={props.data.recheepped} counter={props.data.recheepCount} />
+                            <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={recheep} counter={props.data.recheepCount} onRecheep={() =>
+                            {
+                                setRecheep((state) =>
+                                {
+                                    return !state;
+                                });
+                            }} />
                         </div>
 
                         <div className="interaction-button-container">
