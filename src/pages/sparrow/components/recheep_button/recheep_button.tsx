@@ -6,6 +6,7 @@ import InteractionButton, { InteractionColor } from "../interaction_button";
 
 export interface Props
 {
+    id: string;
     cheepData: CheepData;
     counter?: number;
     active?: boolean;
@@ -16,7 +17,7 @@ const RecheepButton: React.FunctionComponent<Props> = (props) =>
     const [ state, stateManager ] = useContext(StateContext);
     const navigate = useNavigate();
     
-    return <InteractionButton color={InteractionColor.Green} icon="retweet" counter={props.counter} active={props.active} onClick={(event) =>
+    return <InteractionButton id={props.id} color={InteractionColor.Green} icon="retweet" counter={props.counter} active={props.active} onClick={(event) =>
     {
         event.stopPropagation();
 
