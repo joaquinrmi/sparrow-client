@@ -140,7 +140,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
 
                         {props.targetCheep ?
                             <div className="quote-container">
-                                <Cheep data={props.targetCheep} quote />
+                                <Cheep id={`quote-${props.id}`} data={props.targetCheep} quote />
                             </div> :
                             null
                         }
