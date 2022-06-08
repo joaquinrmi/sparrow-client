@@ -13,6 +13,7 @@ import "./cheep.scss";
 
 export interface Props
 {
+    id: string;
     data: CheepData;
     quote?: boolean;
 }
@@ -125,7 +126,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
                 {!props.quote && props.data.quoteTarget ?
                     <div className="sub-container">
-                        <Cheep data={props.data.quoteTarget} quote />
+                        <Cheep id={`quote-${props.id}`} data={props.data.quoteTarget} quote />
                     </div> :
                     null
                 }
@@ -133,15 +134,15 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                 {!props.quote ?
                     <div className="interaction-container">
                         <div className="interaction-button-container">
-                            <CommentButton cheepData={props.data} counter={true} />
+                            <CommentButton id={`comment-${props.id}`} cheepData={props.data} counter={true} />
                         </div>
                         
                         <div className="interaction-button-container">
-                            <RecheepButton cheepData={props.data} active={props.data.recheepped} counter={props.data.recheepCount} />
+                            <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={props.data.recheepped} counter={props.data.recheepCount} />
                         </div>
 
                         <div className="interaction-button-container">
-                            <LikeButton cheepId={props.data.id} active={like} counter={props.data.likeCount} onClick={() =>
+                            <LikeButton id={`like-${props.id}`} cheepId={props.data.id} active={like} counter={props.data.likeCount} onClick={() =>
                             {
                                 setLike((state) =>
                                 {
