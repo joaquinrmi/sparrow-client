@@ -4,16 +4,18 @@ import "./interaction_button.scss";
 
 export interface Props
 {
+    id: string;
     color: InteractionColor;
     icon: string;
     counter?: number;
     active?: boolean;
+
     onClick?(event: React.MouseEvent<HTMLDivElement>): void;
 }
 
 const InteractionButton: React.FunctionComponent<Props> = (props) =>
 {
-    return <div className={`interaction-button ${props.color} ${props.active ? "active" : ""}`} onClick={props.onClick ? props.onClick : () => {}}>
+    return <div id={props.id} className={`interaction-button ${props.color} ${props.active ? "active" : ""}`} onClick={props.onClick ? props.onClick : () => {}}>
         <div className="icon-container">
             <i className={`fa-solid fa-${props.icon}`}></i>
         </div>
