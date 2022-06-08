@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import CheepData from "../../../../cheep_data";
 import StateContext from "../../state_context";
+import CreateCheepData from "../cheep_editor/create_cheep_data";
+import postCheep from "../cheep_editor/post_cheep";
 
 import "./recheep_menu.scss";
 
@@ -29,7 +31,22 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
             top: props.positionY,
             left: props.positionX
         }}>
-            <div className="option">
+            <div className="option" onClick={async () =>
+            {
+                props.onRecheep();
+                stateManager.closeRecheepMenu();
+
+                const data: CreateCheepData = {
+                    quoteTarget: props.targetCheep.id
+                };
+
+                try
+                {
+                    await postCheep(data);
+                }
+                catch(err)
+                {}
+            }}>
                 <div className="icon">
                     <i className="fa-solid fa-pencil"></i>
                 </div>
