@@ -17,6 +17,10 @@ interface SparrowState
     cheepEditor: {
         targetCheep?: CheepData;
     };
+    recheepMenu?: {
+        targetCheep: CheepData;
+        onClick(): void;
+    };
 }
 
 export interface LocationState
