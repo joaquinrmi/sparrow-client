@@ -3,6 +3,7 @@ import InteractionButton, { InteractionColor } from "../interaction_button";
 
 export interface Props
 {
+    id: string;
     cheepId: number;
     counter?: number;
     active?: boolean;
@@ -12,7 +13,7 @@ export interface Props
 
 const LikeButton: React.FunctionComponent<Props> = (props) =>
 {
-    return <InteractionButton color={InteractionColor.Pink} icon="heart" counter={props.counter} active={props.active} onClick={async (event) =>
+    return <InteractionButton id={props.id} color={InteractionColor.Pink} icon="heart" counter={props.counter} active={props.active} onClick={async (event) =>
     {
         event.stopPropagation();
 
