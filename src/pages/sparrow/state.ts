@@ -19,6 +19,8 @@ interface SparrowState
     };
     recheepMenu?: {
         targetCheep: CheepData;
+        positionX: number;
+        positionY: number;
         onClick(): void;
     };
 }
