@@ -60,6 +60,39 @@ class StateManager
             });
         }
     }
+
+    openRecheepMenu(targetCheep: CheepData, onClick: () => void): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.recheepMenu = {
+                    targetCheep: targetCheep,
+                    onClick: onClick
+                };
+
+                return newState;
+            });
+        }
+    }
+
+    closeRecheepMenu(): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.recheepMenu = undefined;
+
+                return newState;
+            });
+        }
+    }
 }
 
 export default StateManager;
