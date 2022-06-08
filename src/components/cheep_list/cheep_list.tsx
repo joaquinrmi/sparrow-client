@@ -98,9 +98,9 @@ function processCheep(data: any): CheepData
         gallery: data.gallery || [],
         quoteTarget: data.quoteTarget ? processCheep(data.quoteTarget) : undefined,
         commentCount: data.commentCount,
-        likeCount: data.likeCount,
-        recheepCount: data.recheepCount,
-        withCommentsCount: data.withCommentCount,
+        likeCount: data.likes,
+        recheepCount: data.recheeps,
+        withCommentsCount: data.quotes,
         responseOf: data.responseOf ? processCheep(data.responseOf) : undefined,
         recheepped: data.userRecheeppedIt,
         liked: data.userLikesIt
