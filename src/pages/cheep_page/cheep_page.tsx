@@ -14,6 +14,7 @@ import "./cheep_page.scss";
 
 export interface Props
 {
+    id: string;
     cheepId: number;
     state: CheepPageState;
     setState: SetCheepPageState;
@@ -125,7 +126,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
             {props.state.cheepData.quoteTarget ?
                 <div className="sub-container">
-                    <Cheep data={props.state.cheepData.quoteTarget} />
+                    <Cheep id={`quote-${props.id}`} data={props.state.cheepData.quoteTarget} />
                 </div> :
                 null
             }
@@ -186,7 +187,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
         </div>;
     }
 
-    return <div className="cheep-page">
+    return <div id={props.id} className="cheep-page">
         <PageHeader>
             <span className="title">Cheep</span>
         </PageHeader>
