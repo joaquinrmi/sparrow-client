@@ -49,7 +49,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
     {
         content = <>{listState.cheeps.map((data, index) =>
         {
-            return <Cheep id={`${index}-cheep-${props.name}`} key={`${index}-cheep`} data={data} />;
+            return <Cheep id={`${index}-cheep-${props.name}`} index={index} listName={props.name} key={`${index}-cheep`} data={data} />;
         })}</>;
     }
     else
