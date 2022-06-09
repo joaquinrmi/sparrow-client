@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import CheepData from "../../../../cheep_data";
+import getRelevantCheepData from "../../../../components/cheep/get_relevant_cheep_data";
 import StateContext from "../../state_context";
 import CreateCheepData from "../cheep_editor/create_cheep_data";
 import postCheep from "../cheep_editor/post_cheep";
@@ -21,6 +22,8 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
+    const targetCheep = getRelevantCheepData(props.targetCheep);
+
     return <>
         <div className="recheep-menu-container" onClick={() =>
         {
@@ -37,7 +40,7 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
                 stateManager.closeRecheepMenu();
 
                 const data: CreateCheepData = {
-                    quoteTarget: props.targetCheep.id
+                    quoteTarget: targetCheep.id
                 };
 
                 try
@@ -58,7 +61,7 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
 
             <div className="option" onClick={() =>
             {
-                stateManager.setEditorTargetCheep(props.targetCheep);
+                stateManager.setEditorTargetCheep(targetCheep);
                 stateManager.closeRecheepMenu();
 
                 navigate("/compose/cheep");
