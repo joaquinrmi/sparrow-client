@@ -9,9 +9,7 @@ import Router from "../../../../components/router";
 import RouteSetter from "../../../../components/route_setter";
 import ButtonContainer from "../../../../components/button_container";
 
-import ProfileData from "../../profile_data";
 import MONTHS from "../../../../months";
-import SetState from "../../../../set_state";
 import SessionContext from "../../../../session_context";
 import StateContext from "../../state_context";
 
@@ -20,33 +18,7 @@ import "./profile.scss";
 export interface Props
 {
     handle: string;
-    state: ProfileState;
-    setState: SetProfileState;
 }
-
-export interface ProfileState
-{
-    profileData: ProfileData;
-}
-
-export type SetProfileState = SetState<ProfileState>;
-
-export const DEFAULT_PROFILE_STATE: ProfileState = {
-    profileData: {
-        handle: "",
-        name: "",
-        picture: "",
-        banner: "",
-        description: "",
-        location: "",
-        birthdate: new Date(),
-        joinDate: new Date(),
-        website: "",
-        cheepCount: 0,
-        followersCount: 0,
-        followingCount: 0
-    }
-};
 
 const Profile: React.FunctionComponent<Props> = (props) =>
 {
@@ -67,7 +39,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             {
                 const data = await response.json();
 
-                props.setState.profileData({
+                stateManager.setProfileState({
                     handle: data.handle,
                     name: data.name,
                     picture: data.picture,
@@ -87,7 +59,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
     [ props.handle ]);
 
     let content: React.ReactNode;
-    if(props.state.profileData.handle.length === 0 || props.handle !== props.state.profileData.handle)
+    if(state.profile.data.handle.length === 0 || props.handle !== state.profile.data.handle)
     {
         content = <div className="loading-container">
             <Loading />
@@ -101,7 +73,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
                 <div className="picture-container">
                     <div className="picture">
-                        <img src={props.state.profileData.picture} alt="" />
+                        <img src={state.profile.data.picture} alt="" />
                     </div>
                 </div>
 
@@ -123,29 +95,29 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             <section className="user-information">
                 <div className="user-id">
                     <span className="user-name">
-                        {props.state.profileData.name}
+                        {state.profile.data.name}
                     </span>
 
                     <span className="user-handle">
-                        @{props.state.profileData.handle}
+                        @{state.profile.data.handle}
                     </span>
                 </div>
 
-                {props.state.profileData.description.length > 0 ? <div className="description">
-                    {props.state.profileData.description}
+                {state.profile.data.description.length > 0 ? <div className="description">
+                    {state.profile.data.description}
                 </div> : null}
 
                 <div className="bottom-information">
                     <div className="extra-information">
-                        {props.state.profileData.location.length > 0 ? <ShortInfo icon="location-dot">{props.state.profileData.location}</ShortInfo> : null}
-                        {props.state.profileData.birthdate !== undefined ? <ShortInfo icon="cake-candles">Fecha de nacimiento: {props.state.profileData.birthdate.getDate()} de {MONTHS[props.state.profileData.birthdate.getMonth()]} de {props.state.profileData.birthdate.getFullYear()}</ShortInfo> : null}
-                        {props.state.profileData.joinDate !== undefined ? <ShortInfo icon="calendar-days">Se unió en {MONTHS[props.state.profileData.joinDate.getMonth()]} de {props.state.profileData.joinDate.getFullYear()}</ShortInfo> : null}
+                        {state.profile.data.location.length > 0 ? <ShortInfo icon="location-dot">{state.profile.data.location}</ShortInfo> : null}
+                        {state.profile.data.birthdate !== undefined ? <ShortInfo icon="cake-candles">Fecha de nacimiento: {state.profile.data.birthdate.getDate()} de {MONTHS[state.profile.data.birthdate.getMonth()]} de {state.profile.data.birthdate.getFullYear()}</ShortInfo> : null}
+                        {state.profile.data.joinDate !== undefined ? <ShortInfo icon="calendar-days">Se unió en {MONTHS[state.profile.data.joinDate.getMonth()]} de {state.profile.data.joinDate.getFullYear()}</ShortInfo> : null}
                     </div>
 
                     <div className="counters">
                         <div className="counter-container">
                             <span className="ammount">
-                                {props.state.profileData.followingCount}
+                                {state.profile.data.followingCount}
                             </span>
 
                             <span className="label">
@@ -155,7 +127,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
                         <div className="counter-container">
                             <span className="ammount">
-                                {props.state.profileData.followersCount}
+                                {state.profile.data.followersCount}
                             </span>
 
                             <span className="label">
@@ -166,26 +138,26 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 </div>
             </section>
 
-            <ProfileNavigation userHandle={props.state.profileData.handle} />
+            <ProfileNavigation userHandle={state.profile.data.handle} />
 
             <Router currentRoute={state.location["profile"].currentRoute} routes={{
                 cheeps: <CheepList name="profileCheeps" arguments={{
-                    userHandle: props.state.profileData.handle,
+                    userHandle: state.profile.data.handle,
                     responses: false
                 }} />,
 
                 withReplies: <CheepList name="profileWithReplies" arguments={{
-                    userHandle: props.state.profileData.handle,
+                    userHandle: state.profile.data.handle,
                     responses: true
                 }} />,
 
                 media: <CheepList name="profileMedia" arguments={{
-                    userHandle: props.state.profileData.handle,
+                    userHandle: state.profile.data.handle,
                     onlyGallery: true
                 }} />,
 
                 likes: <CheepList name="profileLikes" arguments={{
-                    userHandle: props.state.profileData.handle,
+                    userHandle: state.profile.data.handle,
                 }} />
             }} />
 
@@ -216,7 +188,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
     return <>
         <PageHeader>
             {
-                props.state.profileData.handle.length === 0 ?
+                state.profile.data.handle.length === 0 ?
                 <>
                     <span className="title">
                         Perfil
@@ -224,11 +196,11 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 </> :
                 <>
                     <span className="user-name">
-                        {props.state.profileData.name}
+                        {state.profile.data.name}
                     </span>
 
                     <span className="cheep-count">
-                        {props.state.profileData.cheepCount} Cheeps
+                        {state.profile.data.cheepCount} Cheeps
                     </span>
                 </>
             }
