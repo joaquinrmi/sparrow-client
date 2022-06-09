@@ -5,12 +5,14 @@
     flex: 1;
     display: flex;
     flex-direction: row;
+    min-width: 0;
 
     .main-column
     {
         display: flex;
         flex-direction: column;
         flex: 1;
+        min-width: 0;
         max-width: 600px;
         box-sizing: border-box;
         border: 1px solid Color.$gray2;
