@@ -109,7 +109,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                 </div>
                 <div className="editor-right">
                     <div className="editor-elements">
-                        <div className="text-editor-container">
+                        <div className={`text-editor-container ${props.targetCheep || gallery.length > 0 ? "mini" : ""}`}>
                             <TextEditor id={`${props.id}-editor`} maxLength={280} setStatus={(status) =>
                             {
                                 setStatus(status);
