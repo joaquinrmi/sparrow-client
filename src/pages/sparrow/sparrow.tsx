@@ -155,7 +155,7 @@ const Sparrow: React.FunctionComponent = () =>
             }} />
 
             {state.recheepMenu ?
-                <RecheepMenu targetCheep={state.recheepMenu.targetCheep} active={state.recheepMenu.active} positionX={state.recheepMenu.positionX} positionY={state.recheepMenu.positionY} onRecheep={state.recheepMenu.onRecheep} /> :
+                <RecheepMenu /> :
                 null
             }
         </div></StatusMessageContext.Provider>;
