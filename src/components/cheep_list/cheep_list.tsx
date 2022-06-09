@@ -94,7 +94,7 @@ function processCheep(data: any): CheepData
         id: data.id,
         author: data.author,
         dateCreated: new Date(data.dateCreated),
-        content: data.content,
+        content: data.content || undefined,
         gallery: data.gallery || [],
         quoteTarget: data.quoteTarget ? processCheep(data.quoteTarget) : undefined,
         commentCount: data.commentCount,
