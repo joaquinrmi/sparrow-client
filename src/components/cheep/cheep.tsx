@@ -10,6 +10,8 @@ import SessionContext from "../../session_context";
 import Gallery from "../gallery";
 import UserPicture from "../user_picture";
 import getRelevantCheepData from "./get_relevant_cheep_data";
+import StateContext from "../../pages/sparrow/state_context";
+import { CheepListName } from "../../pages/sparrow/state";
 
 import "./cheep.scss";
 
@@ -17,6 +19,8 @@ export interface Props
 {
     id: string;
     data: CheepData;
+    index?: number;
+    listName?: CheepListName;
     quote?: boolean;
 }
 
@@ -25,10 +29,12 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
     const cheepData = getRelevantCheepData(props.data);
 
     const [ cheepDate, setCheepDate ] = useState<string>(formatDate(cheepData.dateCreated));
-    const [ like, setLike ] = useState<boolean>(cheepData.liked);
-    const [ recheep, setRecheep ] = useState<boolean>(cheepData.recheepped);
 
     const userSession = useContext(SessionContext);
+    const [ state, stateManager ] = useContext(StateContext);
+
+    const like = cheepData.liked;
+    const recheep = cheepData.recheepped;
 
     useEffect(() =>
     {
@@ -164,20 +170,40 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                             <div className="interaction-button-container">
                                 <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={recheep} counter={cheepData.recheepCount} onRecheep={() =>
                                 {
-                                    setRecheep((state) =>
+                                    let targetCheepData = { ...props.data };
+                                    if(props.data === cheepData)
                                     {
-                                        return !state;
-                                    });
+                                        updateRecheep(targetCheepData, recheep);
+                                    }
+                                    else if(targetCheepData.quoteTarget)
+                                    {
+                                        updateRecheep(targetCheepData.quoteTarget, recheep);
+                                    }
+
+                                    if(props.listName !== undefined && props.index !== undefined)
+                                    {
+                                        stateManager.updateCheep(props.listName, props.index, targetCheepData);
+                                    }
                                 }} />
                             </div>
 
                             <div className="interaction-button-container">
                                 <LikeButton id={`like-${props.id}`} cheepId={cheepData.id} active={like} counter={cheepData.likeCount} onClick={() =>
                                 {
-                                    setLike((state) =>
+                                    let targetCheepData = { ...props.data };
+                                    if(props.data === cheepData)
                                     {
-                                        return !state;
-                                    });
+                                        updateLike(targetCheepData, like);
+                                    }
+                                    else if(targetCheepData.quoteTarget)
+                                    {
+                                        updateLike(targetCheepData.quoteTarget, like);
+                                    }
+
+                                    if(props.listName !== undefined && props.index !== undefined)
+                                    {
+                                        stateManager.updateCheep(props.listName, props.index, targetCheepData);
+                                    }
                                 }} />
                             </div>
                         </div> :
@@ -195,6 +221,34 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
         </div>
     </div>;
 };
+
+function updateRecheep(data: CheepData, recheep: boolean): void
+{
+    if(recheep)
+    {
+        data.recheepped = false;
+        data.recheepCount -= 1;
+    }
+    else
+    {
+        data.recheepped = true;
+        data.recheepCount += 1;
+    }
+}
+
+function updateLike(data: CheepData, like: boolean): void
+{
+    if(like)
+    {
+        data.liked = false;
+        data.likeCount -= 1;
+    }
+    else
+    {
+        data.liked = true;
+        data.likeCount += 1;
+    }
+}
 
 const MINUTE_TIME = 1000 * 60;
 const HOUR_TIME = MINUTE_TIME * 60;
