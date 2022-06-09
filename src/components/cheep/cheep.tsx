@@ -21,7 +21,7 @@ export interface Props
 
 const Cheep: React.FunctionComponent<Props> = (props) =>
 {
-    const cheepData = props.data.quoteTarget && props.data.content === null && props.data.gallery?.length === 0 ? props.data.quoteTarget : props.data;
+    const cheepData = props.data.quoteTarget && props.data.content === undefined && props.data.gallery.length === 0 ? props.data.quoteTarget : props.data;
 
     const [ cheepDate, setCheepDate ] = useState<string>(formatDate(cheepData.dateCreated));
     const [ like, setLike ] = useState<boolean>(cheepData.liked);
