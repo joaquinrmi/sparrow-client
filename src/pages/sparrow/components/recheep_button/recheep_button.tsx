@@ -27,7 +27,7 @@ const RecheepButton: React.FunctionComponent<Props> = (props) =>
         const x = rect.x + window.scrollX;
         const y = rect.y + window.scrollY;
 
-        stateManager.openRecheepMenu(props.cheepData, [ x, y ], () =>
+        stateManager.openRecheepMenu(props.cheepData, props.active || false, [ x, y ], () =>
         {
             if(props.onRecheep)
             {
