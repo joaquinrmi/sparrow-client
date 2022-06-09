@@ -62,6 +62,21 @@ class StateManager
         }
     }
 
+    updateCheep(listName: CheepListName, index: number, data: CheepData): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.cheepLists[listName].cheeps[index] = data;
+
+                return newState;
+            });
+        }
+    }
+
     setEditorTargetCheep(targetCheep?: CheepData): void
     {
         if(this.setState)
