@@ -1,6 +1,7 @@
 import React from "react";
 import CheepData from "../../cheep_data";
 import SearchCheepsQuery from "../../search_cheep_query";
+import ProfileData from "./profile_data";
 import SparrowState, { CheepListName, LocationName } from "./state";
 
 class StateManager
@@ -21,6 +22,21 @@ class StateManager
                 const newState = { ...state };
 
                 newState.location[locationName].currentRoute = route;
+
+                return newState;
+            });
+        }
+    }
+
+    setProfileState(data: ProfileData): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.profile.data = { ...data };
 
                 return newState;
             });
