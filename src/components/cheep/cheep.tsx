@@ -21,13 +21,13 @@ export interface Props
 
 const Cheep: React.FunctionComponent<Props> = (props) =>
 {
-    const [ cheepDate, setCheepDate ] = useState<string>(formatDate(props.data.dateCreated));
-    const [ like, setLike ] = useState<boolean>(props.data.liked);
-    const [ recheep, setRecheep ] = useState<boolean>(props.data.recheepped);
+    const cheepData = props.data.quoteTarget && props.data.content === null && props.data.gallery?.length === 0 ? props.data.quoteTarget : props.data;
+
+    const [ cheepDate, setCheepDate ] = useState<string>(formatDate(cheepData.dateCreated));
+    const [ like, setLike ] = useState<boolean>(cheepData.liked);
+    const [ recheep, setRecheep ] = useState<boolean>(cheepData.recheepped);
 
     const userSession = useContext(SessionContext);
-
-    const cheepData = props.data.quoteTarget && props.data.content === null && props.data.gallery?.length === 0 ? props.data.quoteTarget : props.data;
 
     useEffect(() =>
     {
