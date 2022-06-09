@@ -100,7 +100,9 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 <div className="banner-container"></div>
 
                 <div className="picture-container">
-                    <div className="picture"></div>
+                    <div className="picture">
+                        <img src={props.state.profileData.picture} alt="" />
+                    </div>
                 </div>
 
                 <div className="options-container">
