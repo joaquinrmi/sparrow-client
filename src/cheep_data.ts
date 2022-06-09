@@ -8,7 +8,7 @@ interface CheepData
     };
     dateCreated: Date;
     content?: string;
-    gallery?: Array<string>;
+    gallery: Array<string>;
     quoteTarget?: CheepData;
     commentCount: number;
     likeCount: number;
