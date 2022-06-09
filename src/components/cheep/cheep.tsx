@@ -162,7 +162,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                             </div>
                             
                             <div className="interaction-button-container">
-                                <RecheepButton id={`recheep-${props.id}`} cheepData={cheepData} active={recheep} counter={cheepData.recheepCount} onRecheep={() =>
+                                <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={recheep} counter={cheepData.recheepCount} onRecheep={() =>
                                 {
                                     setRecheep((state) =>
                                     {
