@@ -11,6 +11,7 @@ import "./recheep_menu.scss";
 export interface Props
 {
     targetCheep: CheepData;
+    active: boolean;
     positionX: number;
     positionY: number;
     onRecheep(): void;
@@ -55,7 +56,7 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
                 </div>
 
                 <span className="message">
-                    Recheepear
+                    {props.active ? "Deshacer Recheep" : "Recheepear"}
                 </span>
             </div>
 
