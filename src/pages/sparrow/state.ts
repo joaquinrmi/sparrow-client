@@ -1,10 +1,14 @@
 import CheepData from "../../cheep_data";
 import SearchCheepsQuery from "../../search_cheep_query";
+import ProfileData from "./profile_data";
 
 interface SparrowState
 {
     location: {
         profile: LocationState;
+    };
+    profile: {
+        data: ProfileData;
     };
     cheepLists: {
         home: CheepListState;
