@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import CheepData from "../../../../cheep_data";
 import getRelevantCheepData from "../../../../components/cheep/get_relevant_cheep_data";
 import StateContext from "../../state_context";
 import CreateCheepData from "../cheep_editor/create_cheep_data";
@@ -9,13 +8,7 @@ import postCheep from "../cheep_editor/post_cheep";
 import "./recheep_menu.scss";
 
 export interface Props
-{
-    targetCheep: CheepData;
-    active: boolean;
-    positionX: number;
-    positionY: number;
-    onRecheep(): void;
-}
+{}
 
 const RecheepMenu: React.FunctionComponent<Props> = (props) =>
 {
@@ -23,7 +16,16 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
-    const targetCheep = getRelevantCheepData(props.targetCheep);
+    if(state.recheepMenu !== undefined)
+    {
+        var menuData = state.recheepMenu;
+    }
+    else
+    {
+        return <></>;
+    }
+
+    const targetCheep = getRelevantCheepData(menuData.targetCheep);
 
     return <>
         <div className="recheep-menu-container" onClick={() =>
@@ -32,12 +34,12 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
         }}></div>
 
         <div className="recheep-menu" style={{
-            top: props.positionY,
-            left: props.positionX
+            top: menuData.positionY,
+            left: menuData.positionX
         }}>
             <div className="option" onClick={async () =>
             {
-                props.onRecheep();
+                menuData.onRecheep();
                 stateManager.closeRecheepMenu();
 
                 const data: CreateCheepData = {
@@ -56,7 +58,7 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
                 </div>
 
                 <span className="message">
-                    {props.active ? "Deshacer Recheep" : "Recheepear"}
+                    {menuData.active ? "Deshacer Recheep" : "Recheepear"}
                 </span>
             </div>
 
