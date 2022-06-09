@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
-import Profile, { ProfileState, SetProfileState, DEFAULT_PROFILE_STATE } from "./components/profile";
+import Profile from "./components/profile";
 import UpdateState from "../../update_state";
 import CheepPage, { CheepPageState, SetCheepPageState } from "../cheep_page";
 import Router from "../../components/router";
@@ -53,14 +53,6 @@ const Sparrow: React.FunctionComponent = () =>
         cheepEditor: {}
     });
 
-    const [ profileState, setProfileState ] = useState<ProfileState>(DEFAULT_PROFILE_STATE);
-    const [ changeProfileState ] = useState<SetProfileState>({
-        profileData: (value) =>
-        {
-            UpdateState(setProfileState, { profileData: value });
-        }
-    });
-
     const [ cheepPageState, setCheepPageState ] = useState<CheepPageState>({});
     const [ changeCheepPageState ] = useState<SetCheepPageState>({
         cheepData: (value) =>
@@ -107,7 +99,7 @@ const Sparrow: React.FunctionComponent = () =>
 
                     cheep: <CheepPage id="cheep-page" cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />,
 
-                    profile: <MainSection mainColumnChildren={<Profile state={profileState} setState={changeProfileState} handle={userHandle} />} rightColumnChildren={aside} />
+                    profile: <MainSection mainColumnChildren={<Profile handle={userHandle} />} rightColumnChildren={aside} />
                 }} />
 
                 <Routes>
