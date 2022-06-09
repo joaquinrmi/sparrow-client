@@ -23,6 +23,7 @@ interface SparrowState
     };
     recheepMenu?: {
         targetCheep: CheepData;
+        active: boolean;
         positionX: number;
         positionY: number;
         onRecheep(): void;
