@@ -4,68 +4,77 @@
 {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    width: 100%;
+    min-width: 0;
     border-bottom: 1px solid Color.$gray2;
 
-    .nav-item
+    .items-wrapper
     {
         display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        flex: 1 0 auto;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        flex: 1;
+        min-width: 0;
+        overflow-x: auto;
 
-        .nav-button
+        .nav-item
         {
             display: flex;
-            flex-direction: row;
-            justify-content: center;
+            flex-direction: column;
             align-items: stretch;
             flex: 1 0 auto;
-            height: 53px;
-            padding: 0 16px;
-            text-decoration: none;
-            transition: background-color 0.2s;
 
-            .nav-text
+            .nav-button
             {
                 display: flex;
                 flex-direction: row;
-                align-items: center;
-                position: relative;
-                font-size: 15px;
-                color: Color.$silverText;
-                white-space: nowrap;
+                justify-content: center;
+                align-items: stretch;
+                flex: 1 0 auto;
+                height: 53px;
+                padding: 0 16px;
+                text-decoration: none;
+                transition: background-color 0.2s;
 
-                .color-bar
+                .nav-text
                 {
-                    position: absolute;
-                    bottom: 0;
-                    left: -3px;
-                    width: 100%;
-                    padding: 0 3px;
-                    background-color: Color.$blue1;
-                    border-radius: 1000px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    position: relative;
+                    font-size: 15px;
+                    color: Color.$silverText;
+                    white-space: nowrap;
+
+                    .color-bar
+                    {
+                        position: absolute;
+                        bottom: 0;
+                        left: -3px;
+                        width: 100%;
+                        padding: 0 3px;
+                        background-color: Color.$blue1;
+                        border-radius: 1000px;
+                    }
                 }
             }
-        }
 
-        .nav-button:hover
-        {
-            background-color: Color.$gray3;
-            transition: background-color 0.1s;
-        }
-
-        .nav-button.active
-        {
-            .nav-text
+            .nav-button:hover
             {
-                font-weight: 700;
-                color: Color.$blackText;
+                background-color: Color.$gray3;
+                transition: background-color 0.1s;
+            }
 
-                .color-bar
+            .nav-button.active
+            {
+                .nav-text
                 {
-                    height: 4px;
+                    font-weight: 700;
+                    color: Color.$blackText;
+
+                    .color-bar
+                    {
+                        height: 4px;
+                    }
                 }
             }
         }

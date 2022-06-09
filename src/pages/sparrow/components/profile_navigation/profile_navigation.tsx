@@ -11,10 +11,12 @@ export interface Props
 const ProfileNavigation: React.FunctionComponent<Props> = (props) =>
 {
     return <div className="profile-navigation">
-        <NavigationItem to={`/${props.userHandle}`}>Cheeps</NavigationItem>
-        <NavigationItem to={`/${props.userHandle}/with-replies`}>Cheeps y respuestas</NavigationItem>
-        <NavigationItem to={`/${props.userHandle}/media`}>Fotos y videos</NavigationItem>
-        <NavigationItem to={`/${props.userHandle}/likes`}>Me gusta</NavigationItem>
+        <div className="items-wrapper">
+            <NavigationItem to={`/${props.userHandle}`}>Cheeps</NavigationItem>
+            <NavigationItem to={`/${props.userHandle}/with-replies`}>Cheeps y respuestas</NavigationItem>
+            <NavigationItem to={`/${props.userHandle}/media`}>Fotos y videos</NavigationItem>
+            <NavigationItem to={`/${props.userHandle}/likes`}>Me gusta</NavigationItem>
+        </div>
     </div>;
 };
 
