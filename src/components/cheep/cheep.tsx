@@ -9,6 +9,7 @@ import parseText, { TokenType } from "../../parse_text";
 import SessionContext from "../../session_context";
 import Gallery from "../gallery";
 import UserPicture from "../user_picture";
+import getRelevantCheepData from "./get_relevant_cheep_data";
 
 import "./cheep.scss";
 
@@ -21,7 +22,7 @@ export interface Props
 
 const Cheep: React.FunctionComponent<Props> = (props) =>
 {
-    const cheepData = props.data.quoteTarget && props.data.content === undefined && props.data.gallery.length === 0 ? props.data.quoteTarget : props.data;
+    const cheepData = getRelevantCheepData(props.data);
 
     const [ cheepDate, setCheepDate ] = useState<string>(formatDate(cheepData.dateCreated));
     const [ like, setLike ] = useState<boolean>(cheepData.liked);
