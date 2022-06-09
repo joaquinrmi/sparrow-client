@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import getRelevantCheepData from "../../../../components/cheep/get_relevant_cheep_data";
 import StateContext from "../../state_context";
 import CreateCheepData from "../cheep_editor/create_cheep_data";
+import deleteCheep from "../cheep_editor/delete_cheep";
 import postCheep from "../cheep_editor/post_cheep";
 
 import "./recheep_menu.scss";
@@ -42,16 +43,23 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
                 menuData.onRecheep();
                 stateManager.closeRecheepMenu();
 
-                const data: CreateCheepData = {
-                    quoteTarget: targetCheep.id
-                };
-
-                try
+                if(menuData.active)
                 {
-                    await postCheep(data);
+                    await deleteCheep(menuData.targetCheep.id);
                 }
-                catch(err)
-                {}
+                else
+                {
+                    const data: CreateCheepData = {
+                        quoteTarget: targetCheep.id
+                    };
+    
+                    try
+                    {
+                        await postCheep(data);
+                    }
+                    catch(err)
+                    {}
+                }
             }}>
                 <div className="icon">
                     <i className="fa-solid fa-pencil"></i>
