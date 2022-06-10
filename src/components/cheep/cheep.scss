@@ -267,6 +267,14 @@
 
             .cheep-content
             {
+                .content-text
+                {
+                    .hashtag:hover
+                    {
+                        text-decoration: none;
+                    }
+                }
+
                 .interaction-container
                 {
                     display: none;

@@ -157,9 +157,18 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                                     return <span key={`${index}-text`}>{token.value}</span>;
 
                                 case TokenType.Hashtag:
-                                    return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
-                                        {token.value}
-                                    </Link>;
+                                    if(props.response)
+                                    {
+                                        return <span key={`${index}-hashtag`} className="hashtag">
+                                            {token.value}
+                                        </span>;
+                                    }
+                                    else
+                                    {
+                                        return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
+                                            {token.value}
+                                        </Link>;
+                                    }
                                 }
                             }) :
                             null
