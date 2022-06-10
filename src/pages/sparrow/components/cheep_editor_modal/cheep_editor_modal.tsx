@@ -36,7 +36,7 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
     {
         navigate(-1);
     }}>
-        <ModalForm>
+        <ModalForm className="editor-modal-form">
             <div className="modal-form-top">
                 <span className="modal-form-close-button" onClick={() =>
                 {

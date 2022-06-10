@@ -3,6 +3,11 @@
     align-items: flex-start;
     box-sizing: border-box;
 
+    .editor-modal-form
+    {
+        min-height: 278px;
+    }
+
     .modal-body
     {
         position: relative;
