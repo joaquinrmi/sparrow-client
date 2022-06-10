@@ -93,16 +93,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
         };
     });
 
-    return <ModalForm className="cheep-editor">
-        <div className="modal-form-top">
-            <span className="modal-form-close-button" onClick={() =>
-            {
-                navigation(-1);
-            }}>
-                <i className="fa-solid fa-xmark"></i>
-            </span>
-        </div>
-
+    return <div className="cheep-editor">
         <section className="editor-body">
             <div className="editor-columns">
                 <div className="editor-left">
@@ -237,7 +228,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                 </div>
             </div>
         </section>
-    </ModalForm>
+    </div>
 };
 
 export default CheepEditor;
