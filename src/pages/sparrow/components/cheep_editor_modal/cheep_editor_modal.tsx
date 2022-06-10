@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Cheep from "../../../../components/cheep";
 import Modal from "../../../../components/modal";
+import ModalForm from "../../../../components/modal_form";
 import StateContext from "../../state_context";
 import CheepEditor from "../cheep_editor/cheep_editor";
 
@@ -33,7 +35,23 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
     {
         navigate(-1);
     }}>
-        <CheepEditor id="cheep-editor-modal" targetCheep={state.cheepEditor.targetCheep} />
+        <ModalForm>
+            <div className="modal-form-top">
+                <span className="modal-form-close-button" onClick={() =>
+                {
+                    navigate(-1);
+                }}>
+                    <i className="fa-solid fa-xmark"></i>
+                </span>
+            </div>
+
+            {state.cheepEditor.responseTarget ?
+                <Cheep id={`cheep-editor-response`} data={state.cheepEditor.responseTarget} /> :
+                null
+            }
+
+            <CheepEditor id="cheep-editor-modal" responseTarget={state.cheepEditor.responseTarget ? state.cheepEditor.responseTarget.id : undefined} targetCheep={state.cheepEditor.targetCheep} />
+        </ModalForm>
     </Modal>;
 };
 
