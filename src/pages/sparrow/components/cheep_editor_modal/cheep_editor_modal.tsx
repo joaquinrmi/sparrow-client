@@ -28,6 +28,7 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
             }
 
             stateManager.setEditorTargetCheep(undefined);
+            stateManager.setEditorResponseTarget(undefined);
         };
     });
 
