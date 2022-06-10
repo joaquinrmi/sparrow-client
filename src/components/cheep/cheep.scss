@@ -179,6 +179,7 @@
 .cheep.quote-form
 {
     padding: 0;
+    border: 0;
     
     .cheep-cheep
     {
@@ -198,6 +199,38 @@
             {
                 border: none;
                 border-radius: 0;
+            }
+        }
+    }
+}
+
+.cheep.response-form
+{
+    border: 0;
+
+    .cheep-cheep
+    {
+        .cheep-body
+        {
+            .cheep-content
+            {
+                .interaction-container
+                {
+                    display: none;
+                }
+
+                .response-message
+                {
+                    margin-top: 4px;
+                    margin-bottom: 12px;
+                    font-size: 15px;
+                    color: Color.$silverText;
+
+                    .response-author
+                    {
+                        color: Color.$blue1;
+                    }
+                }
             }
         }
     }

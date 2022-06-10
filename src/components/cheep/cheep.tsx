@@ -22,6 +22,7 @@ export interface Props
     index?: number;
     listName?: CheepListName;
     quote?: boolean;
+    response?: boolean;
 }
 
 const Cheep: React.FunctionComponent<Props> = (props) =>
@@ -62,7 +63,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
         <div className="veil"></div>
     </>;
 
-    return <div className={`cheep ${props.quote ? "quote-form" : ""}`} onClick={(ev) =>
+    return <div className={`cheep ${props.quote ? "quote-form" : ""} ${props.response ? "response-form" : ""}`} onClick={(ev) =>
     {
         ev.stopPropagation();
         navigate(cheepLink);
@@ -206,6 +207,17 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                                     }
                                 }} />
                             </div>
+                        </div> :
+                        null
+                    }
+
+                    {props.response ?
+                        <div className="response-message">
+                            <span>Respondiendo a </span>
+                            
+                            <span className="response-author">
+                                @{props.data.author.handle}
+                            </span>
                         </div> :
                         null
                     }
