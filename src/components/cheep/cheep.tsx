@@ -65,6 +65,11 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
     return <div className={`cheep ${props.quote ? "quote-form" : ""} ${props.response ? "response-form" : ""}`} onClick={(ev) =>
     {
+        if(props.response)
+        {
+            return;
+        }
+
         ev.stopPropagation();
         navigate(cheepLink);
     }}>
@@ -87,7 +92,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
         <div className="cheep-cheep">
             {!props.quote ?
                 <div className="left-cheep-column">
-                    <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} />
+                    <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} notClickeable={props.response ? true : false} />
 
                     {props.response ?
                         <div className="silver-line-container">
@@ -107,28 +112,38 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                         null
                     }
 
-                    <Link className="author-name" to={`/${cheepData.author.handle}`} onClick={(ev) =>
-                    {
-                        ev.stopPropagation();
-                    }}>
-                        {cheepData.author.name}
-                    </Link>
+                    {props.response ?
+                        <>
+                            <span className="author-name">{cheepData.author.name}</span>
+                            <span className="author-handle">@{cheepData.author.handle}</span>
+                            <span className="separator">·</span>
+                            <span className="cheep-date">{cheepDate}</span>
+                        </> :
+                        <>
+                            <Link className="author-name" to={`/${cheepData.author.handle}`} onClick={(ev) =>
+                            {
+                                ev.stopPropagation();
+                            }}>
+                                {cheepData.author.name}
+                            </Link>
 
-                    <Link className="author-handle" to={`/${cheepData.author.handle}`} onClick={(ev) =>
-                    {
-                        ev.stopPropagation();
-                    }}>
-                        @{cheepData.author.handle}
-                    </Link>
+                            <Link className="author-handle" to={`/${cheepData.author.handle}`} onClick={(ev) =>
+                            {
+                                ev.stopPropagation();
+                            }}>
+                                @{cheepData.author.handle}
+                            </Link>
 
-                    <span className="separator">·</span>
+                            <span className="separator">·</span>
 
-                    <Link className="cheep-date" to={cheepLink} onClick={(ev) =>
-                    {
-                        ev.stopPropagation();
-                    }}>
-                        {cheepDate}
-                    </Link>
+                            <Link className="cheep-date" to={cheepLink} onClick={(ev) =>
+                            {
+                                ev.stopPropagation();
+                            }}>
+                                {cheepDate}
+                            </Link>
+                        </>
+                    }
                 </div>
 
                 <div className="cheep-content">

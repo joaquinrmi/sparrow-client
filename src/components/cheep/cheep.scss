@@ -227,14 +227,44 @@
     }
 }
 
+.cheep.quote-form:hover
+{
+    background-color: Color.$gray5;
+    transition: background-color 0.2s;
+}
+
 .cheep.response-form
 {
     border: 0;
+    cursor: auto;
+
+    a
+    {
+        cursor: default;
+    }
+
+    a:hover
+    {
+        text-decoration: none;
+    }
 
     .cheep-cheep
     {
         .cheep-body
         {
+            .cheep-header
+            {
+                .author-name:hover
+                {
+                    text-decoration: none;
+                }
+
+                .cheep-date:hover
+                {
+                    text-decoration: none;
+                }
+            }
+
             .cheep-content
             {
                 .interaction-container
@@ -259,8 +289,7 @@
     }
 }
 
-.cheep.quote-form:hover
+.cheep.response-form
 {
-    background-color: Color.$gray5;
-    transition: background-color 0.2s;
+    background-color: #fff;
 }
