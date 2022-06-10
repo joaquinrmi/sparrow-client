@@ -86,7 +86,15 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
         <div className="cheep-cheep">
             {!props.quote ?
-                <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} /> :
+                <div className="left-cheep-column">
+                    <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} />
+
+                    {props.response ?
+                        <div className="silver-line-container">
+                            <div className="silver-line"></div>
+                        </div> :
+                        null}
+                </div> :
                 null
             }
 
@@ -214,7 +222,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                     {props.response ?
                         <div className="response-message">
                             <span>Respondiendo a </span>
-                            
+
                             <span className="response-author">
                                 @{props.data.author.handle}
                             </span>
