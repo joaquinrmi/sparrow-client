@@ -46,7 +46,7 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
             </div>
 
             {state.cheepEditor.responseTarget ?
-                <Cheep id={`cheep-editor-response`} data={state.cheepEditor.responseTarget} /> :
+                <Cheep id={`cheep-editor-response`} data={state.cheepEditor.responseTarget} response /> :
                 null
             }
 
