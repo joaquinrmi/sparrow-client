@@ -5,7 +5,9 @@
 
     .editor-modal-form
     {
-        min-height: 278px;
+        flex: 1 1 278px;
+        min-height: 0;
+        max-height: 100%;
     }
 
     .modal-body
@@ -13,6 +15,23 @@
         position: relative;
         top: 5vh;
         max-height: 90vh;
+
+        .modal-form-body
+        {
+            gap: 0;
+            padding: 0;
+        }
+    }
+}
+
+@media (min-height: 309px)
+{
+    .cheep-editor-modal
+    {
+        .editor-modal-form
+        {
+            flex: 1;
+        }
     }
 }
 

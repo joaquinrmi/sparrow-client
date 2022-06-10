@@ -46,12 +46,14 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
                 </span>
             </div>
 
-            {state.cheepEditor.responseTarget ?
-                <Cheep id={`cheep-editor-response`} data={state.cheepEditor.responseTarget} response /> :
-                null
-            }
+            <div className="modal-form-body">
+                {state.cheepEditor.responseTarget ?
+                    <Cheep id={`cheep-editor-response`} data={state.cheepEditor.responseTarget} response /> :
+                    null
+                }
 
-            <CheepEditor id="cheep-editor-modal" responseTarget={state.cheepEditor.responseTarget ? state.cheepEditor.responseTarget.id : undefined} targetCheep={state.cheepEditor.targetCheep} />
+                <CheepEditor id="cheep-editor-modal" responseTarget={state.cheepEditor.responseTarget ? state.cheepEditor.responseTarget.id : undefined} targetCheep={state.cheepEditor.targetCheep} />
+            </div>
         </ModalForm>
     </Modal>;
 };
