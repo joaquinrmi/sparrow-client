@@ -17,6 +17,7 @@ interface CheepData
     responseOf?: CheepData;
     recheepped: boolean;
     liked: boolean;
+    existsJustBecauseItIsAResponseTarget?: boolean;
 }
 
 export default CheepData;
