@@ -96,7 +96,12 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
                     {props.response || props.data.existsJustBecauseItIsAResponseTarget ?
                         <div className="silver-line-container">
-                            <div className="silver-line"></div>
+                            <div className="silver-line">
+                                {!props.response ?
+                                    <div className="silver-line-continue"></div> :
+                                    null
+                                }
+                            </div>
                         </div> :
                         null}
                 </div> :
