@@ -21,6 +21,7 @@ import "./cheep_editor.scss";
 export interface Props
 {
     id: string;
+    responseTarget?: number;
     targetCheep?: CheepData;
 }
 
@@ -195,6 +196,11 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                 if(gallery.length > 0)
                                 {
                                     data.gallery = gallery;
+                                }
+
+                                if(props.responseTarget)
+                                {
+                                    data.responseTarget = props.responseTarget;
                                 }
 
                                 let cheepId: number;
