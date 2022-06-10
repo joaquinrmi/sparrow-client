@@ -85,6 +85,7 @@ async function loadCheeps(query: SearchCheepsQuery): Promise<{ cheeps: Array<Che
             if(cheeps[i].responseOf !== undefined)
             {
                 const responseTarget = processCheep(cheeps[i].responseOf);
+                responseTarget.existsJustBecauseItIsAResponseTarget = true;
                 cheep.responseOf = responseTarget;
 
                 processedCheeps.push(responseTarget);
