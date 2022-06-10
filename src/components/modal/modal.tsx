@@ -24,6 +24,13 @@ const Modal: React.FunctionComponent<Props> = (props) =>
                 props.closeRequest();
             }
         };
+
+        document.body.style.overflow = "hidden";
+
+        return () =>
+        {
+            document.body.style.overflow = "auto";
+        };
     },
     []);
 
