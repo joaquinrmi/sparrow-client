@@ -92,6 +92,21 @@ class StateManager
         }
     }
 
+    setEditorResponseTarget(responseTarget?: CheepData): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.cheepEditor.responseTarget = responseTarget;
+
+                return newState;
+            });
+        }
+    }
+
     openRecheepMenu(targetCheep: CheepData, active: boolean, position: [ number, number ], onRecheep: () => void): void
     {
         if(this.setState)
