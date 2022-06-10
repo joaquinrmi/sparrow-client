@@ -77,8 +77,24 @@ async function loadCheeps(query: SearchCheepsQuery): Promise<{ cheeps: Array<Che
     {
         const { cheeps, nextTime } = (await response.json()) as { cheeps: Array<any>, nextTime: number };
 
+        let processedCheeps = new Array<CheepData>();
+        for(let i = 0; i < cheeps.length; ++i)
+        {
+            const cheep = processCheep(cheeps[i]);
+
+            if(cheeps[i].responseOf !== undefined)
+            {
+                const responseTarget = processCheep(cheeps[i].responseOf);
+                cheep.responseOf = responseTarget;
+
+                processedCheeps.push(responseTarget);
+            }
+
+            processedCheeps.push(cheep);
+        }
+
         return {
-            cheeps: cheeps.map((cheepData) => processCheep(cheepData)),
+            cheeps: processedCheeps,
             nextTime: nextTime
         };
     }
@@ -101,7 +117,6 @@ function processCheep(data: any): CheepData
         likeCount: data.likes,
         recheepCount: data.recheeps,
         withCommentsCount: data.quotes,
-        responseOf: data.responseOf ? processCheep(data.responseOf) : undefined,
         recheepped: data.userRecheeppedIt,
         liked: data.userLikesIt
     };
