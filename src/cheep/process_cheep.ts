@@ -21,7 +21,7 @@ function processCheep(data: any, processResponseTarget?: boolean): CheepData
     {
         if(data.responseOf)
         {
-            result.responseOf = processCheep(result.responseOf, true);
+            result.responseOf = processCheep(data.responseOf, true);
         }
     }
 
