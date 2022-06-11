@@ -4,7 +4,6 @@ import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
 import Profile from "./components/profile";
-import UpdateState from "../../update_state";
 import CheepPage from "../cheep_page";
 import Router from "../../components/router";
 import RouteSetter from "../../components/route_setter";
@@ -89,7 +88,7 @@ const Sparrow: React.FunctionComponent = () =>
 
                     compose: <CheepEditorModal />,
 
-                    cheep: <CheepPage id="cheep-page" cheepId={cheepId} />,
+                    cheep: <MainSection mainColumnChildren={<CheepPage id="cheep-page" cheepId={cheepId} />} rightColumnChildren={aside} />,
 
                     profile: <MainSection mainColumnChildren={<Profile handle={userHandle} />} rightColumnChildren={aside} />
                 }} />
