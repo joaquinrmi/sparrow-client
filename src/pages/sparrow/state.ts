@@ -17,6 +17,7 @@ interface SparrowState
         profileWithReplies: CheepListState;
         profileMedia: CheepListState;
         profileLikes: CheepListState;
+        thread: CheepListState;
     };
     cheepPage?: {
         data: CheepData;
