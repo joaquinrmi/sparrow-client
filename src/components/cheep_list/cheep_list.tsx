@@ -6,6 +6,7 @@ import SearchCheepsQuery from "../../search_cheep_query";
 import CheepData from "../../cheep_data";
 import StateContext from "../../pages/sparrow/state_context";
 import { CheepListName } from "../../pages/sparrow/state";
+import processCheep from "../../cheep/process_cheep";
 
 import "./cheep_list.scss";
 
@@ -103,24 +104,6 @@ async function loadCheeps(query: SearchCheepsQuery): Promise<{ cheeps: Array<Che
     {
         throw new Error();
     }
-}
-
-function processCheep(data: any): CheepData
-{
-    return {
-        id: data.id,
-        author: data.author,
-        dateCreated: new Date(data.dateCreated),
-        content: data.content || undefined,
-        gallery: data.gallery || [],
-        quoteTarget: data.quoteTarget ? processCheep(data.quoteTarget) : undefined,
-        commentCount: data.commentCount,
-        likeCount: data.likes,
-        recheepCount: data.recheeps,
-        withCommentsCount: data.quotes,
-        recheepped: data.userRecheeppedIt,
-        liked: data.userLikesIt
-    };
 }
 
 function parseCheepQuery(query: SearchCheepsQuery): string
