@@ -56,6 +56,15 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
     let content: React.ReactNode;
     if(cheepData)
     {
+        let upperCheeps = new Array<CheepData>();
+
+        let currentData = cheepData;
+        while(currentData.responseOf !== undefined)
+        {
+            upperCheeps = [ currentData.responseOf, ...upperCheeps ];
+            currentData = currentData.responseOf;
+        }
+
         const date = cheepData.dateCreated;
         let formatedDate = "";
 
@@ -86,90 +95,97 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
         const cheepPath = `/${cheepData.author.handle}/status/${cheepData.id}`;
 
-        content = <section className="cheep-page-body">
-            <div className="author-header">
-                <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} />
+        content = <>
+            {upperCheeps.map((data, index) =>
+            {
+                return <Cheep key={`${index}-cheep`} id={`${props.id}-cheep-${index}`} data={data} />;
+            })}
 
-                <div className="author-info-container">
-                    <Link to={profilePath} className="author-name">
-                        {cheepData.author.name}
-                    </Link>
+            <section className="cheep-page-body">
+                <div className="author-header">
+                    <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} />
 
-                    <Link to={profilePath} className="author-handle">
-                        @{cheepData.author.handle}
-                    </Link>
-                </div>
-            </div>
-            
-            {cheepData.content && cheepData.content.length > 0 ?
-                <div className="cheep-content">
-                    {cheepData.content}
-                </div>:
-                null
-            }
-
-            {cheepData.gallery && cheepData.gallery.length > 0 ?
-                <div className="sub-container">
-                    <Gallery pictures={cheepData.gallery} />
-                </div> :
-                null
-            }
-
-            {cheepData.quoteTarget ?
-                <div className="sub-container">
-                    <Cheep id={`quote-${props.id}`} data={cheepData.quoteTarget} />
-                </div> :
-                null
-            }
-
-            <div className="date-container">
-                <Link to={profilePath} className="cheep-date">
-                    {formatedDate}
-                </Link>
-            </div>
-
-            <div className="cheep-page-bottom">
-                <div className="counters-container">
-                    <div className="counters-list">
-                        <Link className="cheep-counter" to={`${cheepPath}/recheeps`}>
-                            <span className="counter-value">
-                                {formatNumber(cheepData.recheepCount)}
-                            </span>
-
-                            <span className="counter-message">
-                                Recheeps
-                            </span>
+                    <div className="author-info-container">
+                        <Link to={profilePath} className="author-name">
+                            {cheepData.author.name}
                         </Link>
 
-                        <Link className="cheep-counter" to={`${cheepPath}/with-comments`}>
-                            <span className="counter-value">
-                                {formatNumber(cheepData.withCommentsCount)}
-                            </span>
-
-                            <span className="counter-message">
-                                Cheeps citados
-                            </span>
-                        </Link>
-
-                        <Link className="cheep-counter" to={`${cheepPath}/likes`}>
-                            <span className="counter-value">
-                                {formatNumber(cheepData.likeCount)}
-                            </span>
-
-                            <span className="counter-message">
-                                Me gusta
-                            </span>
+                        <Link to={profilePath} className="author-handle">
+                            @{cheepData.author.handle}
                         </Link>
                     </div>
                 </div>
+                
+                {cheepData.content && cheepData.content.length > 0 ?
+                    <div className="cheep-content">
+                        {cheepData.content}
+                    </div>:
+                    null
+                }
 
-                <div className="buttons-container"></div>
+                {cheepData.gallery && cheepData.gallery.length > 0 ?
+                    <div className="sub-container">
+                        <Gallery pictures={cheepData.gallery} />
+                    </div> :
+                    null
+                }
 
-                <div className="reply-container">
-                    <CheepEditor id="cheep-editor-page" />
+                {cheepData.quoteTarget ?
+                    <div className="sub-container">
+                        <Cheep id={`quote-${props.id}`} data={cheepData.quoteTarget} />
+                    </div> :
+                    null
+                }
+
+                <div className="date-container">
+                    <Link to={profilePath} className="cheep-date">
+                        {formatedDate}
+                    </Link>
                 </div>
-            </div>
-        </section>;
+
+                <div className="cheep-page-bottom">
+                    <div className="counters-container">
+                        <div className="counters-list">
+                            <Link className="cheep-counter" to={`${cheepPath}/recheeps`}>
+                                <span className="counter-value">
+                                    {formatNumber(cheepData.recheepCount)}
+                                </span>
+
+                                <span className="counter-message">
+                                    Recheeps
+                                </span>
+                            </Link>
+
+                            <Link className="cheep-counter" to={`${cheepPath}/with-comments`}>
+                                <span className="counter-value">
+                                    {formatNumber(cheepData.withCommentsCount)}
+                                </span>
+
+                                <span className="counter-message">
+                                    Cheeps citados
+                                </span>
+                            </Link>
+
+                            <Link className="cheep-counter" to={`${cheepPath}/likes`}>
+                                <span className="counter-value">
+                                    {formatNumber(cheepData.likeCount)}
+                                </span>
+
+                                <span className="counter-message">
+                                    Me gusta
+                                </span>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="buttons-container"></div>
+
+                    <div className="reply-container">
+                        <CheepEditor id="cheep-editor-page" />
+                    </div>
+                </div>
+            </section>
+        </>;
     }
     else
     {
