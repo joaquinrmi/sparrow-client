@@ -20,7 +20,7 @@ import "./cheep_editor.scss";
 export interface Props
 {
     id: string;
-    responseTarget?: number;
+    responseTarget?: CheepData;
     targetCheep?: CheepData;
     inPage?: boolean;
 }
@@ -96,7 +96,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
     return <div className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
         {props.inPage && props.responseTarget ?
             <div className="response-message">
-                En respuesta a <span className="user">@sparrow</span>
+                En respuesta a <span className="user">@{props.responseTarget.author.handle}</span>
             </div> :
             null
         }
@@ -198,7 +198,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
 
                                 if(props.responseTarget)
                                 {
-                                    data.responseTarget = props.responseTarget;
+                                    data.responseTarget = props.responseTarget.id;
                                 }
 
                                 let cheepId: number;
