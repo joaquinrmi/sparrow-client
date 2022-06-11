@@ -22,6 +22,7 @@ function processCheep(data: any, processResponseTarget?: boolean): CheepData
         if(data.responseOf)
         {
             result.responseOf = processCheep(data.responseOf, true);
+            result.responseOf.existsJustBecauseItIsAResponseTarget = true;
         }
     }
 
