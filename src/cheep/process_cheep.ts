@@ -9,7 +9,7 @@ function processCheep(data: any, processResponseTarget?: boolean): CheepData
         content: data.content || undefined,
         gallery: data.gallery || [],
         quoteTarget: data.quoteTarget ? processCheep(data.quoteTarget) : undefined,
-        commentCount: data.commentCount,
+        commentCount: data.comments,
         likeCount: data.likes,
         recheepCount: data.recheeps,
         withCommentsCount: data.quotes,
