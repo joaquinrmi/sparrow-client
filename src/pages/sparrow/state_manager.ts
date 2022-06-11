@@ -77,6 +77,23 @@ class StateManager
         }
     }
 
+    setCheepPage(data: CheepData): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.cheepPage = {
+                    data: data
+                };
+
+                return newState;
+            });
+        }
+    }
+
     setEditorTargetCheep(targetCheep?: CheepData): void
     {
         if(this.setState)
