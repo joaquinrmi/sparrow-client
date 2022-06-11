@@ -3,9 +3,22 @@
 .cheep-editor
 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: stretch;
     flex: 1;
+
+    .response-message
+    {
+        padding-left: 66px;
+        box-sizing: border-box;
+        font-size: 15px;
+        color: Color.$silverText;
+
+        .user
+        {
+            color: Color.$blue1;
+        }
+    }
 
     .editor-body
     {
@@ -167,9 +180,11 @@
 
 .cheep-editor.in-page
 {
+    padding-top: 12px;
+
     .editor-body
     {
-        padding: 12px 0 0 0;
+        padding: 6px 0 0 0;
 
         .editor-columns
         {
