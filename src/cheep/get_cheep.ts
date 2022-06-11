@@ -1,8 +1,8 @@
-async function loadCheep(cheepId: number): Promise<any>
+async function getCheep(cheepId: number): Promise<any>
 {
-    const loadCheepURL = `${process.env.REACT_APP_SERVER}/api/cheep/get?cheepId=${cheepId}`;
+    const getCheepURL = `${process.env.REACT_APP_SERVER}/api/cheep/get?cheepId=${cheepId}`;
 
-    const response = await fetch(loadCheepURL, {
+    const response = await fetch(getCheepURL, {
         method: "GET",
         credentials: "include"
     });
@@ -15,4 +15,4 @@ async function loadCheep(cheepId: number): Promise<any>
     throw await response.json();
 }
 
-export default loadCheep;
+export default getCheep;
