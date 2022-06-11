@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import getCheep from "../../cheep/get_cheep";
+import processCheep from "../../cheep/process_cheep";
 import CheepData from "../../cheep_data";
 import Cheep from "../../components/cheep";
 import Gallery from "../../components/gallery";
@@ -32,31 +34,21 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
     {
         if(cheepData === undefined)
         {
-            setTimeout(() =>
+            (async () =>
             {
-                stateManager.setCheepPage({
-                    id: 3,
-                    author: {
-                        handle: "sparrow",
-                        name: "Sparrow",
-                        picture: "https://www.revistaestilo.net/binrepository/trollface2_ES1218446_MG282389852.jpg",
-                    },
-                    dateCreated: new Date(),
-                    content: "Ejemplo de galería",
-                    gallery: [
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Eiche_bei_Graditz.jpg/1200px-Eiche_bei_Graditz.jpg",
-                        "https://www.elagoradiario.com/wp-content/uploads/2021/04/Pino-Castrej%C3%B3n-1140x600.jpg",
-                        "https://www.fundacionaquae.org/wp-content/uploads/2021/12/fresno-e1639053075597.jpg"
-                    ],
-                    commentCount: 0,
-                    likeCount: 28600,
-                    recheepCount: 0,
-                    withCommentsCount: 0,
-                    recheepped: false,
-                    liked: false
-                });
-            },
-            2000);
+                try
+                {
+                    var responseData = await getCheep(props.cheepId);
+                }
+                catch(err)
+                {
+                    return console.error(err);
+                }
+
+                const cheepData = processCheep(responseData, true);
+
+                stateManager.setCheepPage(cheepData);
+            })();
         }
     },
     [ props ]);
