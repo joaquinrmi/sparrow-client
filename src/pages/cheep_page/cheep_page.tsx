@@ -4,6 +4,7 @@ import getCheep from "../../cheep/get_cheep";
 import processCheep from "../../cheep/process_cheep";
 import CheepData from "../../cheep_data";
 import Cheep from "../../components/cheep";
+import CheepList from "../../components/cheep_list";
 import Gallery from "../../components/gallery";
 import Loading from "../../components/loading";
 import PageHeader from "../../components/page_header";
@@ -183,6 +184,10 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                     </div>
                 </div>
             </section>
+
+            <CheepList name="comments" hideResponseTarget arguments={{
+                responseOf: cheepData.id
+            }} />
         </>;
     }
     else
