@@ -32,7 +32,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
-        if(cheepData === undefined)
+        if(cheepData === undefined || cheepData.id !== props.cheepId)
         {
             (async () =>
             {
@@ -50,8 +50,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                 stateManager.setCheepPage(cheepData);
             })();
         }
-    },
-    [ props ]);
+    });
 
     let content: React.ReactNode;
     if(cheepData)
