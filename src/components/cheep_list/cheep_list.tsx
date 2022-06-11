@@ -14,6 +14,7 @@ export interface Props
 {
     name: CheepListName;
     arguments: SearchCheepsQuery;
+    hideResponseTarget?: boolean;
 }
 
 const CheepList: React.FunctionComponent<Props> = (props) =>
@@ -33,7 +34,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
         {
             try
             {
-                const { cheeps, nextTime } = await loadCheeps(props.arguments);
+                const { cheeps, nextTime } = await loadCheeps(props.arguments, props.hideResponseTarget);
 
                 stateManager.loadCheepList(props.name, props.arguments, nextTime, cheeps);
             }
@@ -65,7 +66,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
     </div>;
 };
 
-async function loadCheeps(query: SearchCheepsQuery): Promise<{ cheeps: Array<CheepData>, nextTime: number }>
+async function loadCheeps(query: SearchCheepsQuery, hideResponseTarget?: boolean): Promise<{ cheeps: Array<CheepData>, nextTime: number }>
 {
     const searchCheepsURL = `${process.env.REACT_APP_SERVER}/api/cheep/search${parseCheepQuery(query)}`;
 
@@ -83,7 +84,7 @@ async function loadCheeps(query: SearchCheepsQuery): Promise<{ cheeps: Array<Che
         {
             const cheep = processCheep(cheeps[i]);
 
-            if(cheeps[i].responseOf !== undefined)
+            if(!hideResponseTarget && cheeps[i].responseOf !== undefined)
             {
                 const responseTarget = processCheep(cheeps[i].responseOf);
                 responseTarget.existsJustBecauseItIsAResponseTarget = true;
