@@ -33,6 +33,7 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             profileMedia: { query: {}, nextTime: 0, cheeps: [] },
             profileLikes: { query: {}, nextTime: 0, cheeps: [] },
             thread: { query: {}, nextTime: 0, cheeps: [] },
+            comments: { query: {}, nextTime: 0, cheeps: [] },
         },
         cheepEditor: {}
     },
