@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CheepData from "../../cheep_data";
 import Cheep from "../../components/cheep";
@@ -7,8 +7,8 @@ import Loading from "../../components/loading";
 import PageHeader from "../../components/page_header";
 import UserPicture from "../../components/user_picture";
 import MONTHS from "../../months";
-import SetState from "../../set_state";
 import CheepEditor from "../sparrow/components/cheep_editor";
+import StateContext from "../sparrow/state_context";
 
 import "./cheep_page.scss";
 
@@ -16,26 +16,25 @@ export interface Props
 {
     id: string;
     cheepId: number;
-    state: CheepPageState;
-    setState: SetCheepPageState;
 }
-
-export interface CheepPageState
-{
-    cheepData?: CheepData;
-}
-
-export type SetCheepPageState = SetState<CheepPageState>;
 
 const CheepPage: React.FunctionComponent<Props> = (props) =>
 {
+    const [ state, stateManager ] = useContext(StateContext);
+
+    let cheepData: CheepData | undefined;
+    if(state.cheepPage && state.cheepPage.data.id === props.cheepId)
+    {
+        cheepData = state.cheepPage.data;
+    }
+
     useEffect(() =>
     {
-        if(props.state.cheepData === undefined)
+        if(cheepData === undefined)
         {
             setTimeout(() =>
             {
-                props.setState.cheepData({
+                stateManager.setCheepPage({
                     id: 3,
                     author: {
                         handle: "sparrow",
@@ -63,9 +62,9 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
     [ props ]);
 
     let content: React.ReactNode;
-    if(props.state.cheepData)
+    if(cheepData)
     {
-        const date = props.state.cheepData.dateCreated;
+        const date = cheepData.dateCreated;
         let formatedDate = "";
 
         const minutes = date.getMinutes();
@@ -91,42 +90,42 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
         formatedDate += ` · ${date.getDate()} ${MONTHS[date.getMonth()].substring(0, 3).toLowerCase()}. ${date.getFullYear()}`;
 
-        const profilePath = `/${props.state.cheepData.author.handle}`;
+        const profilePath = `/${cheepData.author.handle}`;
 
-        const cheepPath = `/${props.state.cheepData.author.handle}/status/${props.state.cheepData.id}`;
+        const cheepPath = `/${cheepData.author.handle}/status/${cheepData.id}`;
 
         content = <section className="cheep-page-body">
             <div className="author-header">
-                <UserPicture userHandle={props.state.cheepData.author.handle} userName={props.state.cheepData.author.name} picture={props.state.cheepData.author.picture} />
+                <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} />
 
                 <div className="author-info-container">
                     <Link to={profilePath} className="author-name">
-                        {props.state.cheepData.author.name}
+                        {cheepData.author.name}
                     </Link>
 
                     <Link to={profilePath} className="author-handle">
-                        @{props.state.cheepData.author.handle}
+                        @{cheepData.author.handle}
                     </Link>
                 </div>
             </div>
             
-            {props.state.cheepData.content && props.state.cheepData.content.length > 0 ?
+            {cheepData.content && cheepData.content.length > 0 ?
                 <div className="cheep-content">
-                    {props.state.cheepData.content}
+                    {cheepData.content}
                 </div>:
                 null
             }
 
-            {props.state.cheepData.gallery && props.state.cheepData.gallery.length > 0 ?
+            {cheepData.gallery && cheepData.gallery.length > 0 ?
                 <div className="sub-container">
-                    <Gallery pictures={props.state.cheepData.gallery} />
+                    <Gallery pictures={cheepData.gallery} />
                 </div> :
                 null
             }
 
-            {props.state.cheepData.quoteTarget ?
+            {cheepData.quoteTarget ?
                 <div className="sub-container">
-                    <Cheep id={`quote-${props.id}`} data={props.state.cheepData.quoteTarget} />
+                    <Cheep id={`quote-${props.id}`} data={cheepData.quoteTarget} />
                 </div> :
                 null
             }
@@ -142,7 +141,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                     <div className="counters-list">
                         <Link className="cheep-counter" to={`${cheepPath}/recheeps`}>
                             <span className="counter-value">
-                                {formatNumber(props.state.cheepData.recheepCount)}
+                                {formatNumber(cheepData.recheepCount)}
                             </span>
 
                             <span className="counter-message">
@@ -152,7 +151,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
                         <Link className="cheep-counter" to={`${cheepPath}/with-comments`}>
                             <span className="counter-value">
-                                {formatNumber(props.state.cheepData.withCommentsCount)}
+                                {formatNumber(cheepData.withCommentsCount)}
                             </span>
 
                             <span className="counter-message">
@@ -162,7 +161,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
                         <Link className="cheep-counter" to={`${cheepPath}/likes`}>
                             <span className="counter-value">
-                                {formatNumber(props.state.cheepData.likeCount)}
+                                {formatNumber(cheepData.likeCount)}
                             </span>
 
                             <span className="counter-message">
