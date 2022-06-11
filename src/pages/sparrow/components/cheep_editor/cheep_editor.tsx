@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import ModalForm from "../../../../components/modal_form";
 import UserPicture from "../../../../components/user_picture";
 import SessionContext from "../../../../session_context";
 import Button, { ButtonStyle } from "../../../../components/button";
@@ -23,6 +22,7 @@ export interface Props
     id: string;
     responseTarget?: number;
     targetCheep?: CheepData;
+    inPage?: boolean;
 }
 
 const CheepEditor: React.FunctionComponent<Props> = (props) =>
@@ -93,7 +93,14 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
         };
     });
 
-    return <div className="cheep-editor">
+    return <div className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
+        {props.inPage && props.responseTarget ?
+            <div className="response-message">
+                En respuesta a <span className="user">@sparrow</span>
+            </div> :
+            null
+        }
+
         <section className="editor-body">
             <div className="editor-columns">
                 <div className="editor-left">

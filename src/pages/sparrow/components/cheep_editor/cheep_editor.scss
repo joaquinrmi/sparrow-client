@@ -6,159 +6,178 @@
     flex-direction: row;
     align-items: stretch;
     flex: 1;
-}
 
-.editor-body
-{
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    flex: 1;
-    padding: 0 18px 8px 18px;
-    box-sizing: border-box;
-    overflow-y: auto;
-
-    .editor-columns
+    .editor-body
     {
         display: flex;
         flex-direction: row;
-        gap: 1em;
+        align-items: stretch;
         flex: 1;
+        padding: 0 18px 8px 18px;
+        box-sizing: border-box;
+        overflow-y: auto;
 
-        .editor-left
-        {
-            flex: 0;
-        }
-
-        .editor-right
+        .editor-columns
         {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            flex-direction: row;
+            gap: 1em;
             flex: 1;
-            min-width: 0;
-            padding: 1em 0 0 0;
-            box-sizing: border-box;
 
-            .editor-elements
+            .editor-left
+            {
+                flex: 0;
+            }
+
+            .editor-right
             {
                 display: flex;
                 flex-direction: column;
+                gap: 12px;
                 flex: 1;
-                border-bottom: 1px solid Color.$gray2;
+                min-width: 0;
+                padding: 1em 0 0 0;
+                box-sizing: border-box;
 
-                .text-editor-container
+                .editor-elements
+                {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                    border-bottom: 1px solid Color.$gray2;
+
+                    .text-editor-container
+                    {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: stretch;
+                        flex: 1;
+                        min-width: 0;
+                        min-height: 52px;
+                    }
+
+                    .gallery-container
+                    {
+                        position: relative;
+                        border: 1px solid Color.$gray3;
+                        border-radius: 16px;
+                        overflow: hidden;
+
+                        .loading-pictures
+                        {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, 0.3);
+                        }
+                    }
+
+                    .quote-container
+                    {
+                        border: 1px solid Color.$gray3;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        margin-bottom: 12px;
+                    }
+                }
+
+                .editor-bottom
                 {
                     display: flex;
                     flex-direction: row;
-                    align-items: stretch;
-                    flex: 1;
-                    min-width: 0;
-                    min-height: 52px;
-                }
+                    gap: 10px;
+                    width: 100%;
 
-                .gallery-container
-                {
-                    position: relative;
-                    border: 1px solid Color.$gray3;
-                    border-radius: 16px;
-                    overflow: hidden;
-
-                    .loading-pictures
-                    {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        justify-content: center;
-                        width: 100%;
-                        height: 100%;
-                        background-color: rgba(0, 0, 0, 0.3);
-                    }
-                }
-
-                .quote-container
-                {
-                    border: 1px solid Color.$gray3;
-                    border-radius: 16px;
-                    overflow: hidden;
-                    margin-bottom: 12px;
-                }
-            }
-
-            .editor-bottom
-            {
-                display: flex;
-                flex-direction: row;
-                gap: 10px;
-                width: 100%;
-
-                .options-container
-                {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    flex: 1;
-
-                    .editor-button
+                    .options-container
                     {
                         display: flex;
                         flex-direction: row;
                         align-items: center;
-                        justify-content: center;
-                        width: 36px;
-                        height: 36px;
-                        cursor: pointer;
-                        border-radius: 1000px;
-                        transition: background-color 0.2s;
+                        flex: 1;
 
-                        i
+                        .editor-button
                         {
-                            font-size: 16px;
-                            color: Color.$blue1;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+                            width: 36px;
+                            height: 36px;
+                            cursor: pointer;
+                            border-radius: 1000px;
+                            transition: background-color 0.2s;
+
+                            i
+                            {
+                                font-size: 16px;
+                                color: Color.$blue1;
+                            }
+
+                            input
+                            {
+                                display: none;
+                            }
                         }
 
-                        input
+                        .editor-button:hover
                         {
-                            display: none;
+                            background-color: Color.$blue4;
+                            transition: background-color 0.2s;
+                        }
+
+                        .editor-button.disabled
+                        {
+                            cursor: auto;
+                            
+                            i
+                            {
+                                color: Color.$blue3;
+                            }
+                        }
+
+                        .editor-button.disabled:hover
+                        {
+                            background-color: transparent;
+                        }
+
+                        .status-container
+                        {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            margin-left: auto;
                         }
                     }
 
-                    .editor-button:hover
+                    .cheep-button-container
                     {
-                        background-color: Color.$blue4;
-                        transition: background-color 0.2s;
-                    }
-
-                    .editor-button.disabled
-                    {
-                        cursor: auto;
-                        
-                        i
-                        {
-                            color: Color.$blue3;
-                        }
-                    }
-
-                    .editor-button.disabled:hover
-                    {
-                        background-color: transparent;
-                    }
-
-                    .status-container
-                    {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
                         margin-left: auto;
                     }
                 }
+            }
+        }
+    }
+}
 
-                .cheep-button-container
+.cheep-editor.in-page
+{
+    .editor-body
+    {
+        padding: 12px 0 0 0;
+
+        .editor-columns
+        {
+            .editor-right
+            {
+                .editor-elements
                 {
-                    margin-left: auto;
+                    border: none;
                 }
             }
         }
