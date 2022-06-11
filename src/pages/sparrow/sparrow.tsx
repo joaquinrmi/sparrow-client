@@ -5,7 +5,7 @@ import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
 import Profile from "./components/profile";
 import UpdateState from "../../update_state";
-import CheepPage, { CheepPageState, SetCheepPageState } from "../cheep_page";
+import CheepPage from "../cheep_page";
 import Router from "../../components/router";
 import RouteSetter from "../../components/route_setter";
 import StateContext from "./state_context";
@@ -53,14 +53,6 @@ const Sparrow: React.FunctionComponent = () =>
         cheepEditor: {}
     });
 
-    const [ cheepPageState, setCheepPageState ] = useState<CheepPageState>({});
-    const [ changeCheepPageState ] = useState<SetCheepPageState>({
-        cheepData: (value) =>
-        {
-            UpdateState(setCheepPageState, { cheepData: value });
-        },
-    });
-
     const [ currentRoute, setCurrentRoute ] = useState<string>("");
     const [ userHandle, setUserHandle ] = useState<string>("");
     const [ cheepId, setCheepId ] = useState<number>(0);
@@ -97,7 +89,7 @@ const Sparrow: React.FunctionComponent = () =>
 
                     compose: <CheepEditorModal />,
 
-                    cheep: <CheepPage id="cheep-page" cheepId={cheepId} state={cheepPageState} setState={changeCheepPageState} />,
+                    cheep: <CheepPage id="cheep-page" cheepId={cheepId} />,
 
                     profile: <MainSection mainColumnChildren={<Profile handle={userHandle} />} rightColumnChildren={aside} />
                 }} />
