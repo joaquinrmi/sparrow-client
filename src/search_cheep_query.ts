@@ -6,6 +6,7 @@ interface SearchCheepsQuery
     responses?: boolean;
     onlyGallery?: boolean;
     likes?: boolean;
+    responseOf?: number;
 }
 
 export default SearchCheepsQuery;
