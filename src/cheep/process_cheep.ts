@@ -1,8 +1,8 @@
 import CheepData from "../cheep_data";
 
-function processCheep(data: any): CheepData
+function processCheep(data: any, processResponseTarget?: boolean): CheepData
 {
-    return {
+    const result: CheepData = {
         id: data.id,
         author: data.author,
         dateCreated: new Date(data.dateCreated),
@@ -16,6 +16,16 @@ function processCheep(data: any): CheepData
         recheepped: data.userRecheeppedIt,
         liked: data.userLikesIt
     };
+
+    if(processResponseTarget)
+    {
+        if(data.responseOf)
+        {
+            result.responseOf = processCheep(result.responseOf, true);
+        }
+    }
+
+    return result;
 }
 
 export default processCheep;
