@@ -7,6 +7,7 @@ import Cheep from "../../components/cheep";
 import Gallery from "../../components/gallery";
 import Loading from "../../components/loading";
 import PageHeader from "../../components/page_header";
+import Thread from "../../components/thread";
 import UserPicture from "../../components/user_picture";
 import MONTHS from "../../months";
 import CheepEditor from "../sparrow/components/cheep_editor";
@@ -47,7 +48,17 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
                 const cheepData = processCheep(responseData, true);
 
+                let upperCheeps = new Array<CheepData>();
+
+                let currentData = cheepData;
+                while(currentData.responseOf !== undefined)
+                {
+                    upperCheeps = [ currentData.responseOf, ...upperCheeps ];
+                    currentData = currentData.responseOf;
+                }
+
                 stateManager.setCheepPage(cheepData);
+                stateManager.loadCheepList("thread", {}, 0, upperCheeps);
             })();
         }
     });
@@ -55,15 +66,6 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
     let content: React.ReactNode;
     if(cheepData)
     {
-        let upperCheeps = new Array<CheepData>();
-
-        let currentData = cheepData;
-        while(currentData.responseOf !== undefined)
-        {
-            upperCheeps = [ currentData.responseOf, ...upperCheeps ];
-            currentData = currentData.responseOf;
-        }
-
         const date = cheepData.dateCreated;
         let formatedDate = "";
 
@@ -95,10 +97,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
         const cheepPath = `/${cheepData.author.handle}/status/${cheepData.id}`;
 
         content = <>
-            {upperCheeps.map((data, index) =>
-            {
-                return <Cheep key={`${index}-cheep`} id={`${props.id}-cheep-${index}`} data={data} />;
-            })}
+            <Thread name="thread" />
 
             <section className="cheep-page-body">
                 <div className="author-header">
