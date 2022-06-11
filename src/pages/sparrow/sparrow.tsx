@@ -121,7 +121,7 @@ const Sparrow: React.FunctionComponent = () =>
                     <Route path="/:userHandle/status/:cheepId/*" element={<GetCheepId>{
                         (cheepId) =>
                         {
-                            return <RouteSetter id="cheep" onMatch={() => {
+                            return <RouteSetter id={`cheep-${cheepId}`} onMatch={() => {
                                 setCheepId(cheepId);
                                 setCurrentRoute("cheep");
                             }} />;
