@@ -7,6 +7,7 @@ import ImageButton from "./components/image_button";
 import ProfileData from "../../profile_data";
 
 import "./profile_form.scss";
+import Button, { ButtonStyle } from "../../../../components/button";
 
 export interface Props
 {}
@@ -71,6 +72,10 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 
             <div className="profile-form-title">
                 Editar perfil
+            </div>
+
+            <div className="save-button-container">
+                <Button stylePreset={ButtonStyle.Black}>Guardar</Button>
             </div>
         </div>
 
