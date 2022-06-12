@@ -7,7 +7,7 @@ import ButtonContainer from "../../../../components/button_container";
 import TextEditor, { TextEditorElement } from "./components/text_editor";
 import Loading from "../../../../components/loading";
 import Gallery from "../../../../components/gallery";
-import uploadImage from "../../../../upload_image";
+import uploadImage, { ImageType } from "../../../../upload_image";
 import CreateCheepData from "./create_cheep_data";
 import postCheep from "./post_cheep";
 import StatusMessageContext from "../../../../status_message_context";
@@ -71,7 +71,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
             {
                 try
                 {
-                    imageUrls.push(await uploadImage(pictureInput.files[i]));
+                    imageUrls.push(await uploadImage(pictureInput.files[i], ImageType.Gallery));
                 }
                 catch(err)
                 {
