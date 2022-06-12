@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./form_input.scss";
 
@@ -11,6 +11,7 @@ export interface Props
     options?: Array<string>;
     errorMessage?: string;
     textarea?: boolean;
+    limit?: number;
 }
 
 export interface FormInputElement extends HTMLDivElement
@@ -20,6 +21,8 @@ export interface FormInputElement extends HTMLDivElement
 
 const FormInput: React.FunctionComponent<Props> = (props) =>
 {
+    const [ currentLength, setCurrentLength ] = useState<number>(props.value ? props.value.length : 0);
+
     useEffect(() =>
     {
         const element = document.getElementById(props.id) as FormInputElement;
@@ -65,6 +68,34 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                 element.classList.remove("static");
             }
         };
+
+        inputElement.addEventListener("keydown", (ev) =>
+        {
+            if(props.limit !== undefined)
+            {
+                if(inputElement.value.length === props.limit)
+                {
+                    if(ev.key !== "Backspace" && ev.key !== "Delete")
+                    {
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                    }
+                }
+            }
+        });
+
+        inputElement.addEventListener("input", (ev) =>
+        {
+            if(props.limit !== undefined)
+            {
+                if(inputElement.value.length > props.limit)
+                {
+                    inputElement.value = inputElement.value.substring(0, props.limit);
+                }
+
+                setCurrentLength(inputElement.value.length);
+            }
+        });
     });
 
     let className = "form-input";
@@ -88,6 +119,13 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
             <span className={"title"}>
                 {props.title}
             </span>
+
+            {props.limit !== undefined ?
+                <div className="limit-counter">
+                    {currentLength} / {props.limit}
+                </div> :
+                null
+            }
 
             {
                 props.options !== undefined ?

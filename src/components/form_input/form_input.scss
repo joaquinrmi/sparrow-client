@@ -17,6 +17,17 @@
         transition: top 0.1s, font-size 0.25s, color 0.25s;
     }
 
+    .limit-counter
+    {
+        position: absolute;
+        display: none;
+        top: 6px;
+        right: 8px;
+        font-size: 13px;
+        color: Color.$silverText;
+        user-select: none;
+    }
+
     .input-container
     {
         display: flex;
@@ -91,6 +102,11 @@
         font-size: 14px;
         color: Color.$blue1;
         transition: top 0.1s, font-size 0.25s, color 0.25s;
+    }
+
+    .limit-counter
+    {
+        display: block;
     }
 
     .arrow-container
