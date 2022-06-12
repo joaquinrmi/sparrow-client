@@ -9,7 +9,7 @@ export interface Props
 
 const ProfileFormModal: React.FunctionComponent<Props> = (props) =>
 {
-    return <Modal id="profile-form-modal" closeRequest={() =>
+    return <Modal id="profile-form-modal" className="profile-form-modal" closeRequest={() =>
     {}}>
         <ProfileForm />
     </Modal>;
