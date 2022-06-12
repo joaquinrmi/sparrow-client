@@ -116,7 +116,9 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                 <div className="picture-container">
                     <div className="picture">
                         {data.picture ?
-                            <img src={data.picture} alt="Imágen de perfil" /> :
+                            <div className="picture-img" title="Imagen de perfil" style={{
+                                backgroundImage: `url(${data.picture})`
+                            }}></div> :
                             null
                         }
 
