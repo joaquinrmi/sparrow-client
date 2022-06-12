@@ -1,0 +1,26 @@
+.image-button
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 1000px;
+    overflow: hidden;
+    transition: background-color 0.2s;
+    cursor: pointer;
+
+    i
+    {
+        font-size: 18px;
+    }
+}
+
+.image-button:hover
+{
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+}
