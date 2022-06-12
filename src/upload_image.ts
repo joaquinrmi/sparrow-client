@@ -1,6 +1,6 @@
-async function uploadImage(file: File): Promise<string>
+async function uploadImage(file: File, imageType: ImageType): Promise<string>
 {
-    const uploadImageURL = `${process.env.REACT_APP_SERVER}/api/upload/image`;
+    const uploadImageURL = `${process.env.REACT_APP_SERVER}/api/upload/${imageType}`;
 
     const formData = new FormData();
     formData.append("image", file);
@@ -21,6 +21,13 @@ async function uploadImage(file: File): Promise<string>
     {
         throw await response.json();
     }
+}
+
+export enum ImageType
+{
+    Gallery = "image",
+    ProfilePicture = "profile-picture",
+    Banner = "banner"
 }
 
 export default uploadImage;
