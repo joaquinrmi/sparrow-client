@@ -79,7 +79,9 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                 <div className="banner-container">
                     <div className="banner">
                         {data.banner ?
-                            <img src={data.banner} alt="Imágen de portada" /> :
+                            <div className="banner-img" title="Imagen de portada" style={{
+                                backgroundImage: `url(${data.banner})`
+                            }}></div> :
                             null
                         }
 
