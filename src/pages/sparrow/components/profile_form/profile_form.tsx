@@ -143,11 +143,11 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             </div>
 
             <div className="profile-form-inputs">
-                <FormInput id="profile-name" title="Nombre" value={data.name} />
+                <FormInput id="profile-name" title="Nombre" value={data.name} limit={50} />
             
-                <FormInput id="profile-description" title="Biografía" value={data.description} textarea />
+                <FormInput id="profile-description" title="Biografía" value={data.description} textarea limit={160} />
                 
-                <FormInput id="profile-location" title="Ubicación" value={data.location} />
+                <FormInput id="profile-location" title="Ubicación" value={data.location} limit={30} />
             </div>
         </div>
     </ModalForm>;
