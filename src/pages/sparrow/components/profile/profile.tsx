@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
 import CheepList from "../../../../components/cheep_list";
@@ -24,6 +24,8 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
     const userSession = useContext(SessionContext);
+
+    const navigate = useNavigate();
 
     useEffect(() =>
     {
@@ -80,7 +82,10 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 <div className="options-container">
                     <ButtonContainer>
                         {userSession.user.handle === props.handle ?
-                            <Button className="follow-button" stylePreset={ButtonStyle.White}>
+                            <Button className="follow-button" stylePreset={ButtonStyle.White} onClick={() =>
+                            {
+                                navigate("/settings/profile");
+                            }}>
                                 Editar perfil
                             </Button> :
 
