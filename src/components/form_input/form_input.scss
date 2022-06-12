@@ -33,6 +33,17 @@
             border: none;
             outline: none;
         }
+
+        textarea
+        {
+            width: 100%;
+            font-size: 17px;
+            font-family: inherit;
+            color: Color.$blackText;
+            border: none;
+            outline: none;
+            resize: none;
+        }
     }
 
     select

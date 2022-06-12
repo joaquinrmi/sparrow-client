@@ -10,6 +10,7 @@ export interface Props
     value?: string;
     options?: Array<string>;
     errorMessage?: string;
+    textarea?: boolean;
 }
 
 export interface FormInputElement extends HTMLDivElement
@@ -104,7 +105,10 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                     })}
                 </select> :
                 <div className="input-container">
-                    <input id={`input-${props.id}`} type={props.type !== undefined ? props.type : "text"} defaultValue={props.value ? props.value : ""} />
+                    {props.textarea ?
+                        <textarea id={`input-${props.id}`} defaultValue={props.value ? props.value : ""} rows={3} /> :
+                        <input id={`input-${props.id}`} type={props.type !== undefined ? props.type : "text"} defaultValue={props.value ? props.value : ""} />
+                    }
                 </div>
             }
         </div>
