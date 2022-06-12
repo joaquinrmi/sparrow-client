@@ -14,6 +14,7 @@ import CheepEditorModal from "./components/cheep_editor_modal";
 import StatusModal from "../../components/status_modal";
 import StatusMessageContext from "../../status_message_context";
 import RecheepMenu from "./components/recheep_menu";
+import ProfileFormModal from "./components/profile_form_modal";
 
 import "./sparrow.scss";
 
@@ -113,6 +114,8 @@ const Sparrow: React.FunctionComponent = () =>
                     <Route path="/messages" element={<RouteSetter id="messages" onMatch={() => {
                         setCurrentRoute("messages");
                     }} />} />
+                    
+                    <Route path="/settings/profile" element={<ProfileFormModal />} />
                     
                     <Route path="/settings" element={<RouteSetter id="settings" onMatch={() => {
                         setCurrentRoute("settings");
