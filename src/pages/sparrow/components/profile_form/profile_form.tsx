@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalForm from "../../../../components/modal_form";
 import FormInput from "../../../../components/form_input/";
@@ -15,9 +15,50 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
 
-    const [ data, setData ] = useState<ProfileData>(state.profile.data);
+    const [ data, setData ] = useState<ProfileData>({ ...state.profile.data });
 
     const navigate = useNavigate();
+
+    useEffect(() =>
+    {
+        const bannerInput = document.getElementById("profile-form-banner") as HTMLInputElement;
+        const pictureInput = document.getElementById("profile-form-picture") as HTMLInputElement;
+
+        bannerInput.onchange = () =>
+        {
+            setData((currentData) =>
+            {
+                let files = bannerInput.files;
+                if(files === null)
+                {
+                    return currentData;
+                }
+
+                return {
+                    ...currentData,
+                    banner: URL.createObjectURL(files[0])
+                };
+            });
+        };
+
+        pictureInput.onchange = () =>
+        {
+            setData((currentData) =>
+            {
+                let files = pictureInput.files;
+                if(files === null)
+                {
+                    return currentData;
+                }
+
+                return {
+                    ...currentData,
+                    picture: URL.createObjectURL(files[0])
+                };
+            });
+        };
+    },
+    [ props ]);
 
     return <ModalForm className="profile-form">
         <div className="modal-form-top">
@@ -45,14 +86,28 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                         <div className="veil">
                             <div className="buttons-container">
                                 <ImageButton title="Agregar foto" onClick={(ev) =>
-                                {}}>
+                                {
+                                    const input = document.getElementById("profile-form-banner") as HTMLInputElement;
+
+                                    input.click();
+                                }}>
                                     <i className="fa-solid fa-camera"></i>
                                 </ImageButton>
 
                                 <ImageButton title="Eliminar foto" onClick={(ev) =>
-                                {}}>
+                                {
+                                    setData((currentData) =>
+                                    {
+                                        return {
+                                            ...currentData,
+                                            banner: ""
+                                        };
+                                    });
+                                }}>
                                     <i className="fa-solid fa-xmark"></i>
                                 </ImageButton>
+
+                                <input type="file" id="profile-form-banner" className="hidden" />
                             </div>
                         </div>
                     </div>
@@ -67,9 +122,15 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 
                         <div className="veil">
                             <ImageButton title="Agregar foto" onClick={(ev) =>
-                            {}}>
+                            {
+                                const input = document.getElementById("profile-form-picture") as HTMLInputElement;
+
+                                input.click();
+                            }}>
                                 <i className="fa-solid fa-camera"></i>
                             </ImageButton>
+
+                            <input type="file" id="profile-form-picture" className="hidden" />
                         </div>
                     </div>
 

@@ -4,6 +4,11 @@
 {
     flex: 0 1 650px;
 
+    input.hidden
+    {
+        display: none;
+    }
+
     .modal-form-top
     {
         display: flex;
