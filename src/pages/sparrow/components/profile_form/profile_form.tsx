@@ -145,7 +145,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             <div className="profile-form-inputs">
                 <FormInput id="profile-name" title="Nombre" value={data.name} />
             
-                <FormInput id="profile-description" title="Biografía" value={data.description} />
+                <FormInput id="profile-description" title="Biografía" value={data.description} textarea />
                 
                 <FormInput id="profile-location" title="Ubicación" value={data.location} />
             </div>
