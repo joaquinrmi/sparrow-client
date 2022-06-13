@@ -35,7 +35,10 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             thread: { query: {}, nextTime: 0, cheeps: [] },
             comments: { query: {}, nextTime: 0, cheeps: [] },
         },
-        cheepEditor: {}
+        cheepEditor: {},
+        closeConfirmation: {
+            open: false
+        }
     },
     new StateManager()
 ]);
