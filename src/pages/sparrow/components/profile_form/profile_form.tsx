@@ -16,6 +16,7 @@ export interface Props
 {
     somethingHasBeenTouched(): void;
     closeRequest(): void;
+    success(): void;
 }
 
 const ProfileForm: React.FunctionComponent<Props> = (props) =>
@@ -134,11 +135,10 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                         {
                             await sendProfileForm(form);
                             statusMessage("Información actualizada.");
-                            props.closeRequest();
+                            props.success();
                         }
                         catch(err)
                         {
-                            console.log(err);
                             statusMessage("Ocurrió un error inesperado.");
                         }
                     })();
@@ -309,8 +309,6 @@ async function sendProfileForm(form: ProfileDataForm): Promise<void>
     {
         data.website = form.website;
     }
-
-    console.log(data);
 
     const sendProfileURL = `${process.env.REACT_APP_SERVER}/api/profile/edit-profile`;
 
