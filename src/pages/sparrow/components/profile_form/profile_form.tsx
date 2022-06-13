@@ -11,7 +11,9 @@ import Loading from "../../../../components/loading";
 import "./profile_form.scss";
 
 export interface Props
-{}
+{
+    somethingHasBeenTouched(): void;
+}
 
 const ProfileForm: React.FunctionComponent<Props> = (props) =>
 {
@@ -29,6 +31,8 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 
         bannerInput.onchange = () =>
         {
+            props.somethingHasBeenTouched();
+
             setData((currentData) =>
             {
                 let files = bannerInput.files;
@@ -46,6 +50,8 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 
         pictureInput.onchange = () =>
         {
+            props.somethingHasBeenTouched();
+            
             setData((currentData) =>
             {
                 let files = pictureInput.files;
@@ -155,13 +161,25 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             </div>
 
             <div className="profile-form-inputs">
-                <FormInput id="profile-name" title="Nombre" value={data.name} limit={50} />
+                <FormInput id="profile-name" title="Nombre" value={data.name} limit={50} onChange={() =>
+                {
+                    props.somethingHasBeenTouched();
+                }} />
             
-                <FormInput id="profile-description" title="Biografía" value={data.description} textarea limit={160} />
+                <FormInput id="profile-description" title="Biografía" value={data.description} textarea limit={160} onChange={() =>
+                {
+                    props.somethingHasBeenTouched();
+                }} />
                 
-                <FormInput id="profile-location" title="Ubicación" value={data.location} limit={30} />
+                <FormInput id="profile-location" title="Ubicación" value={data.location} limit={30} onChange={() =>
+                {
+                    props.somethingHasBeenTouched();
+                }} />
 
-                <FormInput id="profile-website" title="Sitio web" value={data.website} limit={100} />
+                <FormInput id="profile-website" title="Sitio web" value={data.website} limit={100} onChange={() =>
+                {
+                    props.somethingHasBeenTouched();
+                }} />
             </div>
         </div>
 
