@@ -34,6 +34,9 @@ interface SparrowState
         positionY: number;
         onRecheep(): void;
     };
+    closeConfirmation: {
+        open: boolean;
+    };
 }
 
 export interface LocationState
