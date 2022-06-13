@@ -52,7 +52,10 @@ const Sparrow: React.FunctionComponent = () =>
             thread: { query: {}, nextTime: 0, cheeps: [] },
             comments: { query: {}, nextTime: 0, cheeps: [] },
         },
-        cheepEditor: {}
+        cheepEditor: {},
+        closeConfirmation: {
+            open: false
+        }
     });
 
     const [ currentRoute, setCurrentRoute ] = useState<string>("");
