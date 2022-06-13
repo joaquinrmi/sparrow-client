@@ -37,7 +37,8 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
         },
         cheepEditor: {},
         closeConfirmation: {
-            open: false
+            open: false,
+            discart() {}
         }
     },
     new StateManager()
