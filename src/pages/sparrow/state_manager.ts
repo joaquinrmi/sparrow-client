@@ -160,17 +160,17 @@ class StateManager
         }
     }
 
-    openCloseConfirmation(): void
+    openCloseConfirmation(discart: () => void): void
     {
-        this.setCloseConfirmation(true);
+        this.setCloseConfirmation(true, discart);
     }
 
     closeCloseConfirmation(): void
     {
-        this.setCloseConfirmation(false);
+        this.setCloseConfirmation(false, () => {});
     }
 
-    private setCloseConfirmation(status: boolean): void
+    private setCloseConfirmation(status: boolean, discart: () => void): void
     {
         if(this.setState)
         {
@@ -178,7 +178,10 @@ class StateManager
             {
                 const newState = { ...state };
 
-                newState.closeConfirmation.open = status;
+                newState.closeConfirmation = {
+                    open: status,
+                    discart: discart
+                };
 
                 return newState;
             });
