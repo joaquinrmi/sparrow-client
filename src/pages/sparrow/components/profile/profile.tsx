@@ -50,7 +50,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                     location: data.location || "",
                     birthdate: new Date(data.birthdate),
                     joinDate: new Date(data.joinDate),
-                    website: data.website,
+                    website: data.website || "",
                     cheepCount: data.cheepCount,
                     followersCount: data.followers,
                     followingCount: data.following
