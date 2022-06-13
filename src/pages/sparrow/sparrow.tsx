@@ -159,6 +159,11 @@ const Sparrow: React.FunctionComponent = () =>
                 <RecheepMenu /> :
                 null
             }
+
+            {state.closeConfirmation.open ?
+                <CloseConfirmation /> :
+                null
+            }
         </div></StatusMessageContext.Provider>;
     }}</SessionContext.Consumer></StateContext.Provider>;
 };
