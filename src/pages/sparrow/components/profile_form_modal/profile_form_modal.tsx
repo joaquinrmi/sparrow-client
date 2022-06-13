@@ -19,18 +19,23 @@ const ProfileFormModal: React.FunctionComponent<Props> = (props) =>
 
     return <Modal id="profile-form-modal" className="profile-form-modal" closeRequest={() =>
     {
-        if(hasChanged)
+        setHasChanged((hasChanged) =>
         {
-            stateManager.openCloseConfirmation(() =>
+            if(hasChanged)
             {
-                stateManager.closeCloseConfirmation();
+                stateManager.openCloseConfirmation(() =>
+                {
+                    stateManager.closeCloseConfirmation();
+                    navigate(-1);
+                });
+            }
+            else
+            {
                 navigate(-1);
-            });
-        }
-        else
-        {
-            navigate(-1);
-        }
+            }
+
+            return hasChanged;
+        });
     }}>
         <ProfileForm somethingHasBeenTouched={() =>
         {
