@@ -5,9 +5,10 @@ import FormInput from "../../../../components/form_input/";
 import StateContext from "../../state_context";
 import ImageButton from "./components/image_button";
 import ProfileData from "../../profile_data";
+import Button, { ButtonStyle } from "../../../../components/button";
+import Loading from "../../../../components/loading";
 
 import "./profile_form.scss";
-import Button, { ButtonStyle } from "../../../../components/button";
 
 export interface Props
 {}
@@ -17,6 +18,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
     const [ state, stateManager ] = useContext(StateContext);
 
     const [ data, setData ] = useState<ProfileData>({ ...state.profile.data });
+    const [ loading, setLoading ] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -75,7 +77,12 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             </div>
 
             <div className="save-button-container">
-                <Button stylePreset={ButtonStyle.Black}>Guardar</Button>
+                <Button stylePreset={ButtonStyle.Black} onClick={() =>
+                {
+                    setLoading(true);
+                }}>
+                    Guardar
+                </Button>
             </div>
         </div>
 
@@ -153,8 +160,17 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                 <FormInput id="profile-description" title="Biografía" value={data.description} textarea limit={160} />
                 
                 <FormInput id="profile-location" title="Ubicación" value={data.location} limit={30} />
+
+                <FormInput id="profile-website" title="Sitio web" value={data.website} limit={100} />
             </div>
         </div>
+
+        {loading ?
+            <div className="loading-veil">
+                <Loading />
+            </div> :
+            null
+        }
     </ModalForm>;
 };
 
