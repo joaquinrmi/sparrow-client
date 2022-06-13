@@ -36,6 +36,7 @@ interface SparrowState
     };
     closeConfirmation: {
         open: boolean;
+        discart(): void;
     };
 }
 
