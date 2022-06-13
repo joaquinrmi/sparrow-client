@@ -32,7 +32,7 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
         };
     });
 
-    return <Modal id="compose-modal" className="cheep-editor-modal" closeRequest={() =>
+    return <Modal id="compose-modal" className="cheep-editor-modal" changeBodyOverflow closeRequest={() =>
     {
         navigate(-1);
     }}>
