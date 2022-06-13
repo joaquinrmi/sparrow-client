@@ -13,6 +13,7 @@ import "./profile_form.scss";
 export interface Props
 {
     somethingHasBeenTouched(): void;
+    closeRequest(): void;
 }
 
 const ProfileForm: React.FunctionComponent<Props> = (props) =>
@@ -71,10 +72,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 
     return <ModalForm className="profile-form">
         <div className="modal-form-top">
-            <div className="modal-form-close-button" onClick={() =>
-            {
-                navigate(-1);
-            }}>
+            <div className="modal-form-close-button" onClick={props.closeRequest}>
                 <i className="fa-solid fa-xmark"></i>
             </div>
 
