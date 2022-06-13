@@ -17,7 +17,7 @@ const ProfileFormModal: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
-    return <Modal id="profile-form-modal" className="profile-form-modal" closeRequest={() =>
+    return <Modal id="profile-form-modal" className="profile-form-modal" changeBodyOverflow closeRequest={() =>
     {
         setHasChanged((hasChanged) =>
         {
