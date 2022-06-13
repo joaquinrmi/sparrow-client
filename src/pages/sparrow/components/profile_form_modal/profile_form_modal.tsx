@@ -17,7 +17,7 @@ const ProfileFormModal: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
-    return <Modal id="profile-form-modal" className="profile-form-modal" changeBodyOverflow closeRequest={() =>
+    const closeRequest = () =>
     {
         setHasChanged((hasChanged) =>
         {
@@ -36,8 +36,10 @@ const ProfileFormModal: React.FunctionComponent<Props> = (props) =>
 
             return hasChanged;
         });
-    }}>
-        <ProfileForm somethingHasBeenTouched={() =>
+    };
+
+    return <Modal id="profile-form-modal" className="profile-form-modal" changeBodyOverflow closeRequest={closeRequest}>
+        <ProfileForm closeRequest={closeRequest} somethingHasBeenTouched={() =>
         {
             setHasChanged(true);
         }} />
