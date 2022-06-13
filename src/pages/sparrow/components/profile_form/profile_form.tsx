@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import ModalForm from "../../../../components/modal_form";
-import FormInput from "../../../../components/form_input/";
+import FormInput, { FormInputElement } from "../../../../components/form_input/";
 import StateContext from "../../state_context";
 import ImageButton from "./components/image_button";
 import ProfileData from "../../profile_data";
 import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
+import ProfileDataForm from "./profile_data_form";
+import uploadImage, { ImageType } from "../../../../upload_image";
+import StatusMessageContext from "../../../../status_message_context";
 
 import "./profile_form.scss";
 
@@ -19,11 +21,10 @@ export interface Props
 const ProfileForm: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
+    const statusMessage = useContext(StatusMessageContext);
 
     const [ data, setData ] = useState<ProfileData>({ ...state.profile.data });
     const [ loading, setLoading ] = useState<boolean>(false);
-
-    const navigate = useNavigate();
 
     useEffect(() =>
     {
@@ -83,6 +84,65 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             <div className="save-button-container">
                 <Button stylePreset={ButtonStyle.Black} onClick={() =>
                 {
+                    (async () =>
+                    {
+                        let form: ProfileDataForm = {};
+
+                        const bannerInput = document.getElementById("profile-form-banner") as HTMLInputElement;
+
+                        if(bannerInput.files !== null && bannerInput.files.length > 0)
+                        {
+                            form.banner = bannerInput.files[0];
+                        }
+
+                        const pictureInput = document.getElementById("profile-form-picture") as HTMLInputElement;
+
+                        if(pictureInput.files !== null && pictureInput.files.length > 0)
+                        {
+                            form.picture = pictureInput.files[0];
+                        }
+
+                        const nameInput = document.getElementById("profile-name") as FormInputElement;
+
+                        if(nameInput.getValue().length > 0)
+                        {
+                            form.name = nameInput.getValue();
+                        }
+
+                        const descriptionInput = document.getElementById("profile-description") as FormInputElement;
+
+                        if(descriptionInput.getValue().length > 0)
+                        {
+                            form.description = descriptionInput.getValue();
+                        }
+
+                        const locationInput = document.getElementById("profile-location") as FormInputElement;
+
+                        if(locationInput.getValue().length > 0)
+                        {
+                            form.location = locationInput.getValue();
+                        }
+
+                        const websiteInput = document.getElementById("profile-website") as FormInputElement;
+
+                        if(websiteInput.getValue().length > 0)
+                        {
+                            form.website = websiteInput.getValue();
+                        }
+
+                        try
+                        {
+                            await sendProfileForm(form);
+                            statusMessage("Información actualizada.");
+                            props.closeRequest();
+                        }
+                        catch(err)
+                        {
+                            console.log(err);
+                            statusMessage("Ocurrió un error inesperado.");
+                        }
+                    })();
+
                     setLoading(true);
                 }}>
                     Guardar
@@ -189,5 +249,86 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
         }
     </ModalForm>;
 };
+
+async function sendProfileForm(form: ProfileDataForm): Promise<void>
+{
+    let bannerURL: string | undefined;
+    if(form.banner)
+    {
+        try
+        {
+            bannerURL = await uploadImage(form.banner, ImageType.Banner);
+        }
+        catch(err)
+        {
+            throw err;
+        }
+    }
+
+    let pictureURL: string | undefined;
+    if(form.picture)
+    {
+        try
+        {
+            pictureURL = await uploadImage(form.picture, ImageType.ProfilePicture);
+        }
+        catch(err)
+        {
+            throw err;
+        }
+    }
+
+    let data: any = {};
+
+    if(bannerURL)
+    {
+        data.banner = bannerURL;
+    }
+
+    if(pictureURL)
+    {
+        data.picture = pictureURL;
+    }
+
+    if(form.name)
+    {
+        data.name = form.name;
+    }
+
+    if(form.description)
+    {
+        data.description = form.description;
+    }
+
+    if(form.location)
+    {
+        data.location = form.location;
+    }
+
+    if(form.website)
+    {
+        data.website = form.website;
+    }
+
+    console.log(data);
+
+    const sendProfileURL = `${process.env.REACT_APP_SERVER}/api/profile/edit-profile`;
+
+    const response = await fetch(sendProfileURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+        credentials: "include"
+    });
+
+    if(response.status === 200)
+    {
+        return;
+    }
+
+    throw await response.json();
+}
 
 export default ProfileForm;
