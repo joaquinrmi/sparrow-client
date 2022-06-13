@@ -39,10 +39,17 @@ const ProfileFormModal: React.FunctionComponent<Props> = (props) =>
     };
 
     return <Modal id="profile-form-modal" className="profile-form-modal" changeBodyOverflow closeRequest={closeRequest}>
-        <ProfileForm closeRequest={closeRequest} somethingHasBeenTouched={() =>
-        {
-            setHasChanged(true);
-        }} />
+        <ProfileForm
+            closeRequest={closeRequest}
+            somethingHasBeenTouched={() =>
+            {
+                setHasChanged(true);
+            }}
+            success={() =>
+            {
+                navigate(-1);
+            }}
+        />
     </Modal>;
 };
 
