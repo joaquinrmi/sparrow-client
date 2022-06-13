@@ -7,6 +7,7 @@ export interface Props
     children?: React.ReactNode;
     className?: string;
     id: string;
+    changeBodyOverflow?: boolean;
 
     closeRequest(): void;
 }
@@ -25,11 +26,17 @@ const Modal: React.FunctionComponent<Props> = (props) =>
             }
         };
 
-        document.body.style.overflow = "hidden";
+        if(props.changeBodyOverflow)
+        {
+            document.body.style.overflow = "hidden";
+        }
 
         return () =>
         {
-            document.body.style.overflow = "auto";
+            if(props.changeBodyOverflow)
+            {
+                document.body.style.overflow = "auto";
+            }
         };
     },
     []);
