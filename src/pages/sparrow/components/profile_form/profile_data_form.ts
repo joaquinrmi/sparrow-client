@@ -1,4 +1,4 @@
-interface ProfileForm
+interface ProfileDataForm
 {
     banner?: File;
     picture?: File;
@@ -8,4 +8,4 @@ interface ProfileForm
     website?: string;
 }
 
-export default ProfileForm;
+export default ProfileDataForm;
