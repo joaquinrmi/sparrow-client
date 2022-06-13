@@ -17,6 +17,7 @@ import RecheepMenu from "./components/recheep_menu";
 import ProfileFormModal from "./components/profile_form_modal";
 
 import "./sparrow.scss";
+import CloseConfirmation from "./components/close_confirmation";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -54,7 +55,8 @@ const Sparrow: React.FunctionComponent = () =>
         },
         cheepEditor: {},
         closeConfirmation: {
-            open: false
+            open: false,
+            discart() {}
         }
     });
 
