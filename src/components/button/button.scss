@@ -82,3 +82,22 @@
     border: 1px solid Color.$blue2;
     transition: color 0.25s, border 0.25s, background-color 0.25s;
 }
+
+.button-standar.red
+{
+    color: Color.$whiteText;
+    background-color: Color.$red1;
+    transition: background-color 0.25s;
+}
+
+.button-standar.red:hover
+{
+    background-color: Color.$red2;
+    transition: background-color 0.25s;
+}
+
+.button-standar.red.disable
+{
+    background-color: Color.$red3;
+    transition: background-color 0.25s;
+}

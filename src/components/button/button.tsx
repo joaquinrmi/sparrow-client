@@ -76,7 +76,8 @@ export enum ButtonStyle
     White = "white",
     Black = "black",
     Blue = "blue",
-    BlueTransparent = "blue-transparent"
+    BlueTransparent = "blue-transparent",
+    Red = "red",
 }
 
 export default Button;
