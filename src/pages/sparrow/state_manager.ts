@@ -159,6 +159,31 @@ class StateManager
             });
         }
     }
+
+    openCloseConfirmation(): void
+    {
+        this.setCloseConfirmation(true);
+    }
+
+    closeCloseConfirmation(): void
+    {
+        this.setCloseConfirmation(false);
+    }
+
+    private setCloseConfirmation(status: boolean): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.closeConfirmation.open = status;
+
+                return newState;
+            });
+        }
+    }
 }
 
 export default StateManager;
