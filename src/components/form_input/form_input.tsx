@@ -12,6 +12,7 @@ export interface Props
     errorMessage?: string;
     textarea?: boolean;
     limit?: number;
+    onChange?(): void;
 }
 
 export interface FormInputElement extends HTMLDivElement
@@ -94,6 +95,11 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                 }
 
                 setCurrentLength(inputElement.value.length);
+            }
+
+            if(props.onChange)
+            {
+                props.onChange();
             }
         });
     });
