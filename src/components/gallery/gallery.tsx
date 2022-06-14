@@ -1,10 +1,14 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./gallery.scss";
 
 export interface Props
 {
     pictures: Array<string>;
+    userHandle?: string;
+    cheepId?: number;
+    disableClick?: boolean;
 }
 
 const GALLERY_PATTERN = [
@@ -16,11 +20,23 @@ const GALLERY_PATTERN = [
 
 const Gallery: React.FunctionComponent<Props> = (props) =>
 {
+    const navigate = useNavigate();
+
     const pictures: Array<React.ReactNode> = [ null, null, null, null ];
+    const pattern = GALLERY_PATTERN[props.pictures.length - 1];
     for(let i = 0; i < props.pictures.length; ++i)
     {
-        const index = GALLERY_PATTERN[props.pictures.length - 1][i];
-        pictures[index] = <SinglePicture key={`${i}-picture`} picture={props.pictures[i]} />;
+        const index = pattern[i];
+        pictures[index] = <SinglePicture key={`${i}-picture`} picture={props.pictures[i]} onClick={(ev) =>
+        {
+            if(!props.disableClick && props.cheepId !== undefined && props.userHandle !== undefined)
+            {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${index + 1}`);
+            }
+        }} />;
     }
 
     return <div className="gallery">
@@ -44,13 +60,18 @@ const Gallery: React.FunctionComponent<Props> = (props) =>
 interface SinglePictureProps
 {
     picture: string;
+    onClick: MouseEventHandler<HTMLDivElement>;
 }
 
 const SinglePicture: React.FunctionComponent<SinglePictureProps> = (props) =>
 {
-    return <div className="gallery-item-container" style={{
-        backgroundImage: `url(${props.picture})`
-    }}>
+    return <div
+        className="gallery-item-container"
+        style={{
+            backgroundImage: `url(${props.picture})`
+        }}
+        onClick={props.onClick}
+    >
         <img src={props.picture} />
     </div>;
 };
