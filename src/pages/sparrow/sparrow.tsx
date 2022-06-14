@@ -15,9 +15,10 @@ import StatusModal from "../../components/status_modal";
 import StatusMessageContext from "../../status_message_context";
 import RecheepMenu from "./components/recheep_menu";
 import ProfileFormModal from "./components/profile_form_modal";
+import CloseConfirmation from "./components/close_confirmation";
+import CheepGalleryModal from "./components/cheep_gallery_modal";
 
 import "./sparrow.scss";
-import CloseConfirmation from "./components/close_confirmation";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -127,6 +128,18 @@ const Sparrow: React.FunctionComponent = () =>
                     }} />} />
 
                     <Route path="/compose/cheep/*" element={<CheepEditorModal />} />
+
+                    <Route path="/:userHandle/status/:cheepId/photo/:photoIndex/*" element={<GetHandle>{(userHandle) =>
+                    {
+                        return <GetCheepId>{(cheepId) =>
+                            {
+                                return <GetPhotoIndex>{(photoIndex) =>
+                                {
+                                    return <CheepGalleryModal userHandle={userHandle} cheepId={cheepId} photoIndex={photoIndex} />;
+                                }}</GetPhotoIndex>
+                            }
+                        }</GetCheepId>;
+                    }}</GetHandle>} />
                     
                     <Route path="/:userHandle/status/:cheepId/*" element={<GetCheepId>{
                         (cheepId) =>
@@ -190,6 +203,18 @@ const GetCheepId: React.FunctionComponent<GetCheepIdProps> = (props) =>
     const { cheepId } = useParams();
 
     return <>{props.children(Number(cheepId))}</>;
+};
+
+interface GetPhotoIndexProps
+{
+    children(photoIndex: number): React.ReactNode;
+}
+
+const GetPhotoIndex: React.FunctionComponent<GetPhotoIndexProps> = (props) =>
+{
+    const { photoIndex } = useParams();
+
+    return <>{props.children(Number(photoIndex))}</>;
 };
 
 export default Sparrow;
