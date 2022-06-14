@@ -148,7 +148,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
 
                         {gallery.length > 0 || loadingPictures ?
                             <div className="gallery-container">
-                                <Gallery pictures={gallery} />
+                                <Gallery pictures={gallery} disableClick />
 
                                 {loadingPictures ?
                                     <div className="loading-pictures">
