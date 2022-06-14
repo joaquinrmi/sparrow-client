@@ -20,6 +20,7 @@ export interface Props
 {
     id: string;
     cheepId: number;
+    data?: CheepData;
 }
 
 const CheepPage: React.FunctionComponent<Props> = (props) =>
@@ -27,7 +28,11 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
     const [ state, stateManager ] = useContext(StateContext);
 
     let cheepData: CheepData | undefined;
-    if(state.cheepPage && state.cheepPage.data.id === props.cheepId)
+    if(props.data !== undefined)
+    {
+        cheepData = props.data
+    }
+    else if(state.cheepPage && state.cheepPage.data.id === props.cheepId)
     {
         cheepData = state.cheepPage.data;
     }
