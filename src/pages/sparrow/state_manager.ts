@@ -94,6 +94,24 @@ class StateManager
         }
     }
 
+    setCheepGalleryModal(data: CheepData, photoIndex: number): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.cheepGalleryModal = {
+                    data: data,
+                    photoIndex: photoIndex
+                };
+
+                return newState;
+            });
+        }
+    }
+
     setEditorTargetCheep(targetCheep?: CheepData): void
     {
         if(this.setState)
