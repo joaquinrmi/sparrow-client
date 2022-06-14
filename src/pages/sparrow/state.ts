@@ -23,6 +23,10 @@ interface SparrowState
     cheepPage?: {
         data: CheepData;
     },
+    cheepGalleryModal?: {
+        data: CheepData;
+        photoIndex: number;
+    },
     cheepEditor: {
         responseTarget?: CheepData;
         targetCheep?: CheepData;
