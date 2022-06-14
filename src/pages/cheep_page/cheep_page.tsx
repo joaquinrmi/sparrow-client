@@ -21,6 +21,7 @@ export interface Props
     id: string;
     cheepId: number;
     data?: CheepData;
+    hideGallery?: boolean;
 }
 
 const CheepPage: React.FunctionComponent<Props> = (props) =>
@@ -127,7 +128,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                     null
                 }
 
-                {cheepData.gallery && cheepData.gallery.length > 0 ?
+                {!props.hideGallery && cheepData.gallery && cheepData.gallery.length > 0 ?
                     <div className="sub-container">
                         <Gallery pictures={cheepData.gallery} />
                     </div> :
