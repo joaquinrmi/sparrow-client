@@ -22,6 +22,7 @@ export interface Props
     cheepId: number;
     data?: CheepData;
     hideGallery?: boolean;
+    hideHeader?: boolean;
 }
 
 const CheepPage: React.FunctionComponent<Props> = (props) =>
@@ -204,9 +205,12 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
     }
 
     return <div id={props.id} className="cheep-page">
-        <PageHeader>
-            <span className="title">Cheep</span>
-        </PageHeader>
+        {!props.hideHeader ?
+            <PageHeader>
+                <span className="title">Cheep</span>
+            </PageHeader> :
+            null
+        }
 
         {content}
     </div>;
