@@ -57,6 +57,26 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
         })();
     });
 
+    const prevPicture = () =>
+    {
+        if(cheepData !== undefined && props.photoIndex <= 1)
+        {
+            return;
+        }
+
+        navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${props.photoIndex - 1}`);
+    };
+
+    const nextPicture = () =>
+    {
+        if(cheepData !== undefined && props.photoIndex >= cheepData.gallery.length)
+        {
+            return;
+        }
+
+        navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${props.photoIndex + 1}`);
+    };
+
     useEffect(() =>
     {
         let navigateOnGallery = (ev: KeyboardEvent) =>
@@ -64,21 +84,11 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
             switch(ev.key)
             {
             case "ArrowRight":
-                if(cheepData !== undefined && props.photoIndex >= cheepData.gallery.length)
-                {
-                    return;
-                }
-
-                navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${props.photoIndex + 1}`);
+                nextPicture();
                 break;
 
             case "ArrowLeft":
-                if(cheepData !== undefined && props.photoIndex <= 1)
-                {
-                    return;
-                }
-
-                navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${props.photoIndex - 1}`);
+                prevPicture();
                 break;
             }
         };
@@ -113,6 +123,31 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
             content = <>
                 <section className="gallery-container">
                     <Slider gallery={cheepData.gallery} currentIndex={props.photoIndex - 1} />
+
+                    <div className="gallery-button close" onClick={() =>
+                    {}}>
+                        <i className="fa-solid fa-xmark"></i>
+                    </div>
+
+                    {props.photoIndex > 1 ?
+                        <div className="gallery-button left" onClick={() =>
+                        {
+                            prevPicture();
+                        }}>
+                            <i className="fa-solid fa-arrow-left"></i>
+                        </div> :
+                        null
+                    }
+
+                    {props.photoIndex < cheepData.gallery.length ?
+                        <div className="gallery-button right" onClick={() =>
+                        {
+                            nextPicture();
+                        }}>
+                            <i className="fa-solid fa-arrow-right"></i>
+                        </div> :
+                        null
+                    }
                 </section>
 
                 <section className="cheep-container">

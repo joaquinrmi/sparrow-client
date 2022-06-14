@@ -28,6 +28,51 @@
             align-items: center;
             flex: 1;
             overflow: hidden;
+            user-select: none;
+
+            .gallery-button
+            {
+                position: absolute;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 34px;
+                height: 34px;
+                background-color: rgba(0, 0, 0, 0.3);
+                border-radius: 1000px;
+                overflow: hidden;
+                cursor: pointer;
+                transition: background-color 0.2s;
+
+                i
+                {
+                    font-size: 18px;
+                    color: #fff;
+                }
+            }
+
+            .gallery-button:hover
+            {
+                background-color: rgba(255, 255, 255, 0.05);
+                transition: background-color 0.2s;
+            }
+
+            .gallery-button.close
+            {
+                top: 1em;
+                left: 1em;
+            }
+
+            .gallery-button.left
+            {
+                left: 1em;
+            }
+
+            .gallery-button.right
+            {
+                right: 1em;
+            }
 
             img
             {
