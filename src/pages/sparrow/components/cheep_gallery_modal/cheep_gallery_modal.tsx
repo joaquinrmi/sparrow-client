@@ -105,6 +105,13 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
             case "ArrowLeft":
                 prevPicture();
                 break;
+
+            case "Escape":
+                setNavigationCount((count) =>
+                {
+                    navigate(-count);
+                    return count;
+                });
             }
         };
 
