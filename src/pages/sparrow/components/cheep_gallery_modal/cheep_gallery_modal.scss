@@ -128,9 +128,52 @@
 
         .cheep-container
         {
-            flex: 0 0 332px;
+            flex: 0;
             background-color: #fff;
             overflow: auto;
+        }
+
+        .cheep-container.hidden
+        {
+            flex: 0;
+        }
+
+        .cheep-container.show
+        {
+            flex: 0;
+        }
+    }
+}
+
+@media (min-width: 725px)
+{
+    .cheep-gallery-modal
+    {
+        .cheep-modal-container
+        {
+            .cheep-container
+            {
+                flex: 0;
+            }
+
+            .cheep-container.show
+            {
+                flex: 0 0 332px;
+            }
+        }
+    }
+}
+
+@media (min-width: 950px)
+{
+    .cheep-gallery-modal
+    {
+        .cheep-modal-container
+        {
+            .cheep-container
+            {
+                flex: 0 0 332px;
+            }
         }
     }
 }
