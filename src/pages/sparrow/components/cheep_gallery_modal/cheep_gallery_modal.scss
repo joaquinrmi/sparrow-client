@@ -64,6 +64,13 @@
                 left: 1em;
             }
 
+            .gallery-button.collapse
+            {
+                display: none;
+                top: 1em;
+                right: 1em;
+            }
+
             .gallery-button.left
             {
                 left: 1em;
@@ -151,6 +158,14 @@
     {
         .cheep-modal-container
         {
+            .gallery-container
+            {
+                .gallery-button.collapse
+                {
+                    display: flex;
+                }
+            }
+
             .cheep-container
             {
                 flex: 0;
