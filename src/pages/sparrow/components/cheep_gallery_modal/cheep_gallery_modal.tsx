@@ -37,9 +37,14 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
+        document.body.style.overflow = "hidden";
+
         if(cheepData !== undefined && (cheepData.id === props.cheepId))
         {
-            return;
+            return () =>
+            {
+                document.body.style.overflow = "auto";
+            };
         }
 
         (async () =>
@@ -58,6 +63,11 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
 
             stateManager.setCheepGalleryModal(data, props.photoIndex);
         })();
+
+        return () =>
+        {
+            document.body.style.overflow = "auto";
+        };
     });
 
     const prevPicture = () =>
