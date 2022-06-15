@@ -21,3 +21,18 @@
         }
     }
 }
+
+@media (min-width: 1022px) and (max-width: 1041px)
+{
+    .sparrow
+    {
+        .sparrow-content
+        {
+            .navigation-container
+            {
+                flex: 1 1 68px;
+                max-width: 68px;
+            }
+        }
+    }
+}

@@ -17,6 +17,7 @@ import RecheepMenu from "./components/recheep_menu";
 import ProfileFormModal from "./components/profile_form_modal";
 import CloseConfirmation from "./components/close_confirmation";
 import CheepGalleryModal from "./components/cheep_gallery_modal";
+import MainAside from "./components/main_aside";
 
 import "./sparrow.scss";
 
@@ -67,7 +68,7 @@ const Sparrow: React.FunctionComponent = () =>
 
     const [ statusMessage, setStatusMessage ] = useState<string>("");
 
-    const aside = <></>;
+    const aside = <MainAside />;
 
     return <StateContext.Provider value={[
         state, new StateManager(setState)
