@@ -1,0 +1,11 @@
+@use "../../../../colors.scss" as Color;
+
+.main-aside
+{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}

@@ -4,7 +4,7 @@ import "./main_aside.scss";
 
 const MainAside: React.FunctionComponent = (props) =>
 {
-    return <aside></aside>;
+    return <aside className="main-aside"></aside>;
 };
 
 export default MainAside;
