@@ -167,6 +167,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
                 likes: <CheepList name="profileLikes" arguments={{
                     userHandle: state.profile.data.handle,
+                    likes: true
                 }} />
             }} />
 
