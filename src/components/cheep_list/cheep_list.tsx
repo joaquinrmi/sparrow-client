@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Cheep from "../cheep/";
 import Loading from "../loading";
 
@@ -19,9 +19,38 @@ export interface Props
 
 const CheepList: React.FunctionComponent<Props> = (props) =>
 {
+    const [ loadMore, setLoadMore ] = useState<boolean>(false);
+    const [ noMore, setNoMore ] = useState<boolean>(false);
+
     const [ state, stateManager ] = useContext(StateContext);
 
     const listState = state.cheepLists[props.name];
+
+    useEffect(() =>
+    {
+        (async () =>
+        {
+            if(loadMore && !noMore)
+            {
+                let args: SearchCheepsQuery = {
+                    ...props.arguments,
+                    maxTime: listState.nextTime
+                };
+
+                const { cheeps, nextTime } = await loadCheeps(args, props.hideResponseTarget);
+
+                stateManager.loadCheepList(props.name, props.arguments, nextTime, [ ...listState.cheeps, ...cheeps ]);
+
+                setLoadMore(false);
+
+                if(cheeps.length < 20)
+                {
+                    setNoMore(true);
+                }
+            }
+        })();
+    },
+    [ loadMore ]);
 
     useEffect(() =>
     {
@@ -46,6 +75,27 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
     },
     [ props.arguments ]);
 
+    useEffect(() =>
+    {
+        const cheepList = document.querySelector(".cheep-list") as HTMLDivElement;
+
+        const onScroll = () => {
+            const box = cheepList.getBoundingClientRect();
+
+            if(box.height + box.top - window.innerHeight < 1000)
+            {
+                setLoadMore(true);
+            }
+        };
+
+        document.addEventListener("scroll", onScroll);
+
+        return () =>
+        {
+            document.removeEventListener("scroll", onScroll);
+        }
+    });
+
     let content: React.ReactNode;
     if(compareQuery(props.arguments, listState.query))
     {
@@ -63,6 +113,13 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 
     return <div className="cheep-list">
         {content}
+
+        {loadMore && !noMore ?
+            <div className="loading-container">
+                <Loading />
+            </div> :
+            null
+        }
     </div>;
 };
 
