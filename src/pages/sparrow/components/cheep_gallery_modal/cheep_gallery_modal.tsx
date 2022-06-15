@@ -9,6 +9,7 @@ import StateContext from "../../state_context";
 import Slider from "./components/slider";
 
 import "./cheep_gallery_modal.scss";
+import NavigateTo from "./components/navigate_to";
 
 export interface Props
 {
@@ -19,6 +20,8 @@ export interface Props
 
 const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
 {
+    const [ navigationCount, setNavigationCount ] = useState(1);
+
     const statusMessage = useContext(StatusMessageContext);
     const [ state, stateManager ] = useContext(StateContext);
 
@@ -65,6 +68,7 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
         }
 
         navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${props.photoIndex - 1}`);
+        setNavigationCount((value) => value + 1);
     };
 
     const nextPicture = () =>
@@ -75,6 +79,7 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
         }
 
         navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${props.photoIndex + 1}`);
+        setNavigationCount((value) => value + 1);
     };
 
     useEffect(() =>
@@ -106,17 +111,25 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
     {
         if(props.photoIndex < 1)
         {
-            content = <></>;
-
-            stateManager.setCheepGalleryModal(cheepData, 1);
-            navigate(`/${props.userHandle}/status/${props.cheepId}/photo/1`);
+            content = <NavigateTo path={`/${props.userHandle}/status/${props.cheepId}/photo/1`} action={() =>
+            {
+                if(cheepData !== undefined)
+                {
+                    setNavigationCount((value) => value + 1);
+                    stateManager.setCheepGalleryModal(cheepData, 1);
+                }
+            }} />;
         }
         else if(props.photoIndex - 1 >= cheepData.gallery.length)
         {
-            content = <></>;
-
-            stateManager.setCheepGalleryModal(cheepData, cheepData.gallery.length);
-            navigate(`/${props.userHandle}/status/${props.cheepId}/photo/${cheepData.gallery.length}`);
+            content = <NavigateTo path={`/${props.userHandle}/status/${props.cheepId}/photo/${cheepData.gallery.length}`} action={() =>
+            {
+                if(cheepData !== undefined)
+                {
+                    setNavigationCount((value) => value + 1);
+                    stateManager.setCheepGalleryModal(cheepData, cheepData.gallery.length);
+                }
+            }} />;
         }
         else
         {
@@ -125,7 +138,9 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
                     <Slider gallery={cheepData.gallery} currentIndex={props.photoIndex - 1} />
 
                     <div className="gallery-button close" onClick={() =>
-                    {}}>
+                    {
+                        navigate(-navigationCount);
+                    }}>
                         <i className="fa-solid fa-xmark"></i>
                     </div>
 
