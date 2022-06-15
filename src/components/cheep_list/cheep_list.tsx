@@ -79,7 +79,8 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
     {
         const cheepList = document.querySelector(".cheep-list") as HTMLDivElement;
 
-        const onScroll = () => {
+        const onScroll = () =>
+        {
             const box = cheepList.getBoundingClientRect();
 
             if(box.height + box.top - window.innerHeight < 1000)
@@ -90,9 +91,27 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 
         document.addEventListener("scroll", onScroll);
 
+        const onResize = () =>
+        {
+            const lastChild = cheepList.lastChild as HTMLDivElement;
+            if(lastChild === null || lastChild === undefined)
+            {
+                return;
+            }
+
+            const box = lastChild.getBoundingClientRect();
+
+            cheepList.style.paddingBottom = `${window.innerHeight - box.height}px`;
+        }
+
+        window.addEventListener("resize", onResize);
+
+        onResize();
+
         return () =>
         {
             document.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", onResize);
         }
     });
 
