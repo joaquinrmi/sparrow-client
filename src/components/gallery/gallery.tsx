@@ -39,7 +39,7 @@ const Gallery: React.FunctionComponent<Props> = (props) =>
         }} />;
     }
 
-    return <div className="gallery">
+    return <div className={`gallery ${props.disableClick ? "disabled" : ""}`}>
         <div className="gallery-vertical">
             <div className="gallery-horizontal">
                 {pictures[0]}

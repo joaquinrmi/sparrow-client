@@ -5,6 +5,7 @@
     flex-direction: row;
     width: 100%;
     padding-top: 56.25%;
+    cursor: pointer;
 
     .gallery-vertical
     {
@@ -46,4 +47,9 @@
             opacity: 0;
         }
     }
+}
+
+.gallery.disabled
+{
+    cursor: auto;
 }
