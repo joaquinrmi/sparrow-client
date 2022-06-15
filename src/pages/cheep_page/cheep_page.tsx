@@ -131,7 +131,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
                 {!props.hideGallery && cheepData.gallery && cheepData.gallery.length > 0 ?
                     <div className="sub-container">
-                        <Gallery pictures={cheepData.gallery} />
+                        <Gallery pictures={cheepData.gallery} userHandle={cheepData.author.handle} cheepId={cheepData.id} />
                     </div> :
                     null
                 }
