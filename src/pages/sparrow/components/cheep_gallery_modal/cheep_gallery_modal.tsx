@@ -7,9 +7,9 @@ import StatusMessageContext from "../../../../status_message_context";
 import CheepPage from "../../../cheep_page";
 import StateContext from "../../state_context";
 import Slider from "./components/slider";
+import NavigateTo from "./components/navigate_to";
 
 import "./cheep_gallery_modal.scss";
-import NavigateTo from "./components/navigate_to";
 
 export interface Props
 {
@@ -134,7 +134,13 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
         else
         {
             content = <>
-                <section className="gallery-container">
+                <section className="gallery-container" onClick={(ev) =>
+                {
+                    if(((ev.target as HTMLDivElement).parentElement as HTMLDivElement).classList.contains("slider"))
+                    {
+                        navigate(-navigationCount);
+                    }
+                }}>
                     <Slider gallery={cheepData.gallery} currentIndex={props.photoIndex - 1} />
 
                     <div className="gallery-button close" onClick={() =>
