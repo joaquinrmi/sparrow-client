@@ -5,6 +5,7 @@ import "./search_bar.scss";
 export interface Props
 {
     id: string;
+    defaultValue?: string;
 }
 
 const SearchBar: React.FunctionComponent<Props> = (props) =>
@@ -56,7 +57,7 @@ const SearchBar: React.FunctionComponent<Props> = (props) =>
             <i className="fa-solid fa-magnifying-glass"></i>
         </div>
 
-        <input type="text" placeholder="Buscar en Sparrow" />
+        <input type="text" defaultValue={props.defaultValue} placeholder="Buscar en Sparrow" />
     </div>;
 };
 
