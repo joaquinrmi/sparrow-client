@@ -1,0 +1,70 @@
+@use "../../../../../../colors.scss" as Color;
+
+.search-bar-container
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: Color.$gray2;
+    border-radius: 1000px;
+    border-left: 1px solid Color.$gray2;
+    border-right: 1px solid Color.$gray2;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    .icon
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1em 0 1.5em;
+        
+        i
+        {
+            color: Color.$silverText;
+        }
+    }
+
+    input
+    {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex: 1;
+        height: 42px;
+        font-size: 15px;
+        color: Color.$silverText;
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+    }
+
+    input::placeholder
+    {
+        color: Color.$silverText;
+    }
+
+    input:focus
+    {
+        outline: none;
+    }
+}
+
+.search-bar-container.active
+{
+    border: 1px solid Color.$blue1;
+    background-color: #fff;
+
+    .icon
+    {
+        i
+        {
+            color: Color.$blue1;
+        }
+    }
+
+    input
+    {
+        height: 40px;
+    }
+}
