@@ -135,7 +135,7 @@ const Sparrow: React.FunctionComponent = () =>
 
                     <Route path="/search" element={<GetSearchParams>{(searchParams) =>
                     {
-                        return <RouteSetter id="search" onMatch={() => {
+                        return <RouteSetter id={`search-${searchParams.get("q")}`} onMatch={() => {
                             setSearchParams(searchParams);
                             setCurrentRoute("search");
                         }} />;
