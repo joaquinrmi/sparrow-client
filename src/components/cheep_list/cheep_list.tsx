@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import Cheep from "../cheep/";
 import Loading from "../loading";
 
@@ -19,9 +19,6 @@ export interface Props
 
 const CheepList: React.FunctionComponent<Props> = (props) =>
 {
-    const [ loadMore, setLoadMore ] = useState<boolean>(false);
-    const [ noMore, setNoMore ] = useState<boolean>(false);
-
     const [ state, stateManager ] = useContext(StateContext);
 
     const listState = state.cheepLists[props.name];
@@ -30,7 +27,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
     {
         (async () =>
         {
-            if(loadMore && !noMore)
+            if(listState.loadMore && !listState.noMore)
             {
                 let args: SearchCheepsQuery = {
                     ...props.arguments,
@@ -41,16 +38,16 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 
                 stateManager.loadCheepList(props.name, props.arguments, nextTime, [ ...listState.cheeps, ...cheeps ]);
 
-                setLoadMore(false);
+                stateManager.setLoadMore(props.name, false);
 
                 if(cheeps.length < 20)
                 {
-                    setNoMore(true);
+                    stateManager.loadNoMore(props.name);
                 }
             }
         })();
     },
-    [ loadMore ]);
+    [ listState.loadMore ]);
 
     useEffect(() =>
     {
@@ -85,7 +82,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 
             if(box.height + box.top - window.innerHeight < 1000)
             {
-                setLoadMore(true);
+                stateManager.setLoadMore(props.name, true);
             }
         };
 
@@ -133,7 +130,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
     return <div className="cheep-list">
         {content}
 
-        {loadMore && !noMore ?
+        {listState.loadMore && !listState.noMore ?
             <div className="loading-container">
                 <Loading />
             </div> :
