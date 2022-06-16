@@ -55,6 +55,7 @@ export interface CheepListState
     query: SearchCheepsQuery;
     nextTime: number;
     cheeps: Array<CheepData>;
+    noMore?: boolean;
 }
 
 export type LocationName = keyof SparrowState["location"];
