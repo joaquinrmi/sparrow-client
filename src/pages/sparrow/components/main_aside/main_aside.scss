@@ -5,7 +5,41 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: 1em;
     height: 100%;
+    padding-top: 5px;
     box-sizing: border-box;
     overflow: hidden;
+
+    .links-container
+    {
+        width: 100%;
+        padding: 0 12px;
+
+        ul
+        {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li
+            {
+                display: inline-block;
+                margin-right: 12px;
+
+                a
+                {
+                    white-space: nowrap;
+                    font-size: 13px;
+                    text-decoration: none;
+                    color: Color.$silverText;
+                }
+
+                a:hover
+                {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
 }
