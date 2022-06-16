@@ -54,8 +54,24 @@ class StateManager
                 newState.cheepLists[listName] = {
                     query: query,
                     nextTime: nextTime,
-                    cheeps: cheeps
+                    cheeps: cheeps,
+                    noMore: false
                 };
+
+                return newState;
+            });
+        }
+    }
+
+    loadNoMore(listName: CheepListName): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.cheepLists[listName].noMore = true;
 
                 return newState;
             });
