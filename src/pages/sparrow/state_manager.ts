@@ -55,8 +55,24 @@ class StateManager
                     query: query,
                     nextTime: nextTime,
                     cheeps: cheeps,
+                    loadMore: false,
                     noMore: false
                 };
+
+                return newState;
+            });
+        }
+    }
+
+    setLoadMore(listName: CheepListName, loadMore: boolean): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.cheepLists[listName].loadMore = loadMore;
 
                 return newState;
             });
