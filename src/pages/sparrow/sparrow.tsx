@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import { Routes, Route, Navigate, useParams, useSearchParams } from "react-router-dom";
 import NavigationBar from "./components/navigation_bar";
 import SessionContext from "../../session_context";
 import MainSection from "./components/main_section";
@@ -20,6 +20,7 @@ import CheepGalleryModal from "./components/cheep_gallery_modal";
 import MainAside from "./components/main_aside";
 
 import "./sparrow.scss";
+import Search from "../search";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -54,6 +55,7 @@ const Sparrow: React.FunctionComponent = () =>
             profileLikes: { query: {}, nextTime: 0, cheeps: [] },
             thread: { query: {}, nextTime: 0, cheeps: [] },
             comments: { query: {}, nextTime: 0, cheeps: [] },
+            search: { query: {}, nextTime: 0, cheeps: [] },
         },
         cheepEditor: {},
         closeConfirmation: {
@@ -65,6 +67,7 @@ const Sparrow: React.FunctionComponent = () =>
     const [ currentRoute, setCurrentRoute ] = useState<string>("");
     const [ userHandle, setUserHandle ] = useState<string>("");
     const [ cheepId, setCheepId ] = useState<number>(0);
+    const [ searchParams, setSearchParams ] = useState<URLSearchParams>();
 
     const [ statusMessage, setStatusMessage ] = useState<string>("");
 
@@ -100,7 +103,9 @@ const Sparrow: React.FunctionComponent = () =>
 
                     cheep: <MainSection mainColumnChildren={<CheepPage id="cheep-page" cheepId={cheepId} />} rightColumnChildren={aside} />,
 
-                    profile: <MainSection mainColumnChildren={<Profile handle={userHandle} />} rightColumnChildren={aside} />
+                    profile: <MainSection mainColumnChildren={<Profile handle={userHandle} />} rightColumnChildren={aside} />,
+
+                    search: <MainSection mainColumnChildren={<Search params={searchParams} />} rightColumnChildren={aside} />,
                 }} />
 
                 <Routes>
@@ -127,6 +132,14 @@ const Sparrow: React.FunctionComponent = () =>
                     <Route path="/settings" element={<RouteSetter id="settings" onMatch={() => {
                         setCurrentRoute("settings");
                     }} />} />
+
+                    <Route path="/search" element={<GetSearchParams>{(searchParams) =>
+                    {
+                        return <RouteSetter id="search" onMatch={() => {
+                            setSearchParams(searchParams);
+                            setCurrentRoute("search");
+                        }} />;
+                    }}</GetSearchParams>} />
 
                     <Route path="/compose/cheep/*" element={<CheepEditorModal />} />
 
@@ -217,5 +230,17 @@ const GetPhotoIndex: React.FunctionComponent<GetPhotoIndexProps> = (props) =>
 
     return <>{props.children(Number(photoIndex))}</>;
 };
+
+interface GetSearchParamsProps
+{
+    children(searchParams: URLSearchParams): React.ReactNode;
+}
+
+const GetSearchParams: React.FunctionComponent<GetSearchParamsProps> = (props) =>
+{
+    const [ searchParams ] = useSearchParams();
+
+    return <>{props.children(searchParams)}</>;
+}
 
 export default Sparrow;
