@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useMatch, useResolvedPath } from "react-router-dom";
 
+import "./navigation_item.scss";
+
 export interface NavigationItemProps
 {
     children?: React.ReactNode;
