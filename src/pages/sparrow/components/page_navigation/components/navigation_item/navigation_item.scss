@@ -1,0 +1,64 @@
+@use "../../../../../../colors.scss" as Color;
+
+.page-navigation-item
+{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 0 auto;
+
+    .nav-button
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        flex: 1 0 auto;
+        height: 53px;
+        padding: 0 16px;
+        text-decoration: none;
+        transition: background-color 0.2s;
+
+        .nav-text
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            position: relative;
+            font-size: 15px;
+            color: Color.$silverText;
+            white-space: nowrap;
+
+            .color-bar
+            {
+                position: absolute;
+                bottom: 0;
+                left: -3px;
+                width: 100%;
+                padding: 0 3px;
+                background-color: Color.$blue1;
+                border-radius: 1000px;
+            }
+        }
+    }
+
+    .nav-button:hover
+    {
+        background-color: Color.$gray3;
+        transition: background-color 0.1s;
+    }
+
+    .nav-button.active
+    {
+        .nav-text
+        {
+            font-weight: 700;
+            color: Color.$blackText;
+
+            .color-bar
+            {
+                height: 4px;
+            }
+        }
+    }
+}
