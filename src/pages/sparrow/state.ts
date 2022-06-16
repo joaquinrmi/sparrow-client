@@ -55,6 +55,7 @@ export interface CheepListState
     query: SearchCheepsQuery;
     nextTime: number;
     cheeps: Array<CheepData>;
+    loadMore?: boolean;
     noMore?: boolean;
 }
 
