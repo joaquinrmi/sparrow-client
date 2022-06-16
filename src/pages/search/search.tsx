@@ -14,7 +14,7 @@ const Search: React.FunctionComponent<Props> = (props) =>
 {
     return <div className="home-page">
         <PageHeader>
-            <SearchBar id="search-search-bar" />
+            <SearchBar id="search-search-bar" defaultValue={props.params ? props.params.get("q") || undefined : undefined} />
         </PageHeader>
 
         <CheepList name="search" arguments={{
