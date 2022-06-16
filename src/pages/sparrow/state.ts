@@ -6,6 +6,7 @@ interface SparrowState
 {
     location: {
         profile: LocationState;
+        innerProfile: LocationState;
     };
     profile: {
         data: ProfileData;
