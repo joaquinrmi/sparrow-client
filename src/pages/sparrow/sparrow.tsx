@@ -60,6 +60,10 @@ const Sparrow: React.FunctionComponent = () =>
             comments: { query: {}, nextTime: 0, cheeps: [] },
             search: { query: {}, nextTime: 0, cheeps: [] },
         },
+        userLists: {
+            following: { users: [] },
+            followers: { users: [] }
+        },
         cheepEditor: {},
         closeConfirmation: {
             open: false,
