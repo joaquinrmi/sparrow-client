@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import SearchBar from "./components/search_bar";
 
 import "./main_aside.scss";
@@ -6,7 +7,10 @@ import "./main_aside.scss";
 const MainAside: React.FunctionComponent = (props) =>
 {
     return <aside className="main-aside">
-        <SearchBar id="main-search-bar" />
+        <Routes>
+            <Route path="/search" element={<></>} />
+            <Route path="/*" element={<SearchBar id="main-search-bar" />} />
+        </Routes>
 
         <div className="links-container">
             <ul>
