@@ -8,6 +8,7 @@ interface SparrowState
     location: {
         profile: LocationState;
         innerProfile: LocationState;
+        relations: LocationState;
     };
     profile: {
         data: ProfileData;
