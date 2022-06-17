@@ -1,3 +1,4 @@
+import AnotherUserData from "../../another_user_data";
 import CheepData from "../../cheep_data";
 import SearchCheepsQuery from "../../search_cheep_query";
 import ProfileData from "./profile_data";
@@ -21,6 +22,10 @@ interface SparrowState
         thread: CheepListState;
         comments: CheepListState;
         search: CheepListState;
+    };
+    userLists: {
+        following: UserListState;
+        followers: UserListState;
     };
     cheepPage?: {
         data: CheepData;
@@ -56,6 +61,13 @@ export interface CheepListState
     query: SearchCheepsQuery;
     nextTime: number;
     cheeps: Array<CheepData>;
+    loadMore?: boolean;
+    noMore?: boolean;
+}
+
+export interface UserListState
+{
+    users: Array<AnotherUserData>;
     loadMore?: boolean;
     noMore?: boolean;
 }
