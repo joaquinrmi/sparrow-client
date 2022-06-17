@@ -31,6 +31,9 @@ const Sparrow: React.FunctionComponent = () =>
             },
             innerProfile: {
                 currentRoute: ""
+            },
+            relations: {
+                currentRoute: ""
             }
         },
         profile: {
