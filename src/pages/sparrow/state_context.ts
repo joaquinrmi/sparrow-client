@@ -10,6 +10,9 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             },
             innerProfile: {
                 currentRoute: ""
+            },
+            relations: {
+                currentRoute: ""
             }
         },
         profile: {
