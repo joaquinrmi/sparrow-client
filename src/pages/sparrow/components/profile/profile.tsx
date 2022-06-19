@@ -75,7 +75,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             <header className="profile-header">
                 <div className="banner-container">
                     <div className="banner">
-                        <img src={state.profile.data.banner} alt="Imagen de portada" />
+                        {state.profile.data.banner !== undefined ? <img src={state.profile.data.banner} alt="Imagen de portada" /> : null}
                     </div>
                 </div>
 
