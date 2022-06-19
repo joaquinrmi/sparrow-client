@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
-import Button, { ButtonStyle } from "../../../../components/button";
-import Modal from "../../../../components/modal";
 import StateContext from "../../state_context";
-
-import "./close_confirmation.scss";
+import ConfirmationModal, { ConfirmationStyle } from "../confirmation_modal";
 
 export interface Props
 {}
@@ -12,31 +9,16 @@ const CloseConfirmation: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
 
-    return <Modal id="close-confirmation-modal" className="close-confirmation-modal" closeRequest={() =>
-    {}}>
-        <div className="close-confirmation-message">
-            <span className="title">
-                ¿Quieres descartar los cambios?
-            </span>
-
-            <span className="message">
-                Esta acción no se puede revertir, y perderás tus cambios.
-            </span>
-        </div>
-
-        <div className="close-confirmation-buttons">
-            <Button stylePreset={ButtonStyle.Red} onClick={state.closeConfirmation.discart}>
-                Descartar
-            </Button>
-
-            <Button stylePreset={ButtonStyle.White} onClick={() =>
-            {
-                stateManager.closeCloseConfirmation();
-            }}>
-                Cancelar
-            </Button>
-        </div>
-    </Modal>;
+    return <ConfirmationModal
+        id="close-confirmation-modal"
+        title="¿Quieres descartar los cambios?"
+        message="Esta acción no se puede revertir, y perderás tus cambios."
+        styleType={ConfirmationStyle.Important}
+        confirmButtonMessage="Descartar"
+        cancelButtonMessage="Cancelar"
+        confirm={state.closeConfirmation.discart}
+        cancel={stateManager.closeCloseConfirmation}
+        closeRequest={stateManager.closeCloseConfirmation} />;
 };
 
 export default CloseConfirmation;
