@@ -3,15 +3,16 @@ interface ProfileData
     handle: string;
     name: string;
     picture: string;
-    banner: string;
-    description: string;
-    location: string;
-    birthdate?: Date;
+    banner?: string;
+    description?: string;
     joinDate: Date;
-    website: string;
-    cheepCount: number;
+    birthdate?: Date;
+    location?: string;
+    website?: string;
     followersCount: number;
     followingCount: number;
+    cheepCount: number;
+    following: boolean;
 }
 
 export default ProfileData;
