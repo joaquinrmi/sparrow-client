@@ -20,15 +20,11 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
                 handle: "",
                 name: "",
                 picture: "",
-                banner: "",
-                description: "",
-                location: "",
-                birthdate: new Date(),
                 joinDate: new Date(),
-                website: "",
-                cheepCount: 0,
+                followingCount: 0,
                 followersCount: 0,
-                followingCount: 0
+                cheepCount: 0,
+                following: false
             }
         },
         cheepLists: {
