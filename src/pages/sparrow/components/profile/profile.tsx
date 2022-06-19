@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
 import CheepList from "../../../../components/cheep_list";
@@ -12,6 +12,7 @@ import ButtonContainer from "../../../../components/button_container";
 import MONTHS from "../../../../months";
 import SessionContext from "../../../../session_context";
 import StateContext from "../../state_context";
+import Relations from "./components/relations";
 
 import "./profile.scss";
 
@@ -124,32 +125,32 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                     </div>
 
                     <div className="counters">
-                        <div className="counter-container">
+                        <Link to={`/${state.profile.data.handle}/following`} className="counter-container">
                             <span className="ammount">
                                 {state.profile.data.followingCount}
                             </span>
 
                             <span className="label">
-                                Siguiendo
+                                &nbsp;Siguiendo
                             </span>
-                        </div>
+                        </Link>
 
-                        <div className="counter-container">
+                        <Link to={`/${state.profile.data.handle}/followers`} className="counter-container">
                             <span className="ammount">
                                 {state.profile.data.followersCount}
                             </span>
 
                             <span className="label">
-                                Seguidores
+                                &nbsp;Seguidores
                             </span>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </section>
 
             <ProfileNavigation userHandle={state.profile.data.handle} />
 
-            <Router currentRoute={state.location["profile"].currentRoute} routes={{
+            <Router currentRoute={state.location["innerProfile"].currentRoute} routes={{
                 cheeps: <CheepList name="profileCheeps" arguments={{
                     userHandle: state.profile.data.handle,
                     responses: false
@@ -168,55 +169,80 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 likes: <CheepList name="profileLikes" arguments={{
                     userHandle: state.profile.data.handle,
                     likes: true
-                }} />
+                }} />,
             }} />
 
             <Routes>
-                <Route path="/:userHandle/" element={<RouteSetter id="cheeps" onMatch={() =>
+                <Route path="/:userHandle" element={<RouteSetter id="cheeps" onMatch={() =>
                 {
-                    stateManager.navigate("profile", "cheeps");
+                    stateManager.navigate("innerProfile", "cheeps");
                 }} />} />
 
                 <Route path="/:userHandle/with-replies" element={<RouteSetter id="withReplies" onMatch={() =>
                 {
-                    stateManager.navigate("profile", "withReplies");
+                    stateManager.navigate("innerProfile", "withReplies");
                 }} />} />
 
                 <Route path="/:userHandle/media" element={<RouteSetter id="media" onMatch={() =>
                 {
-                    stateManager.navigate("profile", "media");
+                    stateManager.navigate("innerProfile", "media");
                 }} />} />
 
                 <Route path="/:userHandle/likes" element={<RouteSetter id="likes" onMatch={() =>
                 {
-                    stateManager.navigate("profile", "likes");
+                    stateManager.navigate("innerProfile", "likes");
                 }} />} />
             </Routes>
         </>;
     }
 
     return <>
-        <PageHeader>
+        <Router currentRoute={state.location["profile"].currentRoute} routes={{
+            main: <>
+                <PageHeader>
+                    {
+                        state.profile.data.handle.length === 0 ?
+                        <>
+                            <span className="title">
+                                Perfil
+                            </span>
+                        </> :
+                        <>
+                            <span className="user-name">
+                                {state.profile.data.name}
+                            </span>
+
+                            <span className="cheep-count">
+                                {state.profile.data.cheepCount} Cheeps
+                            </span>
+                        </>
+                    }
+                </PageHeader>
+
+                {content}
+            </>,
+
+            relations: <Relations handle={state.profile.data.handle} name={state.profile.data.name} />
+        }} />
+
+        <Routes>
+            <Route path="/compose/cheep" element={<></>} />
+
+            <Route path="/:userHandle/following" element={<RouteSetter id="following" onMatch={() =>
             {
-                state.profile.data.handle.length === 0 ?
-                <>
-                    <span className="title">
-                        Perfil
-                    </span>
-                </> :
-                <>
-                    <span className="user-name">
-                        {state.profile.data.name}
-                    </span>
+                stateManager.navigate("profile", "relations");
+            }} />} />
 
-                    <span className="cheep-count">
-                        {state.profile.data.cheepCount} Cheeps
-                    </span>
-                </>
-            }
-        </PageHeader>
+            <Route path="/:userHandle/followers" element={<RouteSetter id="followers" onMatch={() =>
+            {
+                stateManager.navigate("profile", "relations");
+            }} />} />
 
-        {content}
+            <Route path="/:userHandle/*" element={<RouteSetter id="main" onMatch={() =>
+            {
+                stateManager.navigate("profile", "main");
+            }} />} />
+        </Routes>
     </>;
 };
 
