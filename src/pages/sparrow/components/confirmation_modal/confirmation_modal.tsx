@@ -16,12 +16,12 @@ export interface Props
 
     confirm(): void;
     cancel(): void;
+    closeRequest(): void;
 }
 
 const ConfirmationModal: React.FunctionComponent<Props> = (props) =>
 {
-    return <Modal id={props.id} className="confirmation-modal" closeRequest={() =>
-    {}}>
+    return <Modal id={props.id} className="confirmation-modal" closeRequest={props.closeRequest}>
         <div className="confirmation-message">
             <div className="title">
                 {props.title}
