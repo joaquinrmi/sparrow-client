@@ -1,6 +1,6 @@
 interface ProfileData
 {
-    handle: string;
+    handle?: string;
     name: string;
     picture: string;
     banner?: string;
