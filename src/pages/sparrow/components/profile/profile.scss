@@ -175,3 +175,32 @@
         }
     }
 }
+
+.not-found
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5em 0 0 0;
+
+    .message-container
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 0 1 360px;
+
+        .message
+        {
+            font-size: 31px;
+            font-weight: 800;
+            color: Color.$blackText;
+        }
+
+        .extra
+        {
+            font-size: 15px;
+            color: Color.$silverText;
+        }
+    }
+}

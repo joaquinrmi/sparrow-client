@@ -85,7 +85,43 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             <Loading />
         </div>;
     }
-    else if(state.profile.data.handle !== undefined)
+    else if(state.profile.data.handle === undefined)
+    {
+        content = <>
+            <header className="profile-header">
+                <div className="banner-container">
+                    <div className="banner"></div>
+                </div>
+
+                <div className="picture-container">
+                    <div className="picture"></div>
+                </div>
+
+                <div className="options-container"></div>
+            </header>
+
+            <section className="user-information">
+                <div className="user-id">
+                    <span className="user-name">
+                        @{props.handle}
+                    </span>
+                </div>
+            </section>
+
+            <section className="not-found">
+                <div className="message-container">
+                    <span className="message">
+                        Esta cuenta no existe
+                    </span>
+
+                    <span className="extra">
+                        Prueba intentando con otra.
+                    </span>
+                </div>
+            </section>
+        </>;
+    }
+    else
     {
         content = <>
             <header className="profile-header">
@@ -218,7 +254,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             main: <>
                 <PageHeader>
                     {
-                        state.profile.data.handle !== undefined && state.profile.data.handle.length === 0 ?
+                        state.profile.data.handle === undefined || (state.profile.data.handle !== undefined && state.profile.data.handle.length === 0) ?
                         <>
                             <span className="title">
                                 Perfil
