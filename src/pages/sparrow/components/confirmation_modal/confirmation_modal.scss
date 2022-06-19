@@ -1,0 +1,50 @@
+@use "../../../../colors.scss" as Color;
+
+.confirmation-modal
+{
+    .modal-body
+    {
+        flex: 0 1 320px;
+        gap: 26px;
+        padding: 2em;
+        box-sizing: border-box;
+
+        .confirmation-message
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .title
+            {
+                font-size: 20px;
+                font-weight: 700;
+                color: Color.$blackText;
+            }
+
+            .message
+            {
+                font-size: 15px;
+                color: Color.$silverText;
+            }
+        }
+
+        .confirmation-buttons
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            
+            .button-standar
+            {
+                padding: 1em 0;
+
+                .button-text
+                {
+                    font-size: 15px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}
