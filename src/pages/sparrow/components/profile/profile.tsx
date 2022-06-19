@@ -42,34 +42,50 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             {
                 const data = await response.json();
 
-                stateManager.setProfileState({
-                    handle: data.handle,
-                    name: data.name,
-                    picture: data.picture,
-                    banner: data.banner,
-                    description: data.description,
-                    joinDate: new Date(data.joinDate),
-                    birthdate: data.birthdate === undefined ? undefined : new Date(data.birthdate),
-                    location: data.location,
-                    website: data.website,
-                    followingCount: data.followingCount,
-                    followersCount: data.followerCount,
-                    cheepCount: data.cheepCount,
-                    following: data.following
-                });
+                if(data === null)
+                {
+                    stateManager.setProfileState({
+                        handle: undefined,
+                        name: "",
+                        picture: "",
+                        joinDate: new Date(),
+                        followingCount: 0,
+                        followersCount: 0,
+                        cheepCount: 0,
+                        following: false
+                    });
+                }
+                else
+                {
+                    stateManager.setProfileState({
+                        handle: data.handle,
+                        name: data.name,
+                        picture: data.picture,
+                        banner: data.banner,
+                        description: data.description,
+                        joinDate: new Date(data.joinDate),
+                        birthdate: data.birthdate === undefined ? undefined : new Date(data.birthdate),
+                        location: data.location,
+                        website: data.website,
+                        followingCount: data.followingCount,
+                        followersCount: data.followerCount,
+                        cheepCount: data.cheepCount,
+                        following: data.following
+                    });
+                }
             }
         })();
     },
     [ props.handle ]);
 
     let content: React.ReactNode;
-    if(state.profile.data.handle.length === 0 || props.handle !== state.profile.data.handle)
+    if(state.profile.data.handle !== undefined && (state.profile.data.handle.length === 0 || props.handle !== state.profile.data.handle))
     {
         content = <div className="loading-container">
             <Loading />
         </div>;
     }
-    else
+    else if(state.profile.data.handle !== undefined)
     {
         content = <>
             <header className="profile-header">
@@ -202,7 +218,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             main: <>
                 <PageHeader>
                     {
-                        state.profile.data.handle.length === 0 ?
+                        state.profile.data.handle !== undefined && state.profile.data.handle.length === 0 ?
                         <>
                             <span className="title">
                                 Perfil
@@ -223,7 +239,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 {content}
             </>,
 
-            relations: <Relations handle={state.profile.data.handle} name={state.profile.data.name} />
+            relations: <Relations handle={state.profile.data.handle || ""} name={state.profile.data.name} />
         }} />
 
         <Routes>
