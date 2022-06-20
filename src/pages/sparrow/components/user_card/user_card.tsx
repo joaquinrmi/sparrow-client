@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AnotherUserData from "../../../../another_user_data";
-import Button, { ButtonStyle } from "../../../../components/button";
 import UserPicture from "../../../../components/user_picture";
+import { UserListName } from "../../state";
+import StateContext from "../../state_context";
+import FollowButton from "../follow_button";
 
 import "./user_card.scss";
 
 export interface Props
 {
     id: string;
+    listName: UserListName;
     data: AnotherUserData;
     index: number;
 }
 
 const UserCard: React.FunctionComponent<Props> = (props) =>
 {
+    const [ state, stateManager ] = useContext(StateContext);
+
     const navigate = useNavigate();
 
     return <div id={props.id} className="user-card" onClick={(ev) =>
@@ -50,9 +55,25 @@ const UserCard: React.FunctionComponent<Props> = (props) =>
                 </div>
 
                 <div className="interaction-container">
-                    {props.data.following ?
-                        <Button stylePreset={ButtonStyle.White}>Siguiendo</Button> :
-                        <Button stylePreset={ButtonStyle.Black}>Seguir</Button>}
+                    <FollowButton
+                        id={`${props.id}-follow`}
+                        following={props.data.following}
+                        userHandle={props.data.handle}
+                        onFollow={() =>
+                        {
+                            stateManager.updateUserCard(props.listName, props.index, {
+                                ...props.data,
+                                following: true
+                            });
+                        }}
+                        onUnfollow={() =>
+                        {
+                            stateManager.updateUserCard(props.listName, props.index, {
+                                ...props.data,
+                                following: false
+                            });
+                        }}
+                    />
                 </div>
             </div>
 
