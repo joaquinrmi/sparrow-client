@@ -16,9 +16,18 @@ const UnfollowConfirmation: React.FunctionComponent<Props> = (props) =>
         styleType={ConfirmationStyle.Normal}
         confirmButtonMessage="Dejar de seguir"
         cancelButtonMessage="Cancelar"
-        confirm={state.closeConfirmation.discart}
-        cancel={stateManager.closeCloseConfirmation}
-        closeRequest={stateManager.closeCloseConfirmation}
+        confirm={() =>
+        {
+            state.unfollowConfirmation.unfollow();
+        }}
+        cancel={() =>
+        {
+            stateManager.closeUnfollowConfirmation();
+        }}
+        closeRequest={() =>
+        {
+            stateManager.closeUnfollowConfirmation();
+        }}
     />;
 };
 
