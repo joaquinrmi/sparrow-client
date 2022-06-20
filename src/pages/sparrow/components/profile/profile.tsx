@@ -36,7 +36,8 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             const getProfileURL = `${process.env.REACT_APP_SERVER}/api/profile/get?handle=${props.handle}`;
 
             const response = await fetch(getProfileURL, {
-                method: "GET"
+                method: "GET",
+                credentials: "include"
             });
 
             if(response.status === 200)
