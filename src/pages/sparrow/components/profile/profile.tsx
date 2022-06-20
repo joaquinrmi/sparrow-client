@@ -8,6 +8,7 @@ import PageHeader from "../../../../components/page_header";
 import Router from "../../../../components/router";
 import RouteSetter from "../../../../components/route_setter";
 import ButtonContainer from "../../../../components/button_container";
+import FollowButton from "../follow_button";
 
 import MONTHS from "../../../../months";
 import SessionContext from "../../../../session_context";
@@ -147,9 +148,25 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                                 Editar perfil
                             </Button> :
 
-                            <Button className="follow-button" stylePreset={ButtonStyle.Black}>
-                                Seguir
-                            </Button>
+                            <FollowButton
+                                id="profile-follow-button"
+                                following={state.profile.data.following}
+                                userHandle={state.profile.data.handle}
+                                onFollow={() =>
+                                {
+                                    stateManager.setProfileState({
+                                        ...state.profile.data,
+                                        following: true
+                                    });
+                                }}
+                                onUnfollow={() =>
+                                {
+                                    stateManager.setProfileState({
+                                        ...state.profile.data,
+                                        following: false
+                                    });
+                                }}
+                            />
                         }
                     </ButtonContainer>
                 </div>
