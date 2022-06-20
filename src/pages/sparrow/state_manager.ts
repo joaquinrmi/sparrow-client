@@ -220,14 +220,14 @@ class StateManager
         this.setCloseConfirmation(false, () => {});
     }
 
-    openUnfollowConfirmation(unfollow: () => void): void
+    openUnfollowConfirmation(userHandle: string, unfollow: () => void): void
     {
-        this.setUnfollowConfirmation(true, unfollow);
+        this.setUnfollowConfirmation(true, userHandle, unfollow);
     }
 
     closeUnfollowConfirmation(): void
     {
-        this.setUnfollowConfirmation(false, () => {});
+        this.setUnfollowConfirmation(false, "", () => {});
     }
 
     private setCloseConfirmation(status: boolean, discart: () => void): void
@@ -248,7 +248,7 @@ class StateManager
         }
     }
 
-    private setUnfollowConfirmation(status: boolean, unfollow: () => void): void
+    private setUnfollowConfirmation(status: boolean, userHandle: string, unfollow: () => void): void
     {
         if(this.setState)
         {
@@ -258,6 +258,7 @@ class StateManager
 
                 newState.unfollowConfirmation = {
                     open: status,
+                    userHandle: userHandle,
                     unfollow: unfollow
                 };
 
