@@ -80,7 +80,7 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
         {
             const box = cheepList.getBoundingClientRect();
 
-            if(box.height + box.top - window.innerHeight < 1000)
+            if((box.height + box.top - window.innerHeight < 1000) && listState.cheeps.length >= 20)
             {
                 stateManager.setLoadMore(props.name, true);
             }
