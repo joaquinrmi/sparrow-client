@@ -191,7 +191,9 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 <div className="bottom-information">
                     <div className="extra-information">
                         {state.profile.data.location !== undefined ? <ShortInfo icon="location-dot">{state.profile.data.location}</ShortInfo> : null}
+
                         {state.profile.data.birthdate !== undefined ? <ShortInfo icon="cake-candles">Fecha de nacimiento: {state.profile.data.birthdate.getDate()} de {MONTHS[state.profile.data.birthdate.getMonth()]} de {state.profile.data.birthdate.getFullYear()}</ShortInfo> : null}
+
                         {state.profile.data.joinDate !== undefined ? <ShortInfo icon="calendar-days">Se unió en {MONTHS[state.profile.data.joinDate.getMonth()]} de {state.profile.data.joinDate.getFullYear()}</ShortInfo> : null}
                     </div>
 
@@ -212,7 +214,7 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                             </span>
 
                             <span className="label">
-                                &nbsp;Seguidores
+                                &nbsp;{state.profile.data.followersCount === 1 ? "Seguidor" : "Seguidores"}
                             </span>
                         </Link>
                     </div>
