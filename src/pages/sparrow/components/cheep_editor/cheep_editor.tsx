@@ -25,6 +25,11 @@ export interface Props
     inPage?: boolean;
 }
 
+export interface CheepEditorElement extends HTMLDivElement
+{
+    hasContent(): boolean;
+}
+
 const CheepEditor: React.FunctionComponent<Props> = (props) =>
 {
     const [ buttonEnabled, setButtonEnabled ] = useState<boolean>(props.targetCheep !== undefined);
@@ -93,7 +98,21 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
         };
     });
 
-    return <div className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
+    useEffect(() =>
+    {
+        const element = document.getElementById(props.id) as CheepEditorElement;
+        if(element === null)
+        {
+            return;
+        }
+
+        element.hasContent = () =>
+        {
+            return status > 0 || gallery.length > 0;
+        };
+    })
+
+    return <div id={props.id} className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
         {props.inPage && props.responseTarget ?
             <div className="response-message">
                 En respuesta a <span className="user">@{props.responseTarget.author.handle}</span>
