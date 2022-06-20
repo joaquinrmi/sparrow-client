@@ -18,9 +18,9 @@ import ProfileFormModal from "./components/profile_form_modal";
 import CloseConfirmation from "./components/close_confirmation";
 import CheepGalleryModal from "./components/cheep_gallery_modal";
 import MainAside from "./components/main_aside";
+import Search from "../search";
 
 import "./sparrow.scss";
-import Search from "../search";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -70,6 +70,7 @@ const Sparrow: React.FunctionComponent = () =>
         },
         unfollowConfirmation: {
             open: false,
+            userHandle: "",
             unfollow() {}
         }
     });
