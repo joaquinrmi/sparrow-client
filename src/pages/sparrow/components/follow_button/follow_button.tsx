@@ -27,8 +27,10 @@ const FollowButton: React.FunctionComponent<Props> = (props) =>
             id={props.id}
             stylePreset={ButtonStyle.White}
             className="follow-button"
-            onClick={() =>
+            onClick={(ev) =>
             {
+                ev.stopPropagation();
+
                 stateManager.openUnfollowConfirmation(props.userHandle, async () =>
                 {
                     props.onUnfollow();
@@ -70,15 +72,20 @@ const FollowButton: React.FunctionComponent<Props> = (props) =>
     }
     else
     {
-        content = <Button id={props.id} stylePreset={ButtonStyle.Black} onClick={async () =>
+        content = <Button id={props.id} stylePreset={ButtonStyle.Black} onClick={(ev) =>
         {
+            ev.stopPropagation();
+
             props.onFollow();
 
-            const following = await followUser(props.userHandle);
-            if(!following)
+            (async () =>
             {
-                props.onUnfollow();
-            }
+                const following = await followUser(props.userHandle);
+                if(!following)
+                {
+                    props.onUnfollow();
+                }
+            })();
         }}>
             Seguir
         </Button>
