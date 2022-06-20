@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import parseText, { TokenType } from "../../../../parse_text";
+import LinkParser from "../../../link_parser";
 
 export interface Props
 {
@@ -37,6 +38,12 @@ const CheepContent: React.FunctionComponent<Props> = (props) =>
                         {token.value}
                     </Link>;
                 }
+
+            case TokenType.URL:
+                return <LinkParser
+                    href={token.value}
+                    className="link"
+                />;
             }
         })}
     </>;
