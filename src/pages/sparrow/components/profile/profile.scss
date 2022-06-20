@@ -204,3 +204,17 @@
         }
     }
 }
+
+.sparrow-link
+{
+    font-size: 15px;
+    text-decoration: none;
+    color: Color.$blue1;
+}
+
+.sparrow-link:hover,
+.sparrow-link:active
+{
+    text-decoration: underline;
+    color: Color.$blue1;
+}

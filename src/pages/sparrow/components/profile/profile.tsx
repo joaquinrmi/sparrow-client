@@ -16,6 +16,7 @@ import StateContext from "../../state_context";
 import Relations from "./components/relations";
 
 import "./profile.scss";
+import LinkParser from "../../../../components/link_parser";
 
 export interface Props
 {
@@ -190,11 +191,33 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
                 <div className="bottom-information">
                     <div className="extra-information">
-                        {state.profile.data.location !== undefined ? <ShortInfo icon="location-dot">{state.profile.data.location}</ShortInfo> : null}
+                        {state.profile.data.location !== undefined ?
+                            <ShortInfo icon="location-dot">
+                                {state.profile.data.location}
+                            </ShortInfo> :
+                            null
+                        }
 
-                        {state.profile.data.birthdate !== undefined ? <ShortInfo icon="cake-candles">Fecha de nacimiento: {state.profile.data.birthdate.getDate()} de {MONTHS[state.profile.data.birthdate.getMonth()]} de {state.profile.data.birthdate.getFullYear()}</ShortInfo> : null}
+                        {state.profile.data.website !== undefined ?
+                            <ShortInfo icon="link">
+                                <LinkParser className="sparrow-link" href={state.profile.data.website} />
+                            </ShortInfo> :
+                            null
+                        }
 
-                        {state.profile.data.joinDate !== undefined ? <ShortInfo icon="calendar-days">Se unió en {MONTHS[state.profile.data.joinDate.getMonth()]} de {state.profile.data.joinDate.getFullYear()}</ShortInfo> : null}
+                        {state.profile.data.birthdate !== undefined ?
+                            <ShortInfo icon="cake-candles">
+                                Fecha de nacimiento: {state.profile.data.birthdate.getDate()} de {MONTHS[state.profile.data.birthdate.getMonth()]} de {state.profile.data.birthdate.getFullYear()}
+                            </ShortInfo> :
+                            null
+                        }
+
+                        {state.profile.data.joinDate !== undefined ?
+                            <ShortInfo icon="calendar-days">
+                                Se unió en {MONTHS[state.profile.data.joinDate.getMonth()]} de {state.profile.data.joinDate.getFullYear()}
+                            </ShortInfo> :
+                            null
+                        }
                     </div>
 
                     <div className="counters">
