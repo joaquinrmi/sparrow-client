@@ -81,5 +81,6 @@ export interface UserListState
 export type LocationName = keyof SparrowState["location"];
 
 export type CheepListName = keyof SparrowState["cheepLists"];
+export type UserListName = keyof SparrowState["userLists"];
 
 export default SparrowState;
