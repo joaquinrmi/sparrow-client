@@ -1,8 +1,9 @@
 import React from "react";
+import AnotherUserData from "../../another_user_data";
 import CheepData from "../../cheep_data";
 import SearchCheepsQuery from "../../search_cheep_query";
 import ProfileData from "./profile_data";
-import SparrowState, { CheepListName, LocationName } from "./state";
+import SparrowState, { CheepListName, LocationName, UserListName } from "./state";
 
 class StateManager
 {
@@ -88,6 +89,27 @@ class StateManager
                 const newState = { ...state };
 
                 newState.cheepLists[listName].noMore = true;
+
+                return newState;
+            });
+        }
+    }
+
+    loadUserList(listName: UserListName, id: string, targetHandle: string, users: Array<AnotherUserData>): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.userLists[listName] = {
+                    id: id,
+                    targetHandle: targetHandle,
+                    users: users,
+                    loadMore: false,
+                    noMore: false
+                };
 
                 return newState;
             });
