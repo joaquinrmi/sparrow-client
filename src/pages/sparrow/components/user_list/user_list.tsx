@@ -49,7 +49,7 @@ const UserList: React.FunctionComponent<Props> = (props) =>
     {
         content = <>{listState.users.map((userData, index) =>
         {
-            return <UserCard id={`ucard-${index}-${props.id}`} key={`${index}-card`} data={userData} index={index} />;
+            return <UserCard id={`ucard-${index}-${props.id}`} listName={props.name} key={`${index}-card`} data={userData} index={index} />;
         })}</>;
     }
     else
