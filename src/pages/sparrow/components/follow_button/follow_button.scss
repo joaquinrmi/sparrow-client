@@ -1,0 +1,25 @@
+.follow-button
+{
+    .following-message
+    {
+        display: block;
+    }
+
+    .unfollow-message
+    {
+        display: none;
+    }
+}
+
+.follow-button:hover
+{
+    .following-message
+    {
+        display: none;
+    }
+
+    .unfollow-message
+    {
+        display: block;
+    }
+}
