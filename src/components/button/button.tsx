@@ -14,6 +14,7 @@ export interface Props
     to?: string;
 
     onClick?: MouseEventHandler<HTMLButtonElement>;
+    onMouseEnter?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button: React.FunctionComponent<Props> = (props) =>
@@ -62,6 +63,7 @@ const Button: React.FunctionComponent<Props> = (props) =>
 
     return <button
         onClick={onClick}
+        onMouseEnter={props.onMouseEnter}
         id={props.id}
         className={buttonClass}
     >
