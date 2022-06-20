@@ -23,8 +23,6 @@ export interface Props
     responseTarget?: CheepData;
     targetCheep?: CheepData;
     inPage?: boolean;
-
-    hasContent?(content: boolean): void;
 }
 
 const CheepEditor: React.FunctionComponent<Props> = (props) =>
@@ -92,11 +90,6 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                     ...imageUrls
                 ];
             });
-
-            if(props.hasContent)
-            {
-                props.hasContent(true);
-            }
         };
     });
 
@@ -118,14 +111,9 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                         <div className={`text-editor-container ${props.targetCheep || gallery.length > 0 ? "mini" : ""}`}>
                             <TextEditor id={`${props.id}-editor`} maxLength={280} setStatus={(status) =>
                             {
-                                setStatus(status);
                                 if(status > 0)
                                 {
                                     setButtonEnabled(true);
-                                    if(props.hasContent)
-                                    {
-                                        props.hasContent(true);
-                                    }
                                 }
                                 else
                                 {
@@ -134,15 +122,12 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                         if(gallery.length === 0)
                                         {
                                             setButtonEnabled(false);
-                                            if(props.hasContent)
-                                            {
-                                                props.hasContent(false);
-                                            }
                                         }
 
                                         return gallery;
                                     });
                                 }
+                                setStatus(status);
                             }} />
                         </div>
 
