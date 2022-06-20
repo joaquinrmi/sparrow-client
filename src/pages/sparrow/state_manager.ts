@@ -161,6 +161,21 @@ class StateManager
         }
     }
 
+    updateUserCard(listName: UserListName, index: number, data: AnotherUserData): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.userLists[listName].users[index] = data;
+
+                return newState;
+            });
+        }
+    }
+
     setCheepPage(data: CheepData): void
     {
         if(this.setState)
