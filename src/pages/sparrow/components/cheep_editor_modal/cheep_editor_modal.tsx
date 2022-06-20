@@ -4,7 +4,7 @@ import Cheep from "../../../../components/cheep";
 import Modal from "../../../../components/modal";
 import ModalForm from "../../../../components/modal_form";
 import StateContext from "../../state_context";
-import CheepEditor from "../cheep_editor/cheep_editor";
+import CheepEditor, { CheepEditorElement } from "../cheep_editor/cheep_editor";
 
 import "./cheep_editor_modal.scss";
 
@@ -34,11 +34,19 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
 
     const closeRequest = () =>
     {
-        stateManager.openCloseConfirmation(() =>
+        const cheepEditor = document.getElementById("cheep-editor-modal") as CheepEditorElement;
+        if(cheepEditor === null || cheepEditor.hasContent())
         {
-            stateManager.closeCloseConfirmation();
+            stateManager.openCloseConfirmation(() =>
+            {
+                stateManager.closeCloseConfirmation();
+                navigate(-1);
+            });
+        }
+        else
+        {
             navigate(-1);
-        });
+        }
     };
 
     return <Modal id="compose-modal" className="cheep-editor-modal" changeBodyOverflow closeRequest={closeRequest}>
