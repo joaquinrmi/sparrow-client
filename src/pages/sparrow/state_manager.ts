@@ -116,6 +116,36 @@ class StateManager
         }
     }
 
+    setUserListLoadMore(listName: UserListName, loadMore: boolean): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.userLists[listName].loadMore = loadMore;
+                
+                return newState;
+            });
+        }
+    }
+
+    setUserListLoadNoMore(listName: UserListName): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.userLists[listName].noMore = true;
+
+                return newState;
+            });
+        }
+    }
+
     updateCheep(listName: CheepListName, index: number, data: CheepData): void
     {
         if(this.setState)
