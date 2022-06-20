@@ -180,7 +180,7 @@ const Sparrow: React.FunctionComponent = () =>
                     <Route path="/:userHandle/*" element={<GetHandle>{
                         (userHandle) =>
                         {
-                            return <RouteSetter id="profile" onMatch={() => {
+                            return <RouteSetter id={userHandle} onMatch={() => {
                                 setUserHandle(userHandle);
                                 setCurrentRoute("profile");
                             }} />
