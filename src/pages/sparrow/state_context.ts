@@ -39,8 +39,8 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             search: { query: {}, nextTime: 0, cheeps: [] },
         },
         userLists: {
-            following: { targetHandle: "", users: [] },
-            followers: { targetHandle: "", users: [] }
+            following: { id: "", targetHandle: "", users: [] },
+            followers: { id: "", targetHandle: "", users: [] }
         },
         cheepEditor: {},
         closeConfirmation: {
