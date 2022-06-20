@@ -61,8 +61,8 @@ const Sparrow: React.FunctionComponent = () =>
             search: { query: {}, nextTime: 0, cheeps: [] },
         },
         userLists: {
-            following: { users: [] },
-            followers: { users: [] }
+            following: { targetHandle: "", users: [] },
+            followers: { targetHandle: "", users: [] }
         },
         cheepEditor: {},
         closeConfirmation: {
