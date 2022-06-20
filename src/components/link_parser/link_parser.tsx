@@ -3,6 +3,8 @@ import React, { useMemo } from "react";
 export interface Props
 {
     href: string;
+    plain?: boolean;
+
     id?: string;
     className?: string;
 }
@@ -29,9 +31,18 @@ const LinkParser: React.FunctionComponent<Props> = (props) =>
     },
     [ props.href ]);
 
-    return <a id={props.id} className={props.className} href={props.href}>
-        {link}
-    </a>
-};
+    if(props.plain)
+    {
+        return <span id={props.id} className={props.className}>
+            {link}
+        </span>;
+    }
+    else
+    {
+        return <a id={props.id} className={props.className} href={props.href}>
+            {link}
+        </a>;
+    }
+}
 
 export default LinkParser;
