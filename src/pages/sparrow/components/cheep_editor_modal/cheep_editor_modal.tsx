@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cheep from "../../../../components/cheep";
 import Modal from "../../../../components/modal";
@@ -15,8 +15,6 @@ export interface Props
 
 const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
 {
-    const [ hasChanged, setHasChanged ] = useState<boolean>(false);
-
     const [ state, stateManager ] = useContext(StateContext);
     const navigate = useNavigate();
 
@@ -36,22 +34,10 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
 
     const closeRequest = () =>
     {
-        setHasChanged((hasChanged) =>
+        stateManager.openCloseConfirmation(() =>
         {
-            if(hasChanged)
-            {
-                stateManager.openCloseConfirmation(() =>
-                {
-                    stateManager.closeCloseConfirmation();
-                    navigate(-1);
-                });
-            }
-            else
-            {
-                navigate(-1);
-            }
-
-            return hasChanged;
+            stateManager.closeCloseConfirmation();
+            navigate(-1);
         });
     };
 
@@ -69,10 +55,7 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
                     null
                 }
 
-                <CheepEditor id="cheep-editor-modal" responseTarget={state.cheepEditor.responseTarget ? state.cheepEditor.responseTarget : undefined} targetCheep={state.cheepEditor.targetCheep} hasContent={(content) =>
-                {
-                    setHasChanged(content);
-                }} />
+                <CheepEditor id="cheep-editor-modal" responseTarget={state.cheepEditor.responseTarget ? state.cheepEditor.responseTarget : undefined} targetCheep={state.cheepEditor.targetCheep} />
             </div>
         </ModalForm>
     </Modal>;
