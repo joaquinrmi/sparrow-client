@@ -159,13 +159,15 @@
                     white-space: pre-wrap;
                     color: Color.$blackText;
 
-                    .hashtag
+                    .hashtag,
+                    .link
                     {
                         color: Color.$blue1;
                         text-decoration: none;
                     }
 
-                    .hashtag:hover
+                    .hashtag:hover,
+                    .link:hover
                     {
                         text-decoration: underline;
                     }
