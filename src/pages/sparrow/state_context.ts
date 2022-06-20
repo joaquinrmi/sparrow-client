@@ -49,6 +49,7 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
         },
         unfollowConfirmation: {
             open: false,
+            userHandle: "",
             unfollow() {}
         }
     },
