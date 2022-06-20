@@ -68,10 +68,9 @@
 
             .interaction-container
             {
-                display: flex;
+                display: inline-flex;
                 flex-direction: row;
                 justify-content: flex-end;
-                flex: 0;
 
                 .button-standar
                 {
