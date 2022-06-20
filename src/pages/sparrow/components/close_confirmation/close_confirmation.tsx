@@ -16,9 +16,18 @@ const CloseConfirmation: React.FunctionComponent<Props> = (props) =>
         styleType={ConfirmationStyle.Important}
         confirmButtonMessage="Descartar"
         cancelButtonMessage="Cancelar"
-        confirm={state.closeConfirmation.discart}
-        cancel={stateManager.closeCloseConfirmation}
-        closeRequest={stateManager.closeCloseConfirmation} />;
+        confirm={() =>
+        {
+            state.closeConfirmation.discart();
+        }}
+        cancel={() =>
+        {
+            stateManager.closeCloseConfirmation();
+        }}
+        closeRequest={() =>
+        {
+            stateManager.closeCloseConfirmation();
+        }} />;
 };
 
 export default CloseConfirmation;
