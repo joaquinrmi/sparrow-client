@@ -19,6 +19,7 @@ import CloseConfirmation from "./components/close_confirmation";
 import CheepGalleryModal from "./components/cheep_gallery_modal";
 import MainAside from "./components/main_aside";
 import Search from "../search";
+import UnfollowConfirmation from "./components/unfollow_confirmation";
 
 import "./sparrow.scss";
 
@@ -200,6 +201,11 @@ const Sparrow: React.FunctionComponent = () =>
 
             {state.closeConfirmation.open ?
                 <CloseConfirmation /> :
+                null
+            }
+
+            {state.unfollowConfirmation.open ?
+                <UnfollowConfirmation /> :
                 null
             }
         </div></StatusMessageContext.Provider>;
