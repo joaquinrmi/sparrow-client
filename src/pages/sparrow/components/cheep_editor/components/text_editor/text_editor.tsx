@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import parseText, { tokensToHTML } from "../../../../../../parse_text";
+import React, { useEffect, useState } from "react";
+import parseText, { Token, TokenType } from "../../../../../../parse_text";
 
 import "./text_editor.scss";
 
@@ -18,11 +18,12 @@ export interface TextEditorElement extends HTMLDivElement
 
 const TextEditor: React.FunctionComponent<Props> = (props) =>
 {
+    const [ tokens, setTokens ] = useState<Array<Token>>([]);
+
     useEffect(() =>
     {
         const editor = document.getElementById(props.id) as TextEditorElement;
         const placeholder = editor.querySelector(".placeholder") as HTMLDivElement;
-        const editorContent = editor.querySelector(".editor-content") as HTMLDivElement;
         const editable = editor.querySelector(".editor-editable") as HTMLTextAreaElement;
 
         editor.getText = () =>
@@ -58,7 +59,7 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
             {
                 placeholder.classList.add("show");
                 props.setStatus(0);
-                editorContent.innerHTML = "";
+                setTokens([]);
 
                 return;
             }
@@ -74,8 +75,8 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
                 placeholder.classList.add("show");
             }
 
-            editorContent.innerHTML = tokensToHTML(tokens);
             props.setStatus(text.length * 100 / props.maxLength);
+            setTokens(tokens);
         });
     },
     [ props.id ]);
@@ -86,7 +87,29 @@ const TextEditor: React.FunctionComponent<Props> = (props) =>
         </div>
 
         <div className="text-editor-content">
-            <div className="editor-content"></div>
+            <div key={`a-${tokens.length}`} className="editor-content">
+                {tokens.map((token, index) =>
+                {
+                    switch(token.type)
+                    {
+                    case TokenType.Plain:
+                        return <span key={`${index}-token`}>
+                            {token.value}
+                        </span>;
+
+                    case TokenType.Hashtag:
+                        return <span key={`${index}-token`} className="hashtag">
+                            {token.value}
+                        </span>;
+
+                    case TokenType.URL:
+                        return <span key={`${index}-token`} className="link">
+                            {token.value}
+                        </span>;
+                    }
+                })}
+            </div>
+
             <div className="editable-container">
                 <textarea className="editor-editable"></textarea>
             </div>
