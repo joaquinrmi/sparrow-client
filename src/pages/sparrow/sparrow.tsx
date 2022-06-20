@@ -67,6 +67,10 @@ const Sparrow: React.FunctionComponent = () =>
         closeConfirmation: {
             open: false,
             discart() {}
+        },
+        unfollowConfirmation: {
+            open: false,
+            unfollow() {}
         }
     });
 
