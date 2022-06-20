@@ -46,6 +46,10 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
         closeConfirmation: {
             open: false,
             discart() {}
+        },
+        unfollowConfirmation: {
+            open: false,
+            unfollow() {}
         }
     },
     new StateManager()
