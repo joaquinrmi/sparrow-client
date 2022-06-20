@@ -101,3 +101,11 @@
     background-color: Color.$red3;
     transition: background-color 0.25s;
 }
+
+.button-standar.light-red
+{
+    color: Color.$red1;
+    background-color: Color.$red5;
+    border: 1px solid Color.$red4;
+    transition: background-color 0.25s;
+}

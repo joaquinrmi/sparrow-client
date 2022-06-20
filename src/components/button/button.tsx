@@ -80,6 +80,7 @@ export enum ButtonStyle
     Blue = "blue",
     BlueTransparent = "blue-transparent",
     Red = "red",
+    LightRed = "light-red",
 }
 
 export default Button;
