@@ -42,7 +42,51 @@ const UserList: React.FunctionComponent<Props> = (props) =>
             }
         })()
     },
-    [ props.targetHandle, props.name ])
+    [ props.targetHandle, props.name ]);
+
+    useEffect(() =>
+    {
+        const userList = document.getElementById(props.id) as HTMLDivElement;
+        if(userList === null)
+        {
+            return;
+        }
+
+        const onScroll = () =>
+        {
+            const box = userList.getBoundingClientRect();
+
+            if((box.height + box.top - window.innerHeight < 1000) && listState.users.length >= 20)
+            {
+                stateManager.setUserListLoadMore(props.name, true);
+            }
+        };
+
+        document.addEventListener("scroll", onScroll);
+
+        const onResize = () =>
+        {
+            const lastChild = userList.lastChild as HTMLDivElement;
+            if(lastChild === null || lastChild === undefined)
+            {
+                return;
+            }
+
+            const box = lastChild.getBoundingClientRect();
+
+            userList.style.paddingBottom = `${window.innerHeight - box.height}px`;
+        }
+
+        window.addEventListener("resize", onResize);
+
+        onResize();
+
+        return () =>
+        {
+            document.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", onResize);
+        }
+    });
 
     let content: React.ReactNode;
     if(listState.targetHandle === props.targetHandle)
@@ -59,7 +103,7 @@ const UserList: React.FunctionComponent<Props> = (props) =>
         </div>;
     }
 
-    return <div className="user-list">
+    return <div id={props.id} className="user-list">
         {content}
 
         {listState.loadMore && !listState.noMore ?
