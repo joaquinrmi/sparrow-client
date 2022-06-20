@@ -50,6 +50,10 @@ interface SparrowState
         open: boolean;
         discart(): void;
     };
+    unfollowConfirmation: {
+        open: boolean;
+        unfollow(): void;
+    };
 }
 
 export interface LocationState
