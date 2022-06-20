@@ -3,9 +3,7 @@ import StateContext from "../../state_context";
 import ConfirmationModal, { ConfirmationStyle } from "../confirmation_modal";
 
 export interface Props
-{
-    userHandle: string;
-}
+{}
 
 const UnfollowConfirmation: React.FunctionComponent<Props> = (props) =>
 {
@@ -13,7 +11,7 @@ const UnfollowConfirmation: React.FunctionComponent<Props> = (props) =>
 
     return <ConfirmationModal
         id="close-confirmation-modal"
-        title={`¿Quieres dejar de seguir a @${props.userHandle}?`}
+        title={`¿Quieres dejar de seguir a @${state.unfollowConfirmation.userHandle}?`}
         message="Sus Tweets ya no aparecerán en tu cronología de inicio. Podrás seguir viendo su perfil, a menos que sus Tweets estén protegidos."
         styleType={ConfirmationStyle.Normal}
         confirmButtonMessage="Dejar de seguir"
