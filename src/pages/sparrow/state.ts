@@ -52,6 +52,7 @@ interface SparrowState
     };
     unfollowConfirmation: {
         open: boolean;
+        userHandle: string;
         unfollow(): void;
     };
 }
