@@ -14,20 +14,28 @@ const INSECURE = "http://";
 
 const LinkParser: React.FunctionComponent<Props> = (props) =>
 {
-    const link = useMemo(() =>
+    const [ link, href ] = useMemo(() =>
     {
+        let link: string;
+        let href: string;
+
         if(props.href.substring(0, SECURE.length) === SECURE)
         {
-            return props.href.substring(SECURE.length);
+            link = props.href.substring(SECURE.length);
+            href = props.href;
         }
         else if(props.href.substring(0, INSECURE.length) === INSECURE)
         {
-            return props.href.substring(INSECURE.length);
+            link = props.href.substring(INSECURE.length);
+            href = props.href;
         }
         else
         {
-            return props.href;
+            link = props.href;
+            href = `https://${link}`;
         }
+
+        return [ link, href ];
     },
     [ props.href ]);
 
@@ -39,7 +47,7 @@ const LinkParser: React.FunctionComponent<Props> = (props) =>
     }
     else
     {
-        return <a id={props.id} className={props.className} href={props.href}>
+        return <a id={props.id} className={props.className} href={href}>
             {link}
         </a>;
     }
