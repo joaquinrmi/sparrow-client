@@ -5,13 +5,13 @@ import MONTHS from "../../months";
 import CommentButton from "../../pages/sparrow/components/comment_button";
 import LikeButton from "../../pages/sparrow/components/like_button";
 import RecheepButton from "../../pages/sparrow/components/recheep_button";
-import parseText, { TokenType } from "../../parse_text";
 import SessionContext from "../../session_context";
 import Gallery from "../gallery";
 import UserPicture from "../user_picture";
 import getRelevantCheepData from "./get_relevant_cheep_data";
 import StateContext from "../../pages/sparrow/state_context";
 import { CheepListName } from "../../pages/sparrow/state";
+import CheepContent from "./components/cheep_content";
 
 import "./cheep.scss";
 
@@ -154,28 +154,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                 <div className="cheep-content">
                     <span className="content-text">
                         {cheepData.content ?
-                            parseText(cheepData.content).map((token, index) =>
-                            {
-                                switch(token.type)
-                                {
-                                case TokenType.Plain:
-                                    return <span key={`${index}-text`}>{token.value}</span>;
-
-                                case TokenType.Hashtag:
-                                    if(props.response)
-                                    {
-                                        return <span key={`${index}-hashtag`} className="hashtag">
-                                            {token.value}
-                                        </span>;
-                                    }
-                                    else
-                                    {
-                                        return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
-                                            {token.value}
-                                        </Link>;
-                                    }
-                                }
-                            }) :
+                            <CheepContent content={cheepData.content} response={props.response} /> :
                             null
                         }
                     </span>
