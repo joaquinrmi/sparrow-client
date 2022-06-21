@@ -9,13 +9,14 @@ export interface Props
     icon: string;
     counter?: number;
     active?: boolean;
+    className?: string;
 
     onClick?(event: React.MouseEvent<HTMLDivElement>): void;
 }
 
 const InteractionButton: React.FunctionComponent<Props> = (props) =>
 {
-    return <div id={props.id} className={`interaction-button ${props.color} ${props.active ? "active" : ""}`} onClick={props.onClick ? props.onClick : () => {}}>
+    return <div id={props.id} className={`interaction-button ${props.color} ${props.active ? "active" : ""} ${props.className || ""}`} onClick={props.onClick ? props.onClick : () => {}}>
         <div className="icon-container">
             <i className={`fa-solid fa-${props.icon}`}></i>
         </div>
