@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import getRelevantCheepData from "../../../../components/cheep/get_relevant_cheep_data";
 import StateContext from "../../state_context";
 import CreateCheepData from "../cheep_editor/create_cheep_data";
-import deleteCheep from "../cheep_editor/delete_cheep";
+import deleteRecheep from "../cheep_editor/delete_recheep";
 import postCheep from "../cheep_editor/post_cheep";
 
 import "./recheep_menu.scss";
@@ -45,7 +45,7 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
 
                 if(menuData.active)
                 {
-                    await deleteCheep(menuData.targetCheep.id);
+                    await deleteRecheep(targetCheep.id);
                 }
                 else
                 {
