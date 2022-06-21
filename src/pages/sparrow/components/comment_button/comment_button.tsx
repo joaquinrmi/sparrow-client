@@ -17,7 +17,7 @@ const CommentButton: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
-    return <InteractionButton id={props.id} color={InteractionColor.Blue} icon="comment" counter={props.counter ? props.cheepData.commentCount : undefined} onClick={(event) =>
+    return <InteractionButton id={props.id} className="comment-button" color={InteractionColor.Blue} icon="comment" counter={props.counter ? props.cheepData.commentCount : undefined} onClick={(event) =>
     {
         event.stopPropagation();
 
