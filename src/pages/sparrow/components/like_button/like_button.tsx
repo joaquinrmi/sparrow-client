@@ -13,7 +13,7 @@ export interface Props
 
 const LikeButton: React.FunctionComponent<Props> = (props) =>
 {
-    return <InteractionButton id={props.id} color={InteractionColor.Pink} icon="heart" counter={props.counter} active={props.active} onClick={async (event) =>
+    return <InteractionButton id={props.id} className="like-button" color={InteractionColor.Pink} icon="heart" counter={props.counter} active={props.active} onClick={async (event) =>
     {
         event.stopPropagation();
 
