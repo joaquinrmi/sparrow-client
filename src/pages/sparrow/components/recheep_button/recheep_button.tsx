@@ -17,7 +17,7 @@ const RecheepButton: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
     
-    return <InteractionButton id={props.id} color={InteractionColor.Green} icon="retweet" counter={props.counter} active={props.active} onClick={(event) =>
+    return <InteractionButton id={props.id} className="recheep-button" color={InteractionColor.Green} icon="retweet" counter={props.counter} active={props.active} onClick={(event) =>
     {
         event.stopPropagation();
 
