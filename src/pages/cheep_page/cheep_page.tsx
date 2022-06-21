@@ -12,6 +12,9 @@ import Thread from "../../components/thread";
 import UserPicture from "../../components/user_picture";
 import MONTHS from "../../months";
 import CheepEditor from "../sparrow/components/cheep_editor";
+import CommentButton from "../sparrow/components/comment_button";
+import LikeButton from "../sparrow/components/like_button";
+import RecheepButton from "../sparrow/components/recheep_button";
 import StateContext from "../sparrow/state_context";
 
 import "./cheep_page.scss";
@@ -184,7 +187,37 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                         </div>
                     </div>
 
-                    <div className="buttons-container"></div>
+                    <div className="buttons-container">
+                        <div className="button-container">
+                            <CommentButton id="comment-cheep-page" cheepData={cheepData} counter={false} />
+                        </div>
+
+                        <div className="button-container">
+                            <RecheepButton id={`recheep-${props.id}`} cheepData={cheepData} active={cheepData.recheepped} counter={cheepData.recheepCount} onRecheep={() =>
+                            {
+                                if(cheepData !== undefined)
+                                {
+                                    let targetCheepData = { ...cheepData };
+                                    updateRecheep(targetCheepData, cheepData.recheepped);
+
+                                    stateManager.setCheepPage(targetCheepData);
+                                }
+                            }} />
+                        </div>
+
+                        <div className="button-container">
+                            <LikeButton id={`like-${props.id}`} cheepId={cheepData.id} active={cheepData.liked} counter={cheepData.likeCount} onClick={() =>
+                            {
+                                if(cheepData !== undefined)
+                                {
+                                    let targetCheepData = { ...cheepData };
+                                    updateLike(targetCheepData, cheepData.liked);
+
+                                    stateManager.setCheepPage(targetCheepData);
+                                }
+                            }} />
+                        </div>
+                    </div>
 
                     <div className="reply-container">
                         <CheepEditor id="cheep-editor-page" responseTarget={cheepData.responseOf ? cheepData.responseOf : undefined} inPage />
@@ -231,6 +264,34 @@ function formatNumber(num: number): string
     }
 
     return `${Math.floor(num / 100) / 10} mil`;
+}
+
+function updateRecheep(data: CheepData, recheep: boolean): void
+{
+    if(recheep)
+    {
+        data.recheepped = false;
+        data.recheepCount -= 1;
+    }
+    else
+    {
+        data.recheepped = true;
+        data.recheepCount += 1;
+    }
+}
+
+function updateLike(data: CheepData, like: boolean): void
+{
+    if(like)
+    {
+        data.liked = false;
+        data.likeCount -= 1;
+    }
+    else
+    {
+        data.liked = true;
+        data.likeCount += 1;
+    }
 }
 
 export default CheepPage;
