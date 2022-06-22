@@ -20,6 +20,7 @@ import CheepGalleryModal from "./components/cheep_gallery_modal";
 import MainAside from "./components/main_aside";
 import Search from "../search";
 import UnfollowConfirmation from "./components/unfollow_confirmation";
+import LikesList from "../cheep_page/likes_list";
 
 import "./sparrow.scss";
 
@@ -64,9 +65,9 @@ const Sparrow: React.FunctionComponent = () =>
             search: { query: {}, nextTime: 0, cheeps: [] },
         },
         userLists: {
-            following: { id: "", targetHandle: "", users: [] },
-            followers: { id: "", targetHandle: "", users: [] },
-            likes: { id: "", targetHandle: "", users: [] }
+            following: { id: "", target: "", users: [] },
+            followers: { id: "", target: "", users: [] },
+            likes: { id: "", target: "", users: [] }
         },
         cheepEditor: {},
         closeConfirmation: {
@@ -122,6 +123,8 @@ const Sparrow: React.FunctionComponent = () =>
                     profile: <MainSection mainColumnChildren={<Profile handle={userHandle} />} rightColumnChildren={aside} />,
 
                     search: <MainSection mainColumnChildren={<Search params={searchParams} />} rightColumnChildren={aside} />,
+
+                    usersLike: <MainSection mainColumnChildren={<LikesList cheepId={cheepId} />} rightColumnChildren={aside} />,
                 }} />
 
                 <Routes>
@@ -170,6 +173,17 @@ const Sparrow: React.FunctionComponent = () =>
                             }
                         }</GetCheepId>;
                     }}</GetHandle>} />
+
+                    <Route path="/:userHandle/status/:cheepId/likes" element={<GetCheepId>{
+                        (cheepId) =>
+                        {
+                            return <RouteSetter id={`cheep-${cheepId}-likes`} onMatch={() =>
+                            {
+                                setCheepId(cheepId);
+                                setCurrentRoute("usersLike");
+                            }} />;
+                        }
+                    }</GetCheepId>} />
                     
                     <Route path="/:userHandle/status/:cheepId/*" element={<GetCheepId>{
                         (cheepId) =>
