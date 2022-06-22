@@ -7,7 +7,15 @@ async function loadCheeps(query: SearchCheepsQuery, hideResponseTarget?: boolean
     let q: SearchCheepsQuery;
     let url = "";
 
-    if(query.timeline)
+    if(query.explore)
+    {
+        q = {
+            maxTime: query.maxTime
+        };
+
+        url = `${process.env.REACT_APP_SERVER}/api/cheep/explore`;
+    }
+    else if(query.timeline)
     {
         q = {
             maxTime: query.maxTime
