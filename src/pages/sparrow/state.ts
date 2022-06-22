@@ -27,6 +27,7 @@ interface SparrowState
     userLists: {
         following: UserListState;
         followers: UserListState;
+        likes: UserListState;
     };
     cheepPage?: {
         data: CheepData;
