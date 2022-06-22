@@ -76,7 +76,7 @@ export interface CheepListState
 export interface UserListState
 {
     id: string;
-    targetHandle: string;
+    target: string | number;
     users: Array<AnotherUserData>;
     loadMore?: boolean;
     noMore?: boolean;
