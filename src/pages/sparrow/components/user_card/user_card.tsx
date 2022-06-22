@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AnotherUserData from "../../../../another_user_data";
 import UserPicture from "../../../../components/user_picture";
+import SessionContext from "../../../../session_context";
 import { UserListName } from "../../state";
 import StateContext from "../../state_context";
 import FollowButton from "../follow_button";
@@ -19,6 +20,7 @@ export interface Props
 const UserCard: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
+    const userSession = useContext(SessionContext);
 
     const navigate = useNavigate();
 
@@ -55,25 +57,28 @@ const UserCard: React.FunctionComponent<Props> = (props) =>
                 </div>
 
                 <div className="interaction-container">
-                    <FollowButton
-                        id={`${props.id}-follow`}
-                        following={props.data.following}
-                        userHandle={props.data.handle}
-                        onFollow={() =>
-                        {
-                            stateManager.updateUserCard(props.listName, props.index, {
-                                ...props.data,
-                                following: true
-                            });
-                        }}
-                        onUnfollow={() =>
-                        {
-                            stateManager.updateUserCard(props.listName, props.index, {
-                                ...props.data,
-                                following: false
-                            });
-                        }}
-                    />
+                    {userSession.user.handle !== props.data.handle ?
+                        <FollowButton
+                            id={`${props.id}-follow`}
+                            following={props.data.following}
+                            userHandle={props.data.handle}
+                            onFollow={() =>
+                            {
+                                stateManager.updateUserCard(props.listName, props.index, {
+                                    ...props.data,
+                                    following: true
+                                });
+                            }}
+                            onUnfollow={() =>
+                            {
+                                stateManager.updateUserCard(props.listName, props.index, {
+                                    ...props.data,
+                                    following: false
+                                });
+                            }}
+                        /> :
+                        null
+                    }
                 </div>
             </div>
 
