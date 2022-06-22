@@ -53,6 +53,19 @@
         .cheep-content
         {
             font-size: 23px;
+
+            .hashtag,
+            .link
+            {
+                text-decoration: none;
+                color: Color.$blue1;
+            }
+
+            .hashtag:hover,
+            .link:hover
+            {
+                text-decoration: underline;
+            }
         }
 
         .sub-container

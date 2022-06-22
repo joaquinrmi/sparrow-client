@@ -4,6 +4,7 @@ import getCheep from "../../cheep/get_cheep";
 import processCheep from "../../cheep/process_cheep";
 import CheepData from "../../cheep_data";
 import Cheep from "../../components/cheep";
+import CheepContent from "../../components/cheep/components/cheep_content";
 import CheepList from "../../components/cheep_list";
 import Gallery from "../../components/gallery";
 import Loading from "../../components/loading";
@@ -127,7 +128,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                 
                 {cheepData.content && cheepData.content.length > 0 ?
                     <div className="cheep-content">
-                        {cheepData.content}
+                        <CheepContent content={cheepData.content} />
                     </div>:
                     null
                 }
