@@ -23,6 +23,29 @@ const UserList: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
+        (async () =>
+        {
+            if(listState.loadMore && !listState.noMore)
+            {
+                const userList = await loadUserList(props.type, props.targetHandle, listState.users[listState.users.length - 1].id);
+
+                stateManager.loadUserList(props.name, props.id, props.targetHandle,
+                    [ ...listState.users, ...userList ]
+                );
+
+                stateManager.setUserListLoadMore(props.name, false);
+
+                if(userList.length < 20)
+                {
+                    stateManager.setUserListLoadNoMore(props.name);
+                }
+            }
+        })();
+    },
+    [ listState.loadMore ]);
+
+    useEffect(() =>
+    {
         if(props.id === listState.id && listState.targetHandle === props.targetHandle)
         {
             return;
@@ -40,7 +63,7 @@ const UserList: React.FunctionComponent<Props> = (props) =>
             {
                 stateManager.loadUserList(props.name, props.id, props.targetHandle, []);
             }
-        })()
+        })();
     },
     [ props.targetHandle, props.name ]);
 
