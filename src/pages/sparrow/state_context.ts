@@ -40,6 +40,7 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             thread: { query: {}, nextTime: 0, cheeps: [] },
             comments: { query: {}, nextTime: 0, cheeps: [] },
             search: { query: {}, nextTime: 0, cheeps: [] },
+            quotes: { query: {}, nextTime: 0, cheeps: [] },
         },
         userLists: {
             following: { id: "", target: "", users: [] },
