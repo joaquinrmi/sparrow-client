@@ -62,7 +62,8 @@ const Sparrow: React.FunctionComponent = () =>
         },
         userLists: {
             following: { id: "", targetHandle: "", users: [] },
-            followers: { id: "", targetHandle: "", users: [] }
+            followers: { id: "", targetHandle: "", users: [] },
+            likes: { id: "", targetHandle: "", users: [] }
         },
         cheepEditor: {},
         closeConfirmation: {
