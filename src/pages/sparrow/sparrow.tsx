@@ -35,7 +35,10 @@ const Sparrow: React.FunctionComponent = () =>
             },
             relations: {
                 currentRoute: ""
-            }
+            },
+            cheepPage: {
+                currentRoute: ""
+            },
         },
         profile: {
             data: {
