@@ -223,9 +223,14 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                     data.gallery = gallery;
                                 }
 
-                                if(props.responseTarget)
+                                if(props.responseTarget !== undefined)
                                 {
                                     data.responseTarget = props.responseTarget.id;
+                                }
+
+                                if(props.targetCheep !== undefined)
+                                {
+                                    data.quoteTarget = props.targetCheep.id;
                                 }
 
                                 let cheepId: number;
