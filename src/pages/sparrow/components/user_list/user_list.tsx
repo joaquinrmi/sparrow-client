@@ -164,7 +164,7 @@ async function loadUserList(type: UserListType, target: string | number, offsetI
         break;
 
     case UserListType.Like:
-        requestURL += `/like-target-list?targetId=${target}`;
+        requestURL += `/like-target-list?likeTarget=${target}`;
         break;
     }
 
