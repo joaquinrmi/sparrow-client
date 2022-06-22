@@ -40,7 +40,7 @@ const CheepContent: React.FunctionComponent<Props> = (props) =>
                 }
 
             case TokenType.URL:
-                return <LinkParser
+                return <LinkParser key={`${index}-url`}
                     href={token.value}
                     className="link"
                 />;
