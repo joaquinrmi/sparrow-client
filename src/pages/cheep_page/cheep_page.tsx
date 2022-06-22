@@ -142,7 +142,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
 
                 {cheepData.quoteTarget ?
                     <div className="sub-container">
-                        <Cheep id={`quote-${props.id}`} data={cheepData.quoteTarget} />
+                        <Cheep id={`quote-${props.id}`} data={cheepData.quoteTarget} quote />
                     </div> :
                     null
                 }
