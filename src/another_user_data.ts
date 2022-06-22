@@ -1,5 +1,6 @@
 interface AnotherUserData
 {
+    id: number;
     handle: string;
     name: string;
     picture: string;
