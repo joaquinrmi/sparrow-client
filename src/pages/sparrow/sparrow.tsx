@@ -24,6 +24,7 @@ import LikesList from "../cheep_page/likes_list";
 import QuotesList from "../cheep_page/quotes_list";
 import RecheepsList from "../cheep_page/recheeps_list";
 import GetHandle from "./components/get_handle";
+import Home from "../home";
 
 import "./sparrow.scss";
 
@@ -112,7 +113,7 @@ const Sparrow: React.FunctionComponent = () =>
                 </div>
 
                 <Router currentRoute={currentRoute} routes={{
-                    home: <MainSection mainColumnChildren={<>A</>} rightColumnChildren={aside} />,
+                    home: <MainSection mainColumnChildren={<Home />} rightColumnChildren={aside} />,
 
                     explore: <MainSection mainColumnChildren={<>B</>} rightColumnChildren={aside} />,
 
