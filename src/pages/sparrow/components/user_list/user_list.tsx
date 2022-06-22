@@ -12,7 +12,7 @@ export interface Props
     id: string;
     name: UserListName;
     type: UserListType;
-    targetHandle: string;
+    target: string | number;
 }
 
 const UserList: React.FunctionComponent<Props> = (props) =>
@@ -27,9 +27,9 @@ const UserList: React.FunctionComponent<Props> = (props) =>
         {
             if(listState.loadMore && !listState.noMore)
             {
-                const userList = await loadUserList(props.type, props.targetHandle, listState.users[listState.users.length - 1].id);
+                const userList = await loadUserList(props.type, props.target, listState.users[listState.users.length - 1].id);
 
-                stateManager.loadUserList(props.name, props.id, props.targetHandle,
+                stateManager.loadUserList(props.name, props.id, props.target,
                     [ ...listState.users, ...userList ]
                 );
 
@@ -46,7 +46,7 @@ const UserList: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
-        if(props.id === listState.id && listState.targetHandle === props.targetHandle)
+        if(props.id === listState.id && listState.target === props.target)
         {
             return;
         }
@@ -55,17 +55,17 @@ const UserList: React.FunctionComponent<Props> = (props) =>
         {
             try
             {
-                const userList = await loadUserList(props.type, props.targetHandle);
+                const userList = await loadUserList(props.type, props.target);
 
-                stateManager.loadUserList(props.name, props.id, props.targetHandle, userList);
+                stateManager.loadUserList(props.name, props.id, props.target, userList);
             }
             catch(err)
             {
-                stateManager.loadUserList(props.name, props.id, props.targetHandle, []);
+                stateManager.loadUserList(props.name, props.id, props.target, []);
             }
         })();
     },
-    [ props.targetHandle, props.name ]);
+    [ props.target, props.name ]);
 
     useEffect(() =>
     {
@@ -112,7 +112,7 @@ const UserList: React.FunctionComponent<Props> = (props) =>
     });
 
     let content: React.ReactNode;
-    if(listState.targetHandle === props.targetHandle)
+    if(listState.target === props.target)
     {
         content = <>{listState.users.map((userData, index) =>
         {
@@ -146,17 +146,17 @@ export enum UserListType
     Like
 }
 
-async function loadUserList(type: UserListType, targetHandle: string, offsetId?: number): Promise<Array<AnotherUserData>>
+async function loadUserList(type: UserListType, target: string | number, offsetId?: number): Promise<Array<AnotherUserData>>
 {
     let requestURL = `${process.env.REACT_APP_SERVER}/api/user`;
     switch(type)
     {
     case UserListType.Followers:
-        requestURL += `/follower-list?userHandle=${targetHandle}`;
+        requestURL += `/follower-list?userHandle=${target}`;
         break;
 
     case UserListType.Following:
-        requestURL += `/following-list?userHandle=${targetHandle}`;
+        requestURL += `/following-list?userHandle=${target}`;
         break;
 
     case UserListType.Recommended:
@@ -164,7 +164,7 @@ async function loadUserList(type: UserListType, targetHandle: string, offsetId?:
         break;
 
     case UserListType.Like:
-        requestURL += "/like-target-list";
+        requestURL += `/like-target-list?targetId=${target}`;
         break;
     }
 
