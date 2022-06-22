@@ -95,7 +95,7 @@ class StateManager
         }
     }
 
-    loadUserList(listName: UserListName, id: string, targetHandle: string, users: Array<AnotherUserData>): void
+    loadUserList(listName: UserListName, id: string, target: string | number, users: Array<AnotherUserData>): void
     {
         if(this.setState)
         {
@@ -105,7 +105,7 @@ class StateManager
 
                 newState.userLists[listName] = {
                     id: id,
-                    targetHandle: targetHandle,
+                    target: target,
                     users: users,
                     loadMore: false,
                     noMore: false
