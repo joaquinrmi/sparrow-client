@@ -27,6 +27,7 @@ import GetHandle from "./components/get_handle";
 import Home from "../home";
 
 import "./sparrow.scss";
+import Explore from "../explore";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -115,7 +116,7 @@ const Sparrow: React.FunctionComponent = () =>
                 <Router currentRoute={currentRoute} routes={{
                     home: <MainSection mainColumnChildren={<Home />} rightColumnChildren={aside} />,
 
-                    explore: <MainSection mainColumnChildren={<>B</>} rightColumnChildren={aside} />,
+                    explore: <MainSection mainColumnChildren={<Explore />} rightColumnChildren={aside} />,
 
                     notifications: <MainSection mainColumnChildren={<>C</>} rightColumnChildren={aside} />,
 
