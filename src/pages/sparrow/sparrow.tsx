@@ -23,6 +23,7 @@ import UnfollowConfirmation from "./components/unfollow_confirmation";
 import LikesList from "../cheep_page/likes_list";
 
 import "./sparrow.scss";
+import QuotesList from "../cheep_page/quotes_list";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -126,6 +127,8 @@ const Sparrow: React.FunctionComponent = () =>
                     search: <MainSection mainColumnChildren={<Search params={searchParams} />} rightColumnChildren={aside} />,
 
                     usersLike: <MainSection mainColumnChildren={<LikesList cheepId={cheepId} />} rightColumnChildren={aside} />,
+
+                    withComments: <MainSection mainColumnChildren={<QuotesList cheepId={cheepId} />} rightColumnChildren={aside} />,
                 }} />
 
                 <Routes>
@@ -182,6 +185,17 @@ const Sparrow: React.FunctionComponent = () =>
                             {
                                 setCheepId(cheepId);
                                 setCurrentRoute("usersLike");
+                            }} />;
+                        }
+                    }</GetCheepId>} />
+
+                    <Route path="/:userHandle/status/:cheepId/with-comments" element={<GetCheepId>{
+                        (cheepId) =>
+                        {
+                            return <RouteSetter id={`cheep-${cheepId}-with-comments`} onMatch={() =>
+                            {
+                                setCheepId(cheepId);
+                                setCurrentRoute("withComments");
                             }} />;
                         }
                     }</GetCheepId>} />
