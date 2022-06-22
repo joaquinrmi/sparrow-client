@@ -7,6 +7,8 @@ interface SearchCheepsQuery
     onlyGallery?: boolean;
     likes?: boolean;
     responseOf?: number;
+    quoteTarget?: number;
+    recheepTarget?: number;
 }
 
 export default SearchCheepsQuery;
