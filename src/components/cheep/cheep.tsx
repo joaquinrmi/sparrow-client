@@ -159,7 +159,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                         }
                     </span>
 
-                    {props.quote ?
+                    {props.quote && cheepData.quoteTarget ?
                         <span className="show-thread">Mostrar este hilo</span> :
                         null
                     }
