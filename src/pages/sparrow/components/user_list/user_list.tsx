@@ -143,7 +143,8 @@ export enum UserListType
     Following,
     Followers,
     Recommended,
-    Like
+    Like,
+    Recheep
 }
 
 async function loadUserList(type: UserListType, target: string | number, offsetId?: number): Promise<Array<AnotherUserData>>
@@ -165,6 +166,10 @@ async function loadUserList(type: UserListType, target: string | number, offsetI
 
     case UserListType.Like:
         requestURL += `/like-target-list?likeTarget=${target}`;
+        break;
+
+    case UserListType.Recheep:
+        requestURL += `/recheep-target-list?recheepTarget=${target}`;
         break;
     }
 
