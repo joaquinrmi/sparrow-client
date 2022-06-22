@@ -23,6 +23,7 @@ import UnfollowConfirmation from "./components/unfollow_confirmation";
 import LikesList from "../cheep_page/likes_list";
 import QuotesList from "../cheep_page/quotes_list";
 import RecheepsList from "../cheep_page/recheeps_list";
+import GetHandle from "./components/get_handle";
 
 import "./sparrow.scss";
 
@@ -259,18 +260,6 @@ const Sparrow: React.FunctionComponent = () =>
             }
         </div></StatusMessageContext.Provider>;
     }}</SessionContext.Consumer></StateContext.Provider>;
-};
-
-interface GetHandleProps
-{
-    children(userHandle: string): React.ReactNode;
-}
-
-const GetHandle: React.FunctionComponent<GetHandleProps> = (props) =>
-{
-    const { userHandle } = useParams();
-    
-    return <>{props.children(userHandle as string)}</>;
 };
 
 interface GetCheepIdProps
