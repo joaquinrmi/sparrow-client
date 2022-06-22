@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import GetHandle from "../get_handle";
 import SearchBar from "./components/search_bar";
+import UserGallery from "./components/user_gallery/user_gallery";
 
 import "./main_aside.scss";
 
@@ -10,6 +12,22 @@ const MainAside: React.FunctionComponent = (props) =>
         <Routes>
             <Route path="/search" element={<></>} />
             <Route path="/*" element={<SearchBar id="main-search-bar" />} />
+        </Routes>
+
+        <Routes>
+            <Route path="/search/*" element={<></>} />
+            <Route path="/home/*" element={<></>} />
+            <Route path="/explore/*" element={<></>} />
+            <Route path="/notifications/*" element={<></>} />
+            <Route path="/messages/*" element={<></>} />
+            <Route path="/settings/*" element={<></>} />
+            <Route path="/compose/*" element={<></>} />
+            <Route path="/:userHandle/*" element={<GetHandle>{
+                (userHandle) =>
+                {
+                    return <UserGallery userHandle={userHandle} />;
+                }
+            }</GetHandle>} />
         </Routes>
 
         <div className="links-container">
