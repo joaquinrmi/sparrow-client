@@ -4,7 +4,24 @@ import processCheep from "./process_cheep";
 
 async function loadCheeps(query: SearchCheepsQuery, hideResponseTarget?: boolean): Promise<{ cheeps: Array<CheepData>, nextTime: number }>
 {
-    const searchCheepsURL = `${process.env.REACT_APP_SERVER}/api/cheep/search${parseCheepQuery(query)}`;
+    let q: SearchCheepsQuery;
+    let url = "";
+
+    if(query.timeline)
+    {
+        q = {
+            maxTime: query.maxTime
+        };
+        
+        url = `${process.env.REACT_APP_SERVER}/api/cheep/timeline`;
+    }
+    else
+    {
+        q = { ...query };
+        url = `${process.env.REACT_APP_SERVER}/api/cheep/search`;
+    }
+
+    const searchCheepsURL = `${url}${parseCheepQuery(q)}`;
 
     const response = await fetch(searchCheepsURL, {
         method: "GET",
@@ -49,6 +66,7 @@ function parseCheepQuery(query: SearchCheepsQuery): string
 
     for(const arg in query)
     {
+        if(query[arg as keyof SearchCheepsQuery] === undefined) continue;
         elements.push(`${arg}=${query[arg as keyof SearchCheepsQuery]}`);
     }
 
