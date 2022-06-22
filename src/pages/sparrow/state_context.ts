@@ -13,7 +13,10 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             },
             relations: {
                 currentRoute: ""
-            }
+            },
+            cheepPage: {
+                currentRoute: ""
+            },
         },
         profile: {
             data: {
