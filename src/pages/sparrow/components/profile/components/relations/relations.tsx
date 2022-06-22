@@ -44,9 +44,9 @@ const Relations: React.FunctionComponent<Props> = (props) =>
         ]} />
 
         <Router currentRoute={state.location.relations.currentRoute} routes={{
-            following: <UserList id="following-user-list" name="following" type={UserListType.Following} targetHandle={props.handle} />,
+            following: <UserList id="following-user-list" name="following" type={UserListType.Following} target={props.handle} />,
 
-            followers: <UserList id="follower-user-list" name="followers" type={UserListType.Followers} targetHandle={props.handle} />
+            followers: <UserList id="follower-user-list" name="followers" type={UserListType.Followers} target={props.handle} />
         }} />
 
         <Routes>
