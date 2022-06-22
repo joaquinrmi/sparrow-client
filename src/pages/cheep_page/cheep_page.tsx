@@ -193,7 +193,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                         </div>
 
                         <div className="button-container">
-                            <RecheepButton id={`recheep-${props.id}`} cheepData={cheepData} active={cheepData.recheepped} counter={cheepData.recheepCount} onRecheep={() =>
+                            <RecheepButton id={`recheep-${props.id}`} cheepData={cheepData} active={cheepData.recheepped} counter={0} onRecheep={() =>
                             {
                                 if(cheepData !== undefined)
                                 {
@@ -206,7 +206,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                         </div>
 
                         <div className="button-container">
-                            <LikeButton id={`like-${props.id}`} cheepId={cheepData.id} active={cheepData.liked} counter={cheepData.likeCount} onClick={() =>
+                            <LikeButton id={`like-${props.id}`} cheepId={cheepData.id} active={cheepData.liked} counter={0} onClick={() =>
                             {
                                 if(cheepData !== undefined)
                                 {
