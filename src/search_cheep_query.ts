@@ -10,6 +10,7 @@ interface SearchCheepsQuery
     quoteTarget?: number;
     recheepTarget?: number;
     timeline?: boolean;
+    explore?: boolean;
 }
 
 export default SearchCheepsQuery;
