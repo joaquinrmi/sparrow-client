@@ -14,6 +14,7 @@ export interface Props
     type: UserListType;
     target: string | number;
     limit?: number;
+    little?: boolean;
 }
 
 const UserList: React.FunctionComponent<Props> = (props) =>
@@ -70,45 +71,48 @@ const UserList: React.FunctionComponent<Props> = (props) =>
 
     useEffect(() =>
     {
-        const userList = document.getElementById(props.id) as HTMLDivElement;
-        if(userList === null)
+        if(!props.little)
         {
-            return;
-        }
-
-        const onScroll = () =>
-        {
-            const box = userList.getBoundingClientRect();
-
-            if((box.height + box.top - window.innerHeight < 1000) && listState.users.length >= 20)
-            {
-                stateManager.setUserListLoadMore(props.name, true);
-            }
-        };
-
-        document.addEventListener("scroll", onScroll);
-
-        const onResize = () =>
-        {
-            const lastChild = userList.lastChild as HTMLDivElement;
-            if(lastChild === null || lastChild === undefined)
+            const userList = document.getElementById(props.id) as HTMLDivElement;
+            if(userList === null)
             {
                 return;
             }
 
-            const box = lastChild.getBoundingClientRect();
+            const onScroll = () =>
+            {
+                const box = userList.getBoundingClientRect();
 
-            userList.style.paddingBottom = `${window.innerHeight - box.height}px`;
-        }
+                if((box.height + box.top - window.innerHeight < 1000) && listState.users.length >= 20)
+                {
+                    stateManager.setUserListLoadMore(props.name, true);
+                }
+            };
 
-        window.addEventListener("resize", onResize);
+            document.addEventListener("scroll", onScroll);
 
-        onResize();
+            const onResize = () =>
+            {
+                const lastChild = userList.lastChild as HTMLDivElement;
+                if(lastChild === null || lastChild === undefined)
+                {
+                    return;
+                }
 
-        return () =>
-        {
-            document.removeEventListener("scroll", onScroll);
-            window.removeEventListener("resize", onResize);
+                const box = lastChild.getBoundingClientRect();
+
+                userList.style.paddingBottom = `${window.innerHeight - box.height}px`;
+            }
+
+            window.addEventListener("resize", onResize);
+
+            onResize();
+
+            return () =>
+            {
+                document.removeEventListener("scroll", onScroll);
+                window.removeEventListener("resize", onResize);
+            }
         }
     });
 
