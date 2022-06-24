@@ -1,0 +1,18 @@
+@use "../../../../../../colors.scss" as Color;
+
+.aside-section
+{
+    display: flex;
+    flex-direction: column;
+    background-color: Color.$gray6;
+    border-radius: 16px;
+    overflow: hidden;
+
+    .section-title
+    {
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 20px;
+        font-weight: 700;
+    }
+}
