@@ -21,6 +21,7 @@
         gap: 6px;
         flex: 1;
         min-width: 0;
+        max-width: 100%;
 
         .user-card-header
         {
@@ -88,7 +89,7 @@
                 .button-standar
                 {
                     height: 32px;
-                    padding: 0 2em;
+                    padding: 0 1em;
 
                     .button-text
                     {
