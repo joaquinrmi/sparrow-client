@@ -76,6 +76,7 @@ const Sparrow: React.FunctionComponent = () =>
             search: { query: {}, nextTime: 0, cheeps: [] },
             quotes: { query: {}, nextTime: 0, cheeps: [] },
             userGallery: { query: {}, nextTime: 0, cheeps: [] },
+            asideRecommended: { query: {}, nextTime: 0, cheeps: [] },
         },
         userLists: {
             following: { id: "", target: "", users: [] },
