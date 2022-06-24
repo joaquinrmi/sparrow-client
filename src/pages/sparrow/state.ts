@@ -62,7 +62,7 @@ interface SparrowState
         unfollow(): void;
     };
     mainAside: {
-        userHandle?: string;
+        userHandle: string;
     };
 }
 
