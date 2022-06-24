@@ -28,13 +28,13 @@ interface SparrowState
         search: CheepListState;
         quotes: CheepListState;
         userGallery: CheepListState;
-        asideRecommended: CheepListState;
     };
     userLists: {
         following: UserListState;
         followers: UserListState;
         likes: UserListState;
         recheeps: UserListState;
+        asideRecommended: UserListState;
     };
     cheepPage?: {
         data: CheepData;
