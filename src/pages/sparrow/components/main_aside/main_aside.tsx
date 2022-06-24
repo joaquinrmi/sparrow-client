@@ -1,5 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import Router from "../../../../components/router";
+import RouteSetter from "../../../../components/route_setter";
+import StateContext from "../../state_context";
 import GetHandle from "../get_handle";
 import SearchBar from "./components/search_bar";
 import UserGallery from "./components/user_gallery/user_gallery";
@@ -8,6 +11,8 @@ import "./main_aside.scss";
 
 const MainAside: React.FunctionComponent = (props) =>
 {
+    const [ state, stateManager ] = useContext(StateContext);
+
     useEffect(() =>
     {
         const element = document.querySelector(".main-aside") as HTMLDivElement;
@@ -95,26 +100,15 @@ const MainAside: React.FunctionComponent = (props) =>
         <div className="aside-separator"></div>
 
         <aside className="main-aside">
-            <Routes>
-                <Route path="/search" element={<></>} />
-                <Route path="/*" element={<SearchBar id="main-search-bar" />} />
-            </Routes>
+            <Router currentRoute={state.location.mainAsideSearch.currentRoute} routes={{
+                mainAsideNone: <></>,
+                mainAsideSearch: <SearchBar id="main-search-bar" />,
+            }} />
 
-            <Routes>
-                <Route path="/search/*" element={<></>} />
-                <Route path="/home/*" element={<></>} />
-                <Route path="/explore/*" element={<></>} />
-                <Route path="/notifications/*" element={<></>} />
-                <Route path="/messages/*" element={<></>} />
-                <Route path="/settings/*" element={<></>} />
-                <Route path="/compose/*" element={<></>} />
-                <Route path="/:userHandle/*" element={<GetHandle>{
-                    (userHandle) =>
-                    {
-                        return <UserGallery userHandle={userHandle} />;
-                    }
-                }</GetHandle>} />
-            </Routes>
+            <Router currentRoute={state.location.mainAsideGallery.currentRoute} routes={{
+                mainAsideNone: <></>,
+                mainAsideGallery: <UserGallery userHandle={state.mainAside.userHandle} />,
+            }} />
 
             <div className="links-container">
                 <ul>
@@ -125,6 +119,66 @@ const MainAside: React.FunctionComponent = (props) =>
                     <li><a href="https://github.com/joaquinrmi/sparrow-server">Repositorio (back-end)</a></li>
                 </ul>
             </div>
+
+            <Routes>
+                <Route path="/search" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideSearch", "mainAsideNone");
+                }} />} />
+                
+                <Route path="/*" element={<RouteSetter id={`aside-search`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideSearch", "mainAsideSearch");
+                }} />} />
+            </Routes>
+
+            <Routes>
+                <Route path="/search/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                }} />} />
+
+                <Route path="/home/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                }} />} />
+
+                <Route path="/explore/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                }} />} />
+
+                <Route path="/notifications/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                }} />} />
+
+                <Route path="/messages/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                }} />} />
+
+                <Route path="/settings/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                }} />} />
+
+                <Route path="/compose/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
+                {
+                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                }} />} />
+
+                <Route path="/:userHandle/*" element={<GetHandle>{
+                    (userHandle) =>
+                    {
+                        return <RouteSetter id={`aside-${userHandle}`} onMatch={() =>
+                        {
+                            stateManager.setMainAsideUserHandle(userHandle);
+                            stateManager.navigate("mainAsideGallery", "mainAsideGallery");
+                        }}/>;
+                    }
+                }</GetHandle>} />
+            </Routes>
         </aside>
     </>;
 };
