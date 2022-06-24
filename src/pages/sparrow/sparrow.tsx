@@ -45,7 +45,10 @@ const Sparrow: React.FunctionComponent = () =>
             cheepPage: {
                 currentRoute: ""
             },
-            mainAside: {
+            mainAsideSearch: {
+                currentRoute: ""
+            },
+            mainAsideGallery: {
                 currentRoute: ""
             },
         },
