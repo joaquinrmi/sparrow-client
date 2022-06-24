@@ -28,6 +28,7 @@ interface SparrowState
         search: CheepListState;
         quotes: CheepListState;
         userGallery: CheepListState;
+        asideRecommended: CheepListState;
     };
     userLists: {
         following: UserListState;
