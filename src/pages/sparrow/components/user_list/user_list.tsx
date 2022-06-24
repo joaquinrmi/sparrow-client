@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { ReactNode, useContext, useEffect } from "react";
 import AnotherUserData from "../../../../another_user_data";
 import Loading from "../../../../components/loading";
 import { UserListName } from "../../state";
@@ -13,6 +13,7 @@ export interface Props
     name: UserListName;
     type: UserListType;
     target: string | number;
+    limit?: number;
 }
 
 const UserList: React.FunctionComponent<Props> = (props) =>
@@ -114,10 +115,17 @@ const UserList: React.FunctionComponent<Props> = (props) =>
     let content: React.ReactNode;
     if(listState.target === props.target)
     {
-        content = <>{listState.users.map((userData, index) =>
+        let cards = new Array<ReactNode>();
+
+        let limit = props.limit || listState.users.length;
+        for(let i = 0; i < limit && i < listState.users.length; ++i)
         {
-            return <UserCard id={`ucard-${index}-${props.id}`} listName={props.name} key={`${index}-card`} data={userData} index={index} />;
-        })}</>;
+            const userData = listState.users[i];
+
+            cards.push(<UserCard id={`ucard-${i}-${props.id}`} listName={props.name} key={`${i}-card`} data={userData} index={i} />);
+        }
+
+        content = <>{cards}</>;
     }
     else
     {
