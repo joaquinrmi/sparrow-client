@@ -28,6 +28,7 @@ import Home from "../home";
 import Explore from "../explore";
 
 import "./sparrow.scss";
+import RecommendedList from "./components/recommended_list";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -139,6 +140,8 @@ const Sparrow: React.FunctionComponent = () =>
 
                     profile: <MainSection mainColumnChildren={<Profile handle={userHandle} />} rightColumnChildren={aside} />,
 
+                    recommended: <MainSection mainColumnChildren={<RecommendedList />} rightColumnChildren={aside} />,
+
                     search: <MainSection mainColumnChildren={<Search params={searchParams} />} rightColumnChildren={aside} />,
 
                     hashtag: <MainSection mainColumnChildren={<Search params={searchParams} />} rightColumnChildren={aside} />,
@@ -173,6 +176,11 @@ const Sparrow: React.FunctionComponent = () =>
                     
                     <Route path="/settings" element={<RouteSetter id="settings" onMatch={() => {
                         setCurrentRoute("settings");
+                    }} />} />
+
+                    <Route path="/recommended" element={<RouteSetter id="recommended" onMatch={() =>
+                    {
+                        setCurrentRoute("recommended");
                     }} />} />
 
                     <Route path="/search" element={<GetSearchParams>{(searchParams) =>
