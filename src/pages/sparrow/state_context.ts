@@ -17,6 +17,9 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             cheepPage: {
                 currentRoute: ""
             },
+            mainAside: {
+                currentRoute: ""
+            },
         },
         profile: {
             data: {
