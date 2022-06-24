@@ -17,7 +17,10 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             cheepPage: {
                 currentRoute: ""
             },
-            mainAside: {
+            mainAsideSearch: {
+                currentRoute: ""
+            },
+            mainAsideGallery: {
                 currentRoute: ""
             },
         },
