@@ -61,7 +61,8 @@ const StateContext = createContext<[ SparrowState, StateManager ]>([
             open: false,
             userHandle: "",
             unfollow() {}
-        }
+        },
+        mainAside: {},
     },
     new StateManager()
 ]);
