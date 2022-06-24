@@ -10,7 +10,8 @@ interface SparrowState
         innerProfile: LocationState;
         relations: LocationState;
         cheepPage: LocationState;
-        mainAside: LocationState;
+        mainAsideSearch: LocationState;
+        mainAsideGallery: LocationState;
     };
     profile: {
         data: ProfileData;
