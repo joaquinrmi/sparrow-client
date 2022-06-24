@@ -297,6 +297,21 @@ class StateManager
         this.setUnfollowConfirmation(false, "", () => {});
     }
 
+    setMainAsideUserHandle(userHandle: string): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.mainAside.userHandle = userHandle;
+
+                return newState;
+            });
+        }
+    }
+
     private setCloseConfirmation(status: boolean, discart: () => void): void
     {
         if(this.setState)
