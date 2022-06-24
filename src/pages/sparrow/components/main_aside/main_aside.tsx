@@ -4,6 +4,7 @@ import Router from "../../../../components/router";
 import RouteSetter from "../../../../components/route_setter";
 import StateContext from "../../state_context";
 import GetHandle from "../get_handle";
+import Recommended from "./components/recommended";
 import SearchBar from "./components/search_bar";
 import UserGallery from "./components/user_gallery/user_gallery";
 
@@ -109,6 +110,8 @@ const MainAside: React.FunctionComponent = (props) =>
                 mainAsideNone: <></>,
                 mainAsideGallery: <UserGallery userHandle={state.mainAside.userHandle} />,
             }} />
+
+            <Recommended />
 
             <div className="links-container">
                 <ul>
