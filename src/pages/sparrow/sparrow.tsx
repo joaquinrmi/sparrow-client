@@ -90,7 +90,7 @@ const Sparrow: React.FunctionComponent = () =>
             userHandle: "",
             unfollow() {}
         },
-        mainAside: {},
+        mainAside: { userHandle: "" },
     });
 
     const [ currentRoute, setCurrentRoute ] = useState<string>("");
