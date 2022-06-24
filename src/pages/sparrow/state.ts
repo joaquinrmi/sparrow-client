@@ -61,6 +61,9 @@ interface SparrowState
         userHandle: string;
         unfollow(): void;
     };
+    mainAside: {
+        userHandle?: string;
+    };
 }
 
 export interface LocationState
