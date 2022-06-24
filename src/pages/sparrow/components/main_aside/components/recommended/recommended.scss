@@ -1,0 +1,21 @@
+@use "../../../../../../colors.scss" as Color;
+
+.aside-recommended
+{
+    .show-more
+    {
+        display: block;
+        padding: 1em;
+        box-sizing: border-box;
+        font-size: 15px;
+        text-decoration: none;
+        color: Color.$blue1;
+        transition: background-color 0.2s;
+    }
+
+    .show-more:hover
+    {
+        background-color: Color.$gray2;
+        transition: background-color 0.2s;
+    }
+}
