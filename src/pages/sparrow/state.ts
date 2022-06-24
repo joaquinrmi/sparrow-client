@@ -35,6 +35,7 @@ interface SparrowState
         likes: UserListState;
         recheeps: UserListState;
         asideRecommended: UserListState;
+        recommended: UserListState;
     };
     cheepPage?: {
         data: CheepData;
