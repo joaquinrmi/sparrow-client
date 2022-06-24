@@ -25,9 +25,9 @@ import QuotesList from "../cheep_page/quotes_list";
 import RecheepsList from "../cheep_page/recheeps_list";
 import GetHandle from "./components/get_handle";
 import Home from "../home";
+import Explore from "../explore";
 
 import "./sparrow.scss";
-import Explore from "../explore";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -76,13 +76,13 @@ const Sparrow: React.FunctionComponent = () =>
             search: { query: {}, nextTime: 0, cheeps: [] },
             quotes: { query: {}, nextTime: 0, cheeps: [] },
             userGallery: { query: {}, nextTime: 0, cheeps: [] },
-            asideRecommended: { query: {}, nextTime: 0, cheeps: [] },
         },
         userLists: {
             following: { id: "", target: "", users: [] },
             followers: { id: "", target: "", users: [] },
             likes: { id: "", target: "", users: [] },
             recheeps: { id: "", target: "", users: [] },
+            asideRecommended: { id: "", target: "", users: [] },
         },
         cheepEditor: {},
         closeConfirmation: {
