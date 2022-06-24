@@ -140,6 +140,8 @@ const Sparrow: React.FunctionComponent = () =>
 
                     search: <MainSection mainColumnChildren={<Search params={searchParams} />} rightColumnChildren={aside} />,
 
+                    hashtag: <MainSection mainColumnChildren={<Search params={searchParams} />} rightColumnChildren={aside} />,
+
                     usersLike: <MainSection mainColumnChildren={<LikesList cheepId={cheepId} />} rightColumnChildren={aside} />,
 
                     withComments: <MainSection mainColumnChildren={<QuotesList cheepId={cheepId} />} rightColumnChildren={aside} />,
@@ -179,6 +181,14 @@ const Sparrow: React.FunctionComponent = () =>
                             setCurrentRoute("search");
                         }} />;
                     }}</GetSearchParams>} />
+
+                    <Route path="/hashtag/:tag" element={<GetHashtag>{(searchParams) =>
+                    {
+                        return <RouteSetter id={`hashtag-${searchParams.get("q")}`} onMatch={() => {
+                            setSearchParams(searchParams);
+                            setCurrentRoute("hashtag");
+                        }} />;
+                    }}</GetHashtag>} />
 
                     <Route path="/compose/cheep/*" element={<CheepEditorModal />} />
 
@@ -307,5 +317,17 @@ const GetSearchParams: React.FunctionComponent<GetSearchParamsProps> = (props) =
 
     return <>{props.children(searchParams)}</>;
 }
+
+interface GetHashtagProps
+{
+    children(searchParams: URLSearchParams): React.ReactNode;
+}
+
+const GetHashtag: React.FunctionComponent<GetHashtagProps> = (props) =>
+{
+    const { tag } = useParams();
+
+    return <>{props.children(new URLSearchParams(`?q=${tag}`))}</>
+};
 
 export default Sparrow;
