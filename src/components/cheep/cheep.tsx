@@ -90,6 +90,16 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
         }
 
         <div className="cheep-cheep">
+            {!props.quote && userSession.user.handle === cheepData.author.handle ?
+                <div className="more-options" onClick={(ev) =>
+                {
+                    ev.stopPropagation();
+                }}>
+                    <i className="fa-solid fa-ellipsis"></i>
+                </div> :
+                null
+            }
+
             {!props.quote ?
                 <div className="left-cheep-column">
                     <UserPicture userHandle={cheepData.author.handle} userName={cheepData.author.name} picture={cheepData.author.picture} notClickeable={props.response ? true : false} />

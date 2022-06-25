@@ -46,10 +46,45 @@
 
     .cheep-cheep
     {
+        position: relative;
         display: flex;
         flex-direction: row;
         gap: 12px;
         box-sizing: border-box;
+
+        .more-options
+        {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1000px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            
+            i
+            {
+                color: Color.$silverText;
+                transition: color 0.2s;
+            }
+        }
+
+        .more-options:hover
+        {
+            background-color: Color.$blue4;
+            transition: background-color 0.2s;
+            
+            i
+            {
+                color: Color.$blue1;
+                transition: color 0.2s;
+            }
+        }
 
         .left-cheep-column
         {
