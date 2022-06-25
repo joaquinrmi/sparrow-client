@@ -55,6 +55,13 @@ interface SparrowState
         positionY: number;
         onRecheep(): void;
     };
+    moreOptionsMenu?: {
+        targetCheep: CheepData;
+        active: boolean;
+        positionX: number;
+        positionY: number;
+        onDelete(): void;
+    };
     closeConfirmation: {
         open: boolean;
         discart(): void;
