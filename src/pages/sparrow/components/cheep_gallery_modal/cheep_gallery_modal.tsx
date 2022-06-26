@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import getCheep from "../../../../cheep/get_cheep";
 import processCheep from "../../../../cheep/process_cheep";
 import CheepData from "../../../../cheep_data";
-import StatusMessageContext from "../../../../status_message_context";
 import CheepPage from "../../../cheep_page";
 import StateContext from "../../state_context";
 import Slider from "./components/slider";
@@ -22,7 +21,6 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
 {
     const [ navigationCount, setNavigationCount ] = useState(1);
 
-    const statusMessage = useContext(StatusMessageContext);
     const [ state, stateManager ] = useContext(StateContext);
 
     const navigate = useNavigate();
@@ -55,7 +53,7 @@ const CheepGalleryModal: React.FunctionComponent<Props> = (props) =>
             }
             catch(err)
             {
-                statusMessage("Error al cargar el cheep.");
+                stateManager.setStatusMessage("Error al cargar el cheep.");
                 navigate(-1);
 
                 return;
