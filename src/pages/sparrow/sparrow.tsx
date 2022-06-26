@@ -12,7 +12,6 @@ import SparrowState from "./state";
 import StateManager from "./state_manager";
 import CheepEditorModal from "./components/cheep_editor_modal";
 import StatusModal from "../../components/status_modal";
-import StatusMessageContext from "../../status_message_context";
 import RecheepMenu from "./components/recheep_menu";
 import ProfileFormModal from "./components/profile_form_modal";
 import CloseConfirmation from "./components/close_confirmation";
@@ -26,9 +25,9 @@ import RecheepsList from "../cheep_page/recheeps_list";
 import GetHandle from "./components/get_handle";
 import Home from "../home";
 import Explore from "../explore";
+import RecommendedList from "./components/recommended_list";
 
 import "./sparrow.scss";
-import RecommendedList from "./components/recommended_list";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -97,14 +96,13 @@ const Sparrow: React.FunctionComponent = () =>
             unfollow() {}
         },
         mainAside: { userHandle: "" },
+        statusMessage: { message: "" },
     });
 
     const [ currentRoute, setCurrentRoute ] = useState<string>("");
     const [ userHandle, setUserHandle ] = useState<string>("");
     const [ cheepId, setCheepId ] = useState<number>(0);
     const [ searchParams, setSearchParams ] = useState<URLSearchParams>();
-
-    const [ statusMessage, setStatusMessage ] = useState<string>("");
 
     const aside = <MainAside />;
 
@@ -113,11 +111,7 @@ const Sparrow: React.FunctionComponent = () =>
     ]}>
     <SessionContext.Consumer>{(userSession) =>
     {
-        return <StatusMessageContext.Provider value={(message: string) =>
-        {
-            setStatusMessage(message);
-        }}>
-        <div className="sparrow">
+        return <div className="sparrow">
             <div className="sparrow-content">
                 <div className="navigation-container">
                     <NavigationBar handle={userSession.user.handle} />
@@ -268,10 +262,7 @@ const Sparrow: React.FunctionComponent = () =>
                 </Routes>
             </div>
             
-            <StatusModal id="sparrow-status-modal" message={statusMessage} onClose={() =>
-            {
-                setStatusMessage("");
-            }} />
+            <StatusModal id="sparrow-status-modal" />
 
             {state.recheepMenu ?
                 <RecheepMenu /> :
@@ -287,7 +278,7 @@ const Sparrow: React.FunctionComponent = () =>
                 <UnfollowConfirmation /> :
                 null
             }
-        </div></StatusMessageContext.Provider>;
+        </div>
     }}</SessionContext.Consumer></StateContext.Provider>;
 };
 
