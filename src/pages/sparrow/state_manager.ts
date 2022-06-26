@@ -347,6 +347,21 @@ class StateManager
         }
     }
 
+    setStatusMessage(message: string): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.statusMessage.message = message;
+
+                return newState;
+            });
+        }
+    }
+
     private setCloseConfirmation(status: boolean, discart: () => void): void
     {
         if(this.setState)
