@@ -91,9 +91,22 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
         <div className="cheep-cheep">
             {!props.quote && userSession.user.handle === cheepData.author.handle ?
-                <div className="more-options" onClick={(ev) =>
+                <div id={`${props.id}-more-options`} className="more-options" onClick={(ev) =>
                 {
                     ev.stopPropagation();
+
+                    const button = document.getElementById(`${props.id}-more-options`) as HTMLDivElement;
+
+                    if(button === null)
+                    {
+                        return;
+                    }
+
+                    const rect = button.getBoundingClientRect();
+                    const x = rect.left + window.scrollX;
+                    const y = rect.top + window.scrollY;
+
+                    stateManager.openCheepOptionsMenu(props.data, true, [ x, y ], () => {});
                 }}>
                     <i className="fa-solid fa-ellipsis"></i>
                 </div> :
