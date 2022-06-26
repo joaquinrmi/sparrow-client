@@ -26,6 +26,7 @@ import GetHandle from "./components/get_handle";
 import Home from "../home";
 import Explore from "../explore";
 import RecommendedList from "./components/recommended_list";
+import CheepOptionsMenu from "./components/cheep_options_menu";
 
 import "./sparrow.scss";
 
@@ -266,6 +267,11 @@ const Sparrow: React.FunctionComponent = () =>
 
             {state.recheepMenu ?
                 <RecheepMenu /> :
+                null
+            }
+
+            {state.moreOptionsMenu ?
+                <CheepOptionsMenu /> :
                 null
             }
 
