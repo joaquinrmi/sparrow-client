@@ -8,7 +8,6 @@ import Button, { ButtonStyle } from "../../../../components/button";
 import Loading from "../../../../components/loading";
 import ProfileDataForm from "./profile_data_form";
 import uploadImage, { ImageType } from "../../../../upload_image";
-import StatusMessageContext from "../../../../status_message_context";
 
 import "./profile_form.scss";
 
@@ -22,7 +21,6 @@ export interface Props
 const ProfileForm: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
-    const statusMessage = useContext(StatusMessageContext);
 
     const [ data, setData ] = useState<ProfileData>({ ...state.profile.data });
     const [ loading, setLoading ] = useState<boolean>(false);
@@ -134,12 +132,12 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                         try
                         {
                             await sendProfileForm(form);
-                            statusMessage("Información actualizada.");
+                            stateManager.setStatusMessage("Información actualizada.");
                             props.success();
                         }
                         catch(err)
                         {
-                            statusMessage("Ocurrió un error inesperado.");
+                            stateManager.setStatusMessage("Ocurrió un error inesperado.");
                         }
                     })();
 
