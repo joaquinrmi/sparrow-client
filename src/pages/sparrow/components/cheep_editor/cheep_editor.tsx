@@ -10,12 +10,12 @@ import Gallery from "../../../../components/gallery";
 import uploadImage, { ImageType } from "../../../../upload_image";
 import CreateCheepData from "./create_cheep_data";
 import postCheep from "./post_cheep";
-import StatusMessageContext from "../../../../status_message_context";
 import ResponseErrorType from "../../../../response_error_type";
 import CheepData from "../../../../cheep_data";
 import Cheep from "../../../../components/cheep";
 
 import "./cheep_editor.scss";
+import StateContext from "../../state_context";
 
 export interface Props
 {
@@ -39,7 +39,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
     const [ loadingCheep, setLoadingCheep ] = useState<boolean>(false);
 
     const userSession = useContext(SessionContext);
-    const statusMessageContext = useContext(StatusMessageContext);
+    const [ state, stateManager ] = useContext(StateContext);
 
     const navigation = useNavigate();
 
@@ -237,7 +237,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                 try
                                 {
                                     cheepId = await postCheep(data);
-                                    statusMessageContext("¡Se publicó el cheep!");
+                                    stateManager.setStatusMessage("¡Se publicó el cheep!");
                                     navigation(-1);
                                 }
                                 catch(err: any)
@@ -245,15 +245,15 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                     switch(err.error)
                                     {
                                     case ResponseErrorType.InvalidCheepContent:
-                                        statusMessageContext("El cheep no puede estar vacío.");
+                                        stateManager.setStatusMessage("El cheep no puede estar vacío.");
                                         break;
 
                                     case ResponseErrorType.InvalidForm:
-                                        statusMessageContext("El contenido el cheep es inválido.");
+                                        stateManager.setStatusMessage("El contenido el cheep es inválido.");
                                         break;
 
                                     case ResponseErrorType.InternalServerError:
-                                        statusMessageContext("Ocurrió un error en el servidor.");
+                                        stateManager.setStatusMessage("Ocurrió un error en el servidor.");
                                         break;
                                     }
                                 }
