@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import StateContext from "../../pages/sparrow/state_context";
 
 import "./status_modal.scss";
 
@@ -6,16 +7,17 @@ export interface Props
 {
     children?: React.ReactNode;
     id: string;
-    message: string;
-
-    onClose(): void;
 }
 
 const StatusModal: React.FunctionComponent<Props> = (props) =>
 {
+    const [ state, stateManager ] = useContext(StateContext);
+
+    const data = state.statusMessage;
+
     useEffect(() =>
     {
-        if(props.message.length === 0)
+        if(data.message.length === 0)
         {
             return;
         }
@@ -31,17 +33,17 @@ const StatusModal: React.FunctionComponent<Props> = (props) =>
             setTimeout(() =>
             {
                 modal.classList.add("hide");
-                props.onClose();
+                stateManager.setStatusMessage("");
             },
             300);
         },
         6_000);
     },
-    [ props.message ]);
+    [ data.message ]);
 
-    return <div id={props.id} className={`status-modal ${props.message.length > 0 ? "show" : "hide"}`}>
+    return <div id={props.id} className={`status-modal ${data.message.length > 0 ? "show" : "hide"}`}>
         <div className="modal-body">
-            {props.message}
+            {data.message}
         </div>
     </div>;
 };
