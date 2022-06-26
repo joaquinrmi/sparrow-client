@@ -277,6 +277,41 @@ class StateManager
         }
     }
 
+    openCheepOptionsMenu(targetCheep: CheepData, active: boolean, position: [ number, number ], onDelete: () => void): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.moreOptionsMenu = {
+                    targetCheep: targetCheep,
+                    active: active,
+                    positionX: position[0],
+                    positionY: position[1],
+                    onDelete: onDelete
+                };
+
+                return newState;
+            });
+        }
+    }
+
+    closeCheepOptionsMenu(): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                return {
+                    ...state,
+                    moreOptionsMenu: undefined
+                };
+            });
+        }
+    }
+
     openCloseConfirmation(discart: () => void): void
     {
         this.setCloseConfirmation(true, discart);
