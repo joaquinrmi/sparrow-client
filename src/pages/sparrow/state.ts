@@ -74,6 +74,9 @@ interface SparrowState
     mainAside: {
         userHandle: string;
     };
+    statusMessage: {
+        message: string;
+    };
 }
 
 export interface LocationState
