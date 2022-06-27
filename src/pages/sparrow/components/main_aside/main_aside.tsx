@@ -161,15 +161,14 @@ const MainAside: React.FunctionComponent = (props) =>
                     stateManager.navigate("mainAsideGallery", "mainAsideNone");
                 }} />} />
 
+                <Route path="/settings/profile" element={<></>} />
+
                 <Route path="/settings/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
                 {
                     stateManager.navigate("mainAsideGallery", "mainAsideNone");
                 }} />} />
 
-                <Route path="/compose/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
-                }} />} />
+                <Route path="/compose/*" element={<></>} />
 
                 <Route path="/:userHandle/*" element={<GetHandle>{
                     (userHandle) =>
