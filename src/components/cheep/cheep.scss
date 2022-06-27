@@ -1,5 +1,11 @@
 @use "../../colors.scss" as Color;
 
+.unavailable-cheep-container
+{
+    padding: 1em;
+    box-sizing: border-box;
+}
+
 .cheep
 {
     display: flex;

@@ -12,6 +12,7 @@ import getRelevantCheepData from "./get_relevant_cheep_data";
 import StateContext from "../../pages/sparrow/state_context";
 import { CheepListName } from "../../pages/sparrow/state";
 import CheepContent from "./components/cheep_content";
+import Unavailable from "./components/unavailable";
 
 import "./cheep.scss";
 
@@ -53,6 +54,20 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
     []);
 
     const navigate = useNavigate();
+
+    if(cheepData.dateCreated.getTime() === new Date(-1).getTime())
+    {
+        if(props.quote)
+        {
+            return <Unavailable quote={props.quote} />;
+        }
+        else
+        {
+            return <div className="unavailable-cheep-container">
+                <Unavailable />
+            </div>;
+        }
+    }
 
     const cheepLink = `/${cheepData.author.handle}/status/${cheepData.id}`;
     const authorPicture = <>
