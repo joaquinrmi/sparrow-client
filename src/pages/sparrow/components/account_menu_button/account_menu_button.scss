@@ -1,0 +1,36 @@
+@use "../../../../colors.scss" as Color;
+
+.account-menu-button
+{
+    width: 64px;
+    height: 64px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    border-radius: 2000px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    .button-image
+    {
+        width: 40px;
+        height: 40px;
+        border-radius: 2000px;
+        overflow: hidden;
+
+        img
+        {
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+.account-menu-button:hover
+{
+    background-color: Color.$gray3;
+    transition: background-color 0.2s;
+}
