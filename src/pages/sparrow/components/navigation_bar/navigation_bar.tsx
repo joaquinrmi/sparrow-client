@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 import "./navigation_bar.scss";
@@ -10,92 +10,7 @@ export interface Props
 
 const NavigationBar: React.FunctionComponent<Props> = (props) =>
 {
-    useEffect(() =>
-    {
-        const element = document.querySelector(".navigation-bar") as HTMLDivElement;
-        const separator = document.querySelector(".navigation-separator") as HTMLDivElement;
-        if(element === null || separator === null)
-        {
-            return;
-        }
-
-        let lastScroll = window.scrollY;
-        let start = true;
-        let finish = false;
-        let up = false;
-        let down = false;
-
-        const onScroll = () =>
-        {
-            const box = element.getBoundingClientRect();
-
-            if(box.height < window.innerHeight)
-            {
-                return;
-            }
-
-            if(lastScroll - window.scrollY < 0 && !down && !finish)
-            {
-                separator.style.height = `${window.scrollY}px`;
-                element.style.top = "";
-                element.style.position = "relative";
-
-                start = false;
-                up = false;
-                finish = false;
-                down = true;
-            }
-
-            if((-box.top) + window.innerHeight >= box.height)
-            {
-                element.style.top = `${box.top}px`;
-                element.style.position = "sticky";
-
-                start = false;
-                up = false;
-                down = false;
-                finish = true;
-            }
-
-            if(lastScroll - window.scrollY > 0 && !up && finish)
-            {
-                separator.style.height = `${window.scrollY - (box.height - window.innerHeight)}px`;
-                element.style.top = "";
-                element.style.position = "relative";
-
-                start = false;
-                down = false;
-                finish = false;
-                up = true;
-            }
-
-            if(box.top > 0 && !start)
-            {
-                separator.style.height = "0px";
-                element.style.position = "sticky";
-                element.style.top = `0px`;
-
-                down = false;
-                up = false;
-                finish = false;
-                start = true;
-            }
-
-            lastScroll = window.scrollY;
-        };
-
-        window.addEventListener("scroll", onScroll);
-
-        return () =>
-        {
-            window.removeEventListener("scroll", onScroll);
-        };
-    },
-    []);
-
-    return <>
-        <div className="navigation-separator"></div>
-        
+    return <>        
         <div className="navigation-bar">
             <NavigationItem to="/home" icon="house" />
 
