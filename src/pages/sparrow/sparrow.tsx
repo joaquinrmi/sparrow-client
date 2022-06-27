@@ -27,6 +27,7 @@ import Home from "../home";
 import Explore from "../explore";
 import RecommendedList from "./components/recommended_list";
 import CheepOptionsMenu from "./components/cheep_options_menu";
+import AccountMenuButton from "./components/account_menu_button";
 
 import "./sparrow.scss";
 
@@ -114,8 +115,14 @@ const Sparrow: React.FunctionComponent = () =>
     {
         return <div className="sparrow">
             <div className="sparrow-content">
-                <div className="navigation-container">
-                    <NavigationBar handle={userSession.user.handle} />
+                <div className="sparrow-left">
+                    <div className="navigation-container">
+                        <NavigationBar handle={userSession.user.handle} />
+
+                        <div className="account-menu-button-container">
+                            <AccountMenuButton />
+                        </div>
+                    </div>
                 </div>
 
                 <Router currentRoute={currentRoute} routes={{
