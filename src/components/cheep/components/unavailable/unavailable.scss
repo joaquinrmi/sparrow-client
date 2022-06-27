@@ -1,0 +1,17 @@
+@use "../../../../colors.scss" as Color;
+
+.unavailable-cheep
+{
+    padding: 1em;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: Color.$silverText;
+    border: 1px solid Color.$gray5;
+    background-color: Color.$gray6;
+    border-radius: 16px;
+}
+
+.unavailable-cheep.quote
+{
+    border: none;
+}
