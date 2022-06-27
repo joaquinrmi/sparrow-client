@@ -30,6 +30,9 @@ import CheepOptionsMenu from "./components/cheep_options_menu";
 import AccountMenuButton from "./components/account_menu_button";
 
 import "./sparrow.scss";
+import Notifications from "../notifications";
+import Messages from "../messages";
+import Settings from "../settings";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -130,11 +133,11 @@ const Sparrow: React.FunctionComponent = () =>
 
                     explore: <MainSection mainColumnChildren={<Explore />} rightColumnChildren={aside} />,
 
-                    notifications: <MainSection mainColumnChildren={<>C</>} rightColumnChildren={aside} />,
+                    notifications: <MainSection mainColumnChildren={<Notifications />} rightColumnChildren={aside} />,
 
-                    messages: <MainSection mainColumnChildren={<>D</>} rightColumnChildren={aside} />,
+                    messages: <MainSection mainColumnChildren={<Messages />} rightColumnChildren={aside} />,
 
-                    settings: <MainSection mainColumnChildren={<>E</>} rightColumnChildren={aside} />,
+                    settings: <MainSection mainColumnChildren={<Settings />} rightColumnChildren={aside} />,
 
                     compose: <CheepEditorModal />,
 
