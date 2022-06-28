@@ -62,6 +62,10 @@ interface SparrowState
         positionY: number;
         onDelete(): void;
     };
+    accountMenu?: {
+        positionX: number;
+        positionY: number;
+    };
     closeConfirmation: {
         open: boolean;
         discart(): void;
