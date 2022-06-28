@@ -312,6 +312,38 @@ class StateManager
         }
     }
 
+    openAccountMenu(position: [ number, number ]): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                newState.accountMenu = {
+                    positionX: position[0],
+                    positionY: position[1]
+                };
+
+                return newState;
+            });
+        }
+    }
+
+    closeAccountMenu(): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                return {
+                    ...state,
+                    accountMenu: undefined
+                };
+            });
+        }
+    }
+
     openCloseConfirmation(discart: () => void): void
     {
         this.setCloseConfirmation(true, discart);
