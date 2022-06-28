@@ -28,11 +28,12 @@ import Explore from "../explore";
 import RecommendedList from "./components/recommended_list";
 import CheepOptionsMenu from "./components/cheep_options_menu";
 import AccountMenuButton from "./components/account_menu_button";
-
-import "./sparrow.scss";
 import Notifications from "../notifications";
 import Messages from "../messages";
 import Settings from "../settings";
+import AccountMenu from "./components/account_menu";
+
+import "./sparrow.scss";
 
 const Sparrow: React.FunctionComponent = () =>
 {
@@ -282,6 +283,11 @@ const Sparrow: React.FunctionComponent = () =>
 
             {state.moreOptionsMenu ?
                 <CheepOptionsMenu /> :
+                null
+            }
+
+            {state.accountMenu ?
+                <AccountMenu /> :
                 null
             }
 
