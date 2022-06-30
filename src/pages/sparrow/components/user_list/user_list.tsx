@@ -23,98 +23,107 @@ const UserList: React.FunctionComponent<Props> = (props) =>
 
     const listState = state.userLists[props.name];
 
-    useEffect(() =>
-    {
-        (async () =>
+    useEffect(
+        () =>
         {
-            if(listState.loadMore && !listState.noMore)
+            (async () =>
             {
-                const userList = await loadUserList(props.type, props.target, listState.users[listState.users.length - 1].id);
-
-                stateManager.loadUserList(props.name, props.id, props.target,
-                    [ ...listState.users, ...userList ]
-                );
-
-                stateManager.setUserListLoadMore(props.name, false);
-
-                if(userList.length < 20)
+                if(listState.loadMore && !listState.noMore)
                 {
-                    stateManager.setUserListLoadNoMore(props.name);
+                    const userList = await loadUserList(props.type, props.target, listState.users[listState.users.length - 1].id);
+
+                    stateManager.loadUserList(
+                        props.name,
+                        props.id,
+                        props.target,
+                        [ ...listState.users, ...userList ]
+                    );
+
+                    stateManager.setUserListLoadMore(props.name, false);
+
+                    if(userList.length < 20)
+                    {
+                        stateManager.setUserListLoadNoMore(props.name);
+                    }
                 }
-            }
-        })();
-    },
-    [ listState.loadMore ]);
+            })();
+        },
+        [ listState.loadMore ]
+    );
 
-    useEffect(() =>
-    {
-        if(props.id === listState.id && listState.target === props.target)
+    useEffect(
+        () =>
         {
-            return;
-        }
-
-        (async () =>
-        {
-            try
-            {
-                const userList = await loadUserList(props.type, props.target);
-
-                stateManager.loadUserList(props.name, props.id, props.target, userList);
-            }
-            catch(err)
-            {
-                stateManager.loadUserList(props.name, props.id, props.target, []);
-            }
-        })();
-    },
-    [ props.target, props.name ]);
-
-    useEffect(() =>
-    {
-        if(!props.little)
-        {
-            const userList = document.getElementById(props.id) as HTMLDivElement;
-            if(userList === null)
+            if(props.id === listState.id && listState.target === props.target)
             {
                 return;
             }
 
-            const onScroll = () =>
+            (async () =>
             {
-                const box = userList.getBoundingClientRect();
-
-                if((box.height + box.top - window.innerHeight < 1000) && listState.users.length >= 20)
+                try
                 {
-                    stateManager.setUserListLoadMore(props.name, true);
+                    const userList = await loadUserList(props.type, props.target);
+
+                    stateManager.loadUserList(props.name, props.id, props.target, userList);
                 }
-            };
+                catch(err)
+                {
+                    stateManager.loadUserList(props.name, props.id, props.target, []);
+                }
+            })();
+        },
+        [ props.target, props.name ]
+    );
 
-            document.addEventListener("scroll", onScroll);
-
-            const onResize = () =>
+    useEffect(
+        () =>
+        {
+            if(!props.little)
             {
-                const lastChild = userList.lastChild as HTMLDivElement;
-                if(lastChild === null || lastChild === undefined)
+                const userList = document.getElementById(props.id) as HTMLDivElement;
+                if(userList === null)
                 {
                     return;
                 }
 
-                const box = lastChild.getBoundingClientRect();
+                const onScroll = () =>
+                {
+                    const box = userList.getBoundingClientRect();
 
-                userList.style.paddingBottom = `${window.innerHeight - box.height}px`;
-            }
+                    if((box.height + box.top - window.innerHeight < 1000) && listState.users.length >= 20)
+                    {
+                        stateManager.setUserListLoadMore(props.name, true);
+                    }
+                };
 
-            window.addEventListener("resize", onResize);
+                document.addEventListener("scroll", onScroll);
 
-            onResize();
+                const onResize = () =>
+                {
+                    const lastChild = userList.lastChild as HTMLDivElement;
+                    if(lastChild === null || lastChild === undefined)
+                    {
+                        return;
+                    }
 
-            return () =>
-            {
-                document.removeEventListener("scroll", onScroll);
-                window.removeEventListener("resize", onResize);
+                    const box = lastChild.getBoundingClientRect();
+
+                    userList.style.paddingBottom = `${window.innerHeight - box.height}px`;
+                }
+
+                window.addEventListener("resize", onResize);
+
+                onResize();
+
+                return () =>
+                {
+                    document.removeEventListener("scroll", onScroll);
+                    window.removeEventListener("resize", onResize);
+                }
             }
         }
-    });
+    );
 
     let content: React.ReactNode;
     if(listState.target === props.target)
@@ -190,10 +199,13 @@ async function loadUserList(type: UserListType, target: string | number, offsetI
         requestURL += `&offsetId=${offsetId}`;
     }    
 
-    const response = await fetch(requestURL, {
-        method: "GET",
-        credentials: "include"
-    });
+    const response = await fetch(
+        requestURL,
+        {
+            method: "GET",
+            credentials: "include"
+        }
+    );
 
     if(response.status === 200)
     {
