@@ -44,6 +44,10 @@ const CheepContent: React.FunctionComponent<Props> = (props) =>
                             key={`${index}-hashtag`}
                             className="hashtag"
                             to={`/hashtag/${token.value.substring(1)}`}
+                            onClick={(ev) =>
+                            {
+                                ev.stopPropagation();
+                            }}
                         >
                             {token.value}
                         </Link>;
