@@ -1,19 +1,22 @@
 import React from "react";
 import UserSession from "./user_session";
 
-const SessionContext = React.createContext<UserSession>({
-    logged: false,
-    user: {
-        handle: "",
-        name: "",
-        picture: ""
-    },
+const SessionContext = React.createContext<UserSession>(
+    {
+        logged: false,
+        user:
+        {
+            handle: "",
+            name: "",
+            picture: ""
+        },
 
-    login: (data) =>
-    {},
+        login: (data) =>
+        {},
 
-    logout: () =>
-    {}
-});
+        logout: () =>
+        {}
+    }
+);
 
 export default SessionContext;
