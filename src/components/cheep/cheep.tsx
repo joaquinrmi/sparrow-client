@@ -38,20 +38,22 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
     const like = cheepData.liked;
     const recheep = cheepData.recheepped;
 
-    useEffect(() =>
-    {
-        let interval = setInterval(() =>
+    useEffect(
+        () =>
         {
-            setCheepDate(formatDate(cheepData.dateCreated));
-        },
-        2 * 60 * 1000);
+            let interval = setInterval(() =>
+            {
+                setCheepDate(formatDate(cheepData.dateCreated));
+            },
+            2 * 60 * 1000);
 
-        return () =>
-        {
-            clearInterval(interval);
-        };
-    },
-    []);
+            return () =>
+            {
+                clearInterval(interval);
+            };
+        },
+        []
+    );
 
     const navigate = useNavigate();
 
@@ -71,33 +73,45 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
 
     const cheepLink = `/${cheepData.author.handle}/status/${cheepData.id}`;
     const authorPicture = <>
-        <div className="cheep-picture" style={{
-            backgroundImage: `url(${cheepData.author.picture})`
-        }} title={`Foto de perfil de @${cheepData.author.name}`} />
+        <div
+            className="cheep-picture"
+            style={
+            {
+                backgroundImage: `url(${cheepData.author.picture})`
+            }}
+            title={`Foto de perfil de @${cheepData.author.name}`}
+        />
 
         <div className="veil"></div>
     </>;
 
-    return <div className={`cheep ${props.quote ? "quote-form" : ""} ${props.response ? "response-form" : ""} ${props.data.existsJustBecauseItIsAResponseTarget ? "response-target" : ""}`} onClick={(ev) =>
-    {
-        if(props.response)
+    return <div
+        className={`cheep ${props.quote ? "quote-form" : ""} ${props.response ? "response-form" : ""} ${props.data.existsJustBecauseItIsAResponseTarget ? "response-target" : ""}`}
+        onClick={(ev) =>
         {
-            return;
-        }
+            if(props.response)
+            {
+                return;
+            }
 
-        ev.stopPropagation();
-        navigate(cheepLink);
-    }}>
+            ev.stopPropagation();
+            navigate(cheepLink);
+        }}
+    >
         {cheepData !== props.data ?
             <div className="recheep-info">
                 <div className="icon">
                     <i className="fa-solid fa-retweet"></i>
                 </div>
 
-                <Link className="message" to={`/${props.data.author.handle}`} onClick={(ev) =>
-                {
-                    ev.stopPropagation();
-                }}>
+                <Link
+                    className="message"
+                    to={`/${props.data.author.handle}`}
+                    onClick={(ev) =>
+                    {
+                        ev.stopPropagation();
+                    }}
+                >
                     {props.data.author.name === userSession.user.name ? "Recheepeaste" : `${props.data.author.name} lo recheepeó`}
                 </Link>
             </div> :
@@ -141,7 +155,8 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                                 }
                             </div>
                         </div> :
-                        null}
+                        null
+                    }
                 </div> :
                 null
             }
@@ -163,26 +178,38 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                             <span className="cheep-date">{cheepDate}</span>
                         </> :
                         <>
-                            <Link className="author-name" to={`/${cheepData.author.handle}`} onClick={(ev) =>
-                            {
-                                ev.stopPropagation();
-                            }}>
+                            <Link
+                                className="author-name"
+                                to={`/${cheepData.author.handle}`}
+                                onClick={(ev) =>
+                                {
+                                    ev.stopPropagation();
+                                }}
+                            >
                                 {cheepData.author.name}
                             </Link>
 
-                            <Link className="author-handle" to={`/${cheepData.author.handle}`} onClick={(ev) =>
-                            {
-                                ev.stopPropagation();
-                            }}>
+                            <Link
+                                className="author-handle"
+                                to={`/${cheepData.author.handle}`}
+                                onClick={(ev) =>
+                                {
+                                    ev.stopPropagation();
+                                }}
+                            >
                                 @{cheepData.author.handle}
                             </Link>
 
                             <span className="separator">·</span>
 
-                            <Link className="cheep-date" to={cheepLink} onClick={(ev) =>
-                            {
-                                ev.stopPropagation();
-                            }}>
+                            <Link
+                                className="cheep-date"
+                                to={cheepLink}
+                                onClick={(ev) =>
+                                {
+                                    ev.stopPropagation();
+                                }}
+                            >
                                 {cheepDate}
                             </Link>
                         </>
@@ -198,7 +225,9 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                     </span>
 
                     {props.quote && cheepData.quoteTarget ?
-                        <span className="show-thread">Mostrar este hilo</span> :
+                        <span className="show-thread">
+                            Mostrar este hilo
+                        </span> :
                         null
                     }
 
@@ -223,43 +252,54 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                             </div>
                             
                             <div className="interaction-button-container">
-                                <RecheepButton id={`recheep-${props.id}`} cheepData={props.data} active={recheep} counter={cheepData.recheepCount + cheepData.withCommentsCount} onRecheep={() =>
-                                {
-                                    let targetCheepData = { ...props.data };
-                                    if(props.data === cheepData)
+                                <RecheepButton
+                                    id={`recheep-${props.id}`}
+                                    cheepData={props.data}
+                                    active={recheep}
+                                    counter={cheepData.recheepCount + cheepData.withCommentsCount} onRecheep={() =>
                                     {
-                                        updateRecheep(targetCheepData, recheep);
-                                    }
-                                    else if(targetCheepData.quoteTarget)
-                                    {
-                                        updateRecheep(targetCheepData.quoteTarget, recheep);
-                                    }
+                                        let targetCheepData = { ...props.data };
+                                        if(props.data === cheepData)
+                                        {
+                                            updateRecheep(targetCheepData, recheep);
+                                        }
+                                        else if(targetCheepData.quoteTarget)
+                                        {
+                                            updateRecheep(targetCheepData.quoteTarget, recheep);
+                                        }
 
-                                    if(props.listName !== undefined && props.index !== undefined)
-                                    {
-                                        stateManager.updateCheep(props.listName, props.index, targetCheepData);
-                                    }
-                                }} />
+                                        if(props.listName !== undefined && props.index !== undefined)
+                                        {
+                                            stateManager.updateCheep(props.listName, props.index, targetCheepData);
+                                        }
+                                    }}
+                                />
                             </div>
 
                             <div className="interaction-button-container">
-                                <LikeButton id={`like-${props.id}`} cheepId={cheepData.id} active={like} counter={cheepData.likeCount} onClick={() =>
-                                {
-                                    let targetCheepData = { ...props.data };
-                                    if(props.data === cheepData)
+                                <LikeButton
+                                    id={`like-${props.id}`}
+                                    cheepId={cheepData.id}
+                                    active={like}
+                                    counter={cheepData.likeCount}
+                                    onClick={() =>
                                     {
-                                        updateLike(targetCheepData, like);
-                                    }
-                                    else if(targetCheepData.quoteTarget)
-                                    {
-                                        updateLike(targetCheepData.quoteTarget, like);
-                                    }
+                                        let targetCheepData = { ...props.data };
+                                        if(props.data === cheepData)
+                                        {
+                                            updateLike(targetCheepData, like);
+                                        }
+                                        else if(targetCheepData.quoteTarget)
+                                        {
+                                            updateLike(targetCheepData.quoteTarget, like);
+                                        }
 
-                                    if(props.listName !== undefined && props.index !== undefined)
-                                    {
-                                        stateManager.updateCheep(props.listName, props.index, targetCheepData);
-                                    }
-                                }} />
+                                        if(props.listName !== undefined && props.index !== undefined)
+                                        {
+                                            stateManager.updateCheep(props.listName, props.index, targetCheepData);
+                                        }
+                                    }}
+                                />
                             </div>
                         </div> :
                         null
