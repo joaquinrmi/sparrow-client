@@ -5,11 +5,14 @@ async function uploadImage(file: File, imageType: ImageType): Promise<string>
     const formData = new FormData();
     formData.append("image", file);
 
-    const response = await fetch(uploadImageURL, {
-        method: "POST",
-        body: formData,
-        credentials: "include"
-    });
+    const response = await fetch(
+        uploadImageURL,
+        {
+            method: "POST",
+            body: formData,
+            credentials: "include"
+        }
+    );
 
     if(response.status === 201)
     {
