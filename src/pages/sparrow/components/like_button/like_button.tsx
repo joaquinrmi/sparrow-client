@@ -33,10 +33,13 @@ const LikeButton: React.FunctionComponent<Props> = (props) =>
             url = `${process.env.REACT_APP_SERVER}/api/cheep/like?cheepId=${props.cheepId}`;
         }
 
-        await fetch(url, {
-            method: "POST",
-            credentials: "include"
-        });
+        await fetch(
+            url,
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
     }} />;
 };
 
