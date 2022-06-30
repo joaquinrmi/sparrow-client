@@ -6,14 +6,17 @@ async function restoreSession(): Promise<UserData>
     {
         const restoreSessionURL = `${process.env.REACT_APP_SERVER}/api/user/restore-session`;
 
-        const response = await fetch(restoreSessionURL, {
-            method: "POST",
-            headers:
+        const response = await fetch(
+            restoreSessionURL,
             {
-                "Content-Type": "application/json"
-            },
-            credentials: "include"
-        });
+                method: "POST",
+                headers:
+                {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            }
+        );
 
         if(response.status === 200)
         {
