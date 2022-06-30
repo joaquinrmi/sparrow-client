@@ -1,7 +1,8 @@
 interface CheepData
 {
     id: number;
-    author: {
+    author:
+    {
         handle: string;
         name: string;
         picture: string;
