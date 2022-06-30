@@ -11,11 +11,13 @@ const NavigateTo: React.FunctionComponent<Props> = (props) =>
 {
     const navigate = useNavigate();
 
-    useEffect(() =>
-    {
-        navigate(props.path);
-        props.action();
-    });
+    useEffect(
+        () =>
+        {
+            navigate(props.path);
+            props.action();
+        }
+    );
 
     return <></>;
 }
