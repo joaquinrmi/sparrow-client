@@ -22,102 +22,113 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
 
     const listState = state.cheepLists[props.name];
 
-    useEffect(() =>
-    {
-        (async () =>
+    useEffect(
+        () =>
         {
-            if(listState.loadMore && !listState.noMore)
+            (async () =>
             {
-                let args: SearchCheepsQuery = {
-                    ...props.arguments,
-                    maxTime: listState.nextTime
-                };
-
-                const { cheeps, nextTime } = await loadCheeps(args, props.hideResponseTarget);
-
-                stateManager.loadCheepList(props.name, props.arguments, nextTime, [ ...listState.cheeps, ...cheeps ]);
-
-                stateManager.setLoadMore(props.name, false);
-
-                if(cheeps.length < 20)
+                if(listState.loadMore && !listState.noMore)
                 {
-                    stateManager.loadNoMore(props.name);
+                    let args: SearchCheepsQuery =
+                    {
+                        ...props.arguments,
+                        maxTime: listState.nextTime
+                    };
+
+                    const { cheeps, nextTime } = await loadCheeps(args, props.hideResponseTarget);
+
+                    stateManager.loadCheepList(props.name, props.arguments, nextTime, [ ...listState.cheeps, ...cheeps ]);
+
+                    stateManager.setLoadMore(props.name, false);
+
+                    if(cheeps.length < 20)
+                    {
+                        stateManager.loadNoMore(props.name);
+                    }
                 }
-            }
-        })();
-    },
-    [ listState.loadMore ]);
+            })();
+        },
+        [ listState.loadMore ]
+    );
 
-    useEffect(() =>
-    {
-        if(compareQuery(props.arguments, listState.query))
+    useEffect(
+        () =>
         {
-            return;
-        }
-
-        (async () =>
-        {
-            try
-            {
-                const { cheeps, nextTime } = await loadCheeps(props.arguments, props.hideResponseTarget);
-
-                stateManager.loadCheepList(props.name, props.arguments, nextTime, cheeps);
-            }
-            catch(err)
-            {
-                stateManager.loadCheepList(props.name, props.arguments, 0, []);
-            }
-        })();
-    },
-    [ props.arguments ]);
-
-    useEffect(() =>
-    {
-        const cheepList = document.querySelector(".cheep-list") as HTMLDivElement;
-
-        const onScroll = () =>
-        {
-            const box = cheepList.getBoundingClientRect();
-
-            if((box.height + box.top - window.innerHeight < 1000) && listState.cheeps.length >= 20)
-            {
-                stateManager.setLoadMore(props.name, true);
-            }
-        };
-
-        document.addEventListener("scroll", onScroll);
-
-        const onResize = () =>
-        {
-            const lastChild = cheepList.lastChild as HTMLDivElement;
-            if(lastChild === null || lastChild === undefined)
+            if(compareQuery(props.arguments, listState.query))
             {
                 return;
             }
 
-            const box = lastChild.getBoundingClientRect();
+            (async () =>
+            {
+                try
+                {
+                    const { cheeps, nextTime } = await loadCheeps(props.arguments, props.hideResponseTarget);
 
-            cheepList.style.paddingBottom = `${window.innerHeight - box.height}px`;
-        }
+                    stateManager.loadCheepList(props.name, props.arguments, nextTime, cheeps);
+                }
+                catch(err)
+                {
+                    stateManager.loadCheepList(props.name, props.arguments, 0, []);
+                }
+            })();
+        },
+        [ props.arguments ]
+    );
 
-        window.addEventListener("resize", onResize);
-
-        onResize();
-
-        return () =>
+    useEffect(
+        () =>
         {
-            document.removeEventListener("scroll", onScroll);
-            window.removeEventListener("resize", onResize);
+            const cheepList = document.querySelector(".cheep-list") as HTMLDivElement;
+
+            const onScroll = () =>
+            {
+                const box = cheepList.getBoundingClientRect();
+
+                if((box.height + box.top - window.innerHeight < 1000) && listState.cheeps.length >= 20)
+                {
+                    stateManager.setLoadMore(props.name, true);
+                }
+            };
+
+            document.addEventListener("scroll", onScroll);
+
+            const onResize = () =>
+            {
+                const lastChild = cheepList.lastChild as HTMLDivElement;
+                if(lastChild === null || lastChild === undefined)
+                {
+                    return;
+                }
+
+                const box = lastChild.getBoundingClientRect();
+
+                cheepList.style.paddingBottom = `${window.innerHeight - box.height}px`;
+            }
+
+            window.addEventListener("resize", onResize);
+
+            onResize();
+
+            return () =>
+            {
+                document.removeEventListener("scroll", onScroll);
+                window.removeEventListener("resize", onResize);
+            }
         }
-    });
+    );
 
     let content: React.ReactNode;
     if(compareQuery(props.arguments, listState.query))
     {
-        content = <>{listState.cheeps.map((data, index) =>
-        {
-            return <Cheep id={`${index}-cheep-${props.name}`} index={index} listName={props.name} key={`${index}-cheep`} data={data} />;
-        })}</>;
+        content = <>
+            {listState.cheeps.map(
+                (data, index) =>
+                {
+                    return <Cheep id={`${index}-cheep-${props.name}`} index={index} listName={props.name} key={`${index}-cheep`} data={data} />;
+                }
+            )}
+        </>;
     }
     else
     {
