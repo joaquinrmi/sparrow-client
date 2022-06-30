@@ -29,38 +29,48 @@ const RecheepMenu: React.FunctionComponent<Props> = (props) =>
     const targetCheep = getRelevantCheepData(menuData.targetCheep);
 
     return <>
-        <div className="recheep-menu-container" onClick={() =>
-        {
-            stateManager.closeRecheepMenu();
-        }}></div>
-
-        <div className="recheep-menu" style={{
-            top: menuData.positionY,
-            left: menuData.positionX
-        }}>
-            <div className="option" onClick={async () =>
+        <div
+            className="recheep-menu-container"
+            onClick={() =>
             {
-                menuData.onRecheep();
                 stateManager.closeRecheepMenu();
+            }}
+        ></div>
 
-                if(menuData.active)
+        <div
+            className="recheep-menu"
+            style={
+            {
+                top: menuData.positionY,
+                left: menuData.positionX
+            }}
+        >
+            <div
+                className="option"
+                onClick={async () =>
                 {
-                    await deleteRecheep(targetCheep.id);
-                }
-                else
-                {
-                    const data: CreateCheepData = {
-                        quoteTarget: targetCheep.id
-                    };
-    
-                    try
+                    menuData.onRecheep();
+                    stateManager.closeRecheepMenu();
+
+                    if(menuData.active)
                     {
-                        await postCheep(data);
+                        await deleteRecheep(targetCheep.id);
                     }
-                    catch(err)
-                    {}
-                }
-            }}>
+                    else
+                    {
+                        const data: CreateCheepData = {
+                            quoteTarget: targetCheep.id
+                        };
+        
+                        try
+                        {
+                            await postCheep(data);
+                        }
+                        catch(err)
+                        {}
+                    }
+                }}
+            >
                 <div className="icon">
                     <i className="fa-solid fa-pencil"></i>
                 </div>
