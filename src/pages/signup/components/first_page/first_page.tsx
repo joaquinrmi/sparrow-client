@@ -7,13 +7,17 @@ import Button, { ButtonStyle } from "../../../../components/button";
 import SignupForm from "../../signup_form";
 import SignupFormSet from "../../signup_form_set";
 import ModalForm from "../../../../components/modal_form";
+import SignupError from "../../signup_error";
 
 import "./first_page.scss";
 
 export interface Props
 {
     signupData: SignupForm;
+    error: SignupError;
+
     changePage(page: number, data: SignupFormSet): void;
+    setError(error: SignupError): void;
 }
 
 const EMAIL_ERROR_MESSAGE = "Dirección de correo electrónico inválida.";
@@ -23,7 +27,6 @@ const EMAIL_REGEX = /^[a-zA-Z\-_0-9]*@[a-zA-Z\-_0-9]*\.com$/;
 const FirstPage: React.FunctionComponent<Props> = (props) =>
 {
     const [ enableNext, setEnableNext ] = useState(false);
-    const [ emailError, setEmailError ] = useState("");
 
     useEffect(
         () =>
@@ -72,11 +75,21 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
 
                     if(email.length > 0 && (match === null || match.length !== 1))
                     {
-                        setEmailError(EMAIL_ERROR_MESSAGE);
+                        props.setError(
+                            {
+                                ...props.error,
+                                email: EMAIL_ERROR_MESSAGE
+                            }
+                        );
                     }
                     else
                     {
-                        setEmailError("");
+                        props.setError(
+                            {
+                                ...props.error,
+                                email: undefined
+                            }
+                        );
                     }
                 }
             );
@@ -94,9 +107,9 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
             <h1>Crea tu cuenta</h1>
 
             <div className="form-elements">
-                <FormInput id="signup-name" title="Nombre" value={props.signupData.name} />
+                <FormInput id="signup-name" title="Nombre" value={props.signupData.name} errorMessage={props.error.name} />
 
-                <FormInput id="signup-email" title="Correo electrónico" value={props.signupData.email} type={FormInputType.Email} errorMessage={emailError} />
+                <FormInput id="signup-email" title="Correo electrónico" value={props.signupData.email} type={FormInputType.Email} errorMessage={props.error.email} />
 
                 <div className="birthdate-text">
                     <span className="birthdate-title">Fecha de nacimiento</span>
