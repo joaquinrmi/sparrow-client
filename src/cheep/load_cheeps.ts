@@ -31,10 +31,13 @@ async function loadCheeps(query: SearchCheepsQuery, hideResponseTarget?: boolean
 
     const searchCheepsURL = `${url}${parseCheepQuery(q)}`;
 
-    const response = await fetch(searchCheepsURL, {
-        method: "GET",
-        credentials: "include"
-    });
+    const response = await fetch(
+        searchCheepsURL,
+        {
+            method: "GET",
+            credentials: "include"
+        }
+    );
 
     if(response.status === 200)
     {
