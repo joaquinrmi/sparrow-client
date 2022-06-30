@@ -16,14 +16,17 @@ import "./app.scss";
 const App: React.FunctionComponent = () =>
 {
     const [ loading, setLoading ] = useState<boolean>(true);
-    const [ userSession, setUserSession ] = useState<SessionData>({
-        logged: false,
-        user: {
-            handle: "sparrow",
-            name: "",
-            picture: ""
+    const [ userSession, setUserSession ] = useState<SessionData>(
+        {
+            logged: false,
+            user:
+            {
+                handle: "sparrow",
+                name: "",
+                picture: ""
+            }
         }
-    });
+    );
 
     useEffect(() =>
     {
@@ -43,10 +46,12 @@ const App: React.FunctionComponent = () =>
 
                 if(userData)
                 {
-                    setUserSession({
-                        logged: true,
-                        user: userData
-                    });
+                    setUserSession(
+                        {
+                            logged: true,
+                            user: userData
+                        }
+                    );
                 }
             })();
         }
@@ -87,14 +92,16 @@ const App: React.FunctionComponent = () =>
         },
         logout: () =>
         {
-            setUserSession({
-                logged: false,
-                user: {
-                    handle: "",
-                    name: "",
-                    picture: ""
+            setUserSession(
+                {
+                    logged: false,
+                    user: {
+                        handle: "",
+                        name: "",
+                        picture: ""
+                    }
                 }
-            });
+            );
         }
     }}>
         <Routes>
