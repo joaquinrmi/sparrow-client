@@ -14,102 +14,110 @@ const MainAside: React.FunctionComponent = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
 
-    useEffect(() =>
-    {
-        const element = document.querySelector(".main-aside") as HTMLDivElement;
-        const separator = document.querySelector(".aside-separator") as HTMLDivElement;
-        if(element === null || separator === null)
+    useEffect(
+        () =>
         {
-            return;
-        }
-
-        let lastScroll = window.scrollY;
-        let start = true;
-        let finish = false;
-        let up = false;
-        let down = false;
-
-        const onScroll = () =>
-        {
-            const box = element.getBoundingClientRect();
-
-            if(box.height < window.innerHeight)
+            const element = document.querySelector(".main-aside") as HTMLDivElement;
+            const separator = document.querySelector(".aside-separator") as HTMLDivElement;
+            if(element === null || separator === null)
             {
                 return;
             }
 
-            if(lastScroll - window.scrollY < 0 && !down && !finish)
+            let lastScroll = window.scrollY;
+            let start = true;
+            let finish = false;
+            let up = false;
+            let down = false;
+
+            const onScroll = () =>
             {
-                separator.style.height = `${window.scrollY}px`;
-                element.style.top = "";
-                element.style.position = "relative";
+                const box = element.getBoundingClientRect();
 
-                start = false;
-                up = false;
-                finish = false;
-                down = true;
-            }
+                if(box.height < window.innerHeight)
+                {
+                    return;
+                }
 
-            if((-box.top) + window.innerHeight >= box.height)
+                if(lastScroll - window.scrollY < 0 && !down && !finish)
+                {
+                    separator.style.height = `${window.scrollY}px`;
+                    element.style.top = "";
+                    element.style.position = "relative";
+
+                    start = false;
+                    up = false;
+                    finish = false;
+                    down = true;
+                }
+
+                if((-box.top) + window.innerHeight >= box.height)
+                {
+                    element.style.top = `${box.top}px`;
+                    element.style.position = "sticky";
+
+                    start = false;
+                    up = false;
+                    down = false;
+                    finish = true;
+                }
+
+                if(lastScroll - window.scrollY > 0 && !up && finish)
+                {
+                    separator.style.height = `${window.scrollY - (box.height - window.innerHeight)}px`;
+                    element.style.top = "";
+                    element.style.position = "relative";
+
+                    start = false;
+                    down = false;
+                    finish = false;
+                    up = true;
+                }
+
+                if(box.top > 0 && !start)
+                {
+                    separator.style.height = "0px";
+                    element.style.position = "sticky";
+                    element.style.top = `0px`;
+
+                    down = false;
+                    up = false;
+                    finish = false;
+                    start = true;
+                }
+
+                lastScroll = window.scrollY;
+            };
+
+            window.addEventListener("scroll", onScroll);
+
+            return () =>
             {
-                element.style.top = `${box.top}px`;
-                element.style.position = "sticky";
-
-                start = false;
-                up = false;
-                down = false;
-                finish = true;
-            }
-
-            if(lastScroll - window.scrollY > 0 && !up && finish)
-            {
-                separator.style.height = `${window.scrollY - (box.height - window.innerHeight)}px`;
-                element.style.top = "";
-                element.style.position = "relative";
-
-                start = false;
-                down = false;
-                finish = false;
-                up = true;
-            }
-
-            if(box.top > 0 && !start)
-            {
-                separator.style.height = "0px";
-                element.style.position = "sticky";
-                element.style.top = `0px`;
-
-                down = false;
-                up = false;
-                finish = false;
-                start = true;
-            }
-
-            lastScroll = window.scrollY;
-        };
-
-        window.addEventListener("scroll", onScroll);
-
-        return () =>
-        {
-            window.removeEventListener("scroll", onScroll);
-        };
-    },
-    []);
+                window.removeEventListener("scroll", onScroll);
+            };
+        },
+        []
+    );
 
     return <>
         <div className="aside-separator"></div>
 
         <aside className="main-aside">
-            <Router currentRoute={state.location.mainAsideSearch.currentRoute} routes={{
-                mainAsideNone: <></>,
-                mainAsideSearch: <SearchBar id="main-search-bar" />,
-            }} />
+            <Router
+                currentRoute={state.location.mainAsideSearch.currentRoute}
+                routes={{
+                    mainAsideNone: <></>,
+                    mainAsideSearch: <SearchBar id="main-search-bar" />,
+                }}
+            />
 
-            <Router currentRoute={state.location.mainAsideGallery.currentRoute} routes={{
-                mainAsideNone: <></>,
-                mainAsideGallery: <UserGallery userHandle={state.mainAside.userHandle} />,
-            }} />
+            <Router
+                currentRoute={state.location.mainAsideGallery.currentRoute}
+                routes={{
+                    mainAsideNone: <></>,
+                    mainAsideGallery: <UserGallery userHandle={state.mainAside.userHandle} />,
+                }}
+            />
 
             <Recommended />
 
@@ -124,62 +132,115 @@ const MainAside: React.FunctionComponent = (props) =>
             </div>
 
             <Routes>
-                <Route path="/search" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideSearch", "mainAsideNone");
-                }} />} />
+                <Route
+                    path="/search"
+                    element={<RouteSetter
+                        id={`aside-none`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideSearch", "mainAsideNone");
+                        }}
+                    />}
+                />
                 
-                <Route path="/*" element={<RouteSetter id={`aside-search`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideSearch", "mainAsideSearch");
-                }} />} />
+                <Route
+                    path="/*"
+                    element={<RouteSetter id={`aside-search`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideSearch", "mainAsideSearch");
+                        }}
+                    />}
+                />
             </Routes>
 
             <Routes>
-                <Route path="/search/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
-                }} />} />
+                <Route
+                    path="/search/*"
+                    element={<RouteSetter
+                        id={`aside-none`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                        }}
+                    />}
+                />
 
-                <Route path="/home/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
-                }} />} />
+                <Route
+                    path="/home/*"
+                    element={<RouteSetter
+                        id={`aside-none`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                        }}
+                    />}
+                />
 
-                <Route path="/explore/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
-                }} />} />
+                <Route
+                    path="/explore/*"
+                    element={<RouteSetter
+                        id={`aside-none`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                        }}
+                    />}
+                />
 
-                <Route path="/notifications/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
-                }} />} />
+                <Route
+                    path="/notifications/*"
+                    element={<RouteSetter
+                        id={`aside-none`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                        }}
+                    />}
+                />
 
-                <Route path="/messages/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
-                }} />} />
+                <Route
+                    path="/messages/*"
+                    element={<RouteSetter
+                        id={`aside-none`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                        }}
+                    />}
+                />
 
                 <Route path="/settings/profile" element={<></>} />
 
-                <Route path="/settings/*" element={<RouteSetter id={`aside-none`} onMatch={() =>
-                {
-                    stateManager.navigate("mainAsideGallery", "mainAsideNone");
-                }} />} />
+                <Route
+                    path="/settings/*"
+                    element={<RouteSetter
+                        id={`aside-none`}
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("mainAsideGallery", "mainAsideNone");
+                        }}
+                    />}
+                />
 
                 <Route path="/compose/*" element={<></>} />
 
-                <Route path="/:userHandle/*" element={<GetHandle>{
-                    (userHandle) =>
-                    {
-                        return <RouteSetter id={`aside-${userHandle}`} onMatch={() =>
+                <Route 
+                    path="/:userHandle/*"
+                    element={<GetHandle>{
+                        (userHandle) =>
                         {
-                            stateManager.setMainAsideUserHandle(userHandle);
-                            stateManager.navigate("mainAsideGallery", "mainAsideGallery");
-                        }}/>;
-                    }
-                }</GetHandle>} />
+                            return <RouteSetter
+                                id={`aside-${userHandle}`}
+                                onMatch={() =>
+                                {
+                                    stateManager.setMainAsideUserHandle(userHandle);
+                                    stateManager.navigate("mainAsideGallery", "mainAsideGallery");
+                                }}
+                            />;
+                        }
+                    }</GetHandle>}
+                />
             </Routes>
         </aside>
     </>;
