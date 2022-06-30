@@ -22,40 +22,53 @@ const AccountMenu: React.FunctionComponent<Props> = (props) =>
     }
 
     return <>
-        <div className="account-menu-container" onClick={() =>
-        {
-            stateManager.closeAccountMenu();
-        }}></div>
-
-        <div className="account-menu" style={{
-            top: menuData.positionY - 20,
-            left: menuData.positionX + 12
-        }}>
-            <div className="option" onClick={(ev) =>
+        <div
+            className="account-menu-container"
+            onClick={() =>
             {
-                ev.stopPropagation();
+                stateManager.closeAccountMenu();
+            }}
+        ></div>
 
-                stateManager.closeCheepOptionsMenu();
-
-                (async () =>
+        <div
+            className="account-menu"
+            style={
+            {
+                top: menuData.positionY - 20,
+                left: menuData.positionX + 12
+            }}
+        >
+            <div
+                className="option"
+                onClick={(ev) =>
                 {
-                    const logoutURL = `${process.env.REACT_APP_SERVER}/api/user/logout`;
+                    ev.stopPropagation();
 
-                    const response = await fetch(logoutURL, {
-                        method: "POST",
-                        credentials: "include"
-                    });
+                    stateManager.closeCheepOptionsMenu();
 
-                    if(response.status === 200)
+                    (async () =>
                     {
-                        userSession.logout();
-                    }
-                    else
-                    {
-                        stateManager.setStatusMessage("Ocurrió un error al cerrar la sesión.");
-                    }
-                })();
-            }}>
+                        const logoutURL = `${process.env.REACT_APP_SERVER}/api/user/logout`;
+
+                        const response = await fetch(
+                            logoutURL,
+                            {
+                                method: "POST",
+                                credentials: "include"
+                            }
+                        );
+
+                        if(response.status === 200)
+                        {
+                            userSession.logout();
+                        }
+                        else
+                        {
+                            stateManager.setStatusMessage("Ocurrió un error al cerrar la sesión.");
+                        }
+                    })();
+                }}
+            >
                 <span className="message">
                     Cerrar la sesión de @{userSession.user.handle}.
                 </span>
