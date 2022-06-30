@@ -43,37 +43,39 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
         cheepData = state.cheepPage.data;
     }
 
-    useEffect(() =>
-    {
-        if(cheepData === undefined || cheepData.id !== props.cheepId)
+    useEffect(
+        () =>
         {
-            (async () =>
+            if(cheepData === undefined || cheepData.id !== props.cheepId)
             {
-                try
+                (async () =>
                 {
-                    var responseData = await getCheep(props.cheepId);
-                }
-                catch(err)
-                {
-                    return console.error(err);
-                }
+                    try
+                    {
+                        var responseData = await getCheep(props.cheepId);
+                    }
+                    catch(err)
+                    {
+                        return console.error(err);
+                    }
 
-                const cheepData = processCheep(responseData, true);
+                    const cheepData = processCheep(responseData, true);
 
-                let upperCheeps = new Array<CheepData>();
+                    let upperCheeps = new Array<CheepData>();
 
-                let currentData = cheepData;
-                while(currentData.responseOf !== undefined)
-                {
-                    upperCheeps = [ currentData.responseOf, ...upperCheeps ];
-                    currentData = currentData.responseOf;
-                }
+                    let currentData = cheepData;
+                    while(currentData.responseOf !== undefined)
+                    {
+                        upperCheeps = [ currentData.responseOf, ...upperCheeps ];
+                        currentData = currentData.responseOf;
+                    }
 
-                stateManager.setCheepPage(cheepData);
-                stateManager.loadCheepList("thread", {}, 0, upperCheeps);
-            })();
+                    stateManager.setCheepPage(cheepData);
+                    stateManager.loadCheepList("thread", {}, 0, upperCheeps);
+                })();
+            }
         }
-    });
+    );
 
     let content: React.ReactNode;
     if(cheepData)
@@ -194,29 +196,41 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                         </div>
 
                         <div className="button-container">
-                            <RecheepButton id={`recheep-${props.id}`} cheepData={cheepData} active={cheepData.recheepped} counter={0} onRecheep={() =>
-                            {
-                                if(cheepData !== undefined)
+                            <RecheepButton
+                                id={`recheep-${props.id}`}
+                                cheepData={cheepData}
+                                active={cheepData.recheepped}
+                                counter={0}
+                                onRecheep={() =>
                                 {
-                                    let targetCheepData = { ...cheepData };
-                                    updateRecheep(targetCheepData, cheepData.recheepped);
+                                    if(cheepData !== undefined)
+                                    {
+                                        let targetCheepData = { ...cheepData };
+                                        updateRecheep(targetCheepData, cheepData.recheepped);
 
-                                    stateManager.setCheepPage(targetCheepData);
-                                }
-                            }} />
+                                        stateManager.setCheepPage(targetCheepData);
+                                    }
+                                }}
+                            />
                         </div>
 
                         <div className="button-container">
-                            <LikeButton id={`like-${props.id}`} cheepId={cheepData.id} active={cheepData.liked} counter={0} onClick={() =>
-                            {
-                                if(cheepData !== undefined)
+                            <LikeButton
+                                id={`like-${props.id}`}
+                                cheepId={cheepData.id}
+                                active={cheepData.liked}
+                                counter={0}
+                                onClick={() =>
                                 {
-                                    let targetCheepData = { ...cheepData };
-                                    updateLike(targetCheepData, cheepData.liked);
+                                    if(cheepData !== undefined)
+                                    {
+                                        let targetCheepData = { ...cheepData };
+                                        updateLike(targetCheepData, cheepData.liked);
 
-                                    stateManager.setCheepPage(targetCheepData);
-                                }
-                            }} />
+                                        stateManager.setCheepPage(targetCheepData);
+                                    }
+                                }}
+                            />
                         </div>
                     </div>
 
@@ -226,9 +240,14 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                 </div>
             </section>
 
-            <CheepList name="comments" hideResponseTarget arguments={{
-                responseOf: cheepData.id
-            }} />
+            <CheepList
+                name="comments"
+                hideResponseTarget
+                arguments={
+                {
+                    responseOf: cheepData.id
+                }}
+            />
         </>;
     }
     else
