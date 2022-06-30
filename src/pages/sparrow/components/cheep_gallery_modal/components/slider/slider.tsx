@@ -13,76 +13,88 @@ const VELOCITY = 100 / 15;
 
 const Slider: React.FunctionComponent<Props> = (props) =>
 {
-    const [ status, setStatus ] = useState<SliderStatus>({
-        timer: 0,
-        leftPosition: props.currentIndex * (-100)
-    });
-
-    useEffect(() =>
-    {
-        const targetPosition = props.currentIndex * (-100);
-
-        setStatus((status) =>
+    const [ status, setStatus ] = useState<SliderStatus>(
         {
-            if(targetPosition !== status.leftPosition)
-            {
-                if(status.timer >= REFRESH_TIME)
-                {
-                    if(status.leftPosition > targetPosition)
-                    {
-                        let newPosition = status.leftPosition -= VELOCITY;
-                        if(newPosition < targetPosition)
-                        {
-                            newPosition = targetPosition;
-                        }
+            timer: 0,
+            leftPosition: props.currentIndex * (-100)
+        }
+    );
 
-                        return {
-                            leftPosition: newPosition,
-                            timer: status.timer -= REFRESH_TIME
-                        };
+    useEffect(
+        () =>
+        {
+            const targetPosition = props.currentIndex * (-100);
+
+            setStatus(
+                (status) =>
+                {
+                    if(targetPosition !== status.leftPosition)
+                    {
+                        if(status.timer >= REFRESH_TIME)
+                        {
+                            if(status.leftPosition > targetPosition)
+                            {
+                                let newPosition = status.leftPosition -= VELOCITY;
+                                if(newPosition < targetPosition)
+                                {
+                                    newPosition = targetPosition;
+                                }
+
+                                return {
+                                    leftPosition: newPosition,
+                                    timer: status.timer -= REFRESH_TIME
+                                };
+                            }
+                            else
+                            {
+                                let newPosition = status.leftPosition += VELOCITY;
+                                if(newPosition > targetPosition)
+                                {
+                                    newPosition = targetPosition;
+                                }
+
+                                return {
+                                    leftPosition: newPosition,
+                                    timer: status.timer -= REFRESH_TIME
+                                };
+                            }
+                        }
+                        else
+                        {
+                            setTimeout(() =>
+                            {
+                                setStatus(
+                                    (currentStatus) =>
+                                    {
+                                        return {
+                                            ...currentStatus,
+                                            timer: currentStatus.timer += REFRESH_TIME
+                                        };
+                                    }
+                                );
+                            },
+                            REFRESH_TIME);
+
+                            return status;
+                        }
                     }
                     else
                     {
-                        let newPosition = status.leftPosition += VELOCITY;
-                        if(newPosition > targetPosition)
-                        {
-                            newPosition = targetPosition;
-                        }
-
-                        return {
-                            leftPosition: newPosition,
-                            timer: status.timer -= REFRESH_TIME
-                        };
+                        return status;
                     }
                 }
-                else
-                {
-                    setTimeout(() =>
-                    {
-                        setStatus((currentStatus) =>
-                        {
-                            return {
-                                ...currentStatus,
-                                timer: currentStatus.timer += REFRESH_TIME
-                            };
-                        });
-                    },
-                    REFRESH_TIME);
+            );
+        },
+        [ props.currentIndex, status ]
+    );
 
-                    return status;
-                }
-            }
-            else
-            {
-                return status;
-            }
-        });
-    },
-    [ props.currentIndex, status ]);
-
-    return <div className="slider" style={{
-        left: `${status.leftPosition}%`
-    }}>
+    return <div
+        className="slider"
+        style={
+        {
+            left: `${status.leftPosition}%`
+        }}
+    >
         {props.gallery.map((element, index) =>
         {
             return <div key={`${index}-img`} className={`slide-${index + 1}`}>
