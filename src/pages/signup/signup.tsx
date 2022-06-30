@@ -40,7 +40,49 @@ const Signup: React.FunctionComponent = () =>
         {
             if(state.sendForm)
             {
-                sendSignupForm(state.signupData, userSession);
+                (async () =>
+                {
+                    const response = await sendSignupForm(state.signupData, userSession);
+
+                    if(response !== undefined)
+                    {
+                        let error: SignupError = {};
+                        let currentPage = 2;
+
+                        for(let i = 0; i < response.error.length; ++i)
+                        {
+                            const errorType = response.error[i];
+
+                            switch(errorType)
+                            {
+                            case "Email Already Exists":
+                                error.email = "El correo electrónico ya está en uso.";
+                                currentPage = 1;
+                                break;
+
+                            case "Username Already Exists":
+                                error.handle = "El nombre de usuario ya está en uso.";
+                                break;
+                            }
+                        }
+
+                        setSate(
+                            (state) =>
+                            {
+                                return {
+                                    ...state,
+                                    sendForm: false,
+                                    currentPage: currentPage,
+                                    error:
+                                    {
+                                        ...state.error,
+                                        ...error
+                                    }
+                                };
+                            }
+                        )
+                    }
+                })();
             }
         },
         [ state.sendForm ]
@@ -133,7 +175,7 @@ const Signup: React.FunctionComponent = () =>
     </Modal>;
 };
 
-async function sendSignupForm(signupData: SignupForm, session: UserSession)
+async function sendSignupForm(signupData: SignupForm, session: UserSession): Promise<any>
 {
     const form: CreateUserForm =
     {
@@ -184,7 +226,7 @@ async function sendSignupForm(signupData: SignupForm, session: UserSession)
         }
         else
         {
-            return;
+            return await response.json();
         }
     }
     else
