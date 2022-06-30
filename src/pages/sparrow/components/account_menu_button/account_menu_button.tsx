@@ -12,12 +12,13 @@ const AccountMenuButton: React.FunctionComponent<Props> = (props) =>
     const userSession = useContext(SessionContext);
     const [ state, stateManager ] = useContext(StateContext);
 
-    return <div className="account-menu-button" onClick={
-        () =>
+    return <div
+        className="account-menu-button"
+        onClick={() =>
         {
             const button = document.querySelector(".account-menu-button") as HTMLDivElement;
 
-            if(button === null)
+            if (button === null)
             {
                 return;
             }
@@ -27,8 +28,8 @@ const AccountMenuButton: React.FunctionComponent<Props> = (props) =>
             const y = rect.y + window.scrollY;
 
             stateManager.openAccountMenu([ x, y ]);
-        }
-    }>
+        }}
+    >
         <div className="button-image">
             <img src={userSession.user.picture} alt={`Foto de perfil de @${userSession.user.handle}`} />
         </div>
