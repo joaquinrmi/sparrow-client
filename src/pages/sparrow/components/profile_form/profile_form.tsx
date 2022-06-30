@@ -25,50 +25,56 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
     const [ data, setData ] = useState<ProfileData>({ ...state.profile.data });
     const [ loading, setLoading ] = useState<boolean>(false);
 
-    useEffect(() =>
-    {
-        const bannerInput = document.getElementById("profile-form-banner") as HTMLInputElement;
-        const pictureInput = document.getElementById("profile-form-picture") as HTMLInputElement;
-
-        bannerInput.onchange = () =>
+    useEffect(
+        () =>
         {
-            props.somethingHasBeenTouched();
+            const bannerInput = document.getElementById("profile-form-banner") as HTMLInputElement;
+            const pictureInput = document.getElementById("profile-form-picture") as HTMLInputElement;
 
-            setData((currentData) =>
+            bannerInput.onchange = () =>
             {
-                let files = bannerInput.files;
-                if(files === null)
-                {
-                    return currentData;
-                }
+                props.somethingHasBeenTouched();
 
-                return {
-                    ...currentData,
-                    banner: URL.createObjectURL(files[0])
-                };
-            });
-        };
+                setData(
+                    (currentData) =>
+                    {
+                        let files = bannerInput.files;
+                        if(files === null)
+                        {
+                            return currentData;
+                        }
 
-        pictureInput.onchange = () =>
-        {
-            props.somethingHasBeenTouched();
-            
-            setData((currentData) =>
+                        return {
+                            ...currentData,
+                            banner: URL.createObjectURL(files[0])
+                        };
+                    }
+                );
+            };
+
+            pictureInput.onchange = () =>
             {
-                let files = pictureInput.files;
-                if(files === null)
-                {
-                    return currentData;
-                }
+                props.somethingHasBeenTouched();
+                
+                setData(
+                    (currentData) =>
+                    {
+                        let files = pictureInput.files;
+                        if(files === null)
+                        {
+                            return currentData;
+                        }
 
-                return {
-                    ...currentData,
-                    picture: URL.createObjectURL(files[0])
-                };
-            });
-        };
-    },
-    [ props ]);
+                        return {
+                            ...currentData,
+                            picture: URL.createObjectURL(files[0])
+                        };
+                    }
+                );
+            };
+        },
+        [ props ]
+    );
 
     return <ModalForm className="profile-form">
         <div className="modal-form-top">
@@ -81,68 +87,71 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             </div>
 
             <div className="save-button-container">
-                <Button stylePreset={ButtonStyle.Black} onClick={() =>
-                {
-                    (async () =>
+                <Button 
+                    stylePreset={ButtonStyle.Black}
+                    onClick={() =>
                     {
-                        let form: ProfileDataForm = {};
-
-                        const bannerInput = document.getElementById("profile-form-banner") as HTMLInputElement;
-
-                        if(bannerInput.files !== null && bannerInput.files.length > 0)
+                        (async () =>
                         {
-                            form.banner = bannerInput.files[0];
-                        }
+                            let form: ProfileDataForm = {};
 
-                        const pictureInput = document.getElementById("profile-form-picture") as HTMLInputElement;
+                            const bannerInput = document.getElementById("profile-form-banner") as HTMLInputElement;
 
-                        if(pictureInput.files !== null && pictureInput.files.length > 0)
-                        {
-                            form.picture = pictureInput.files[0];
-                        }
+                            if(bannerInput.files !== null && bannerInput.files.length > 0)
+                            {
+                                form.banner = bannerInput.files[0];
+                            }
 
-                        const nameInput = document.getElementById("profile-name") as FormInputElement;
+                            const pictureInput = document.getElementById("profile-form-picture") as HTMLInputElement;
 
-                        if(nameInput.getValue().length > 0)
-                        {
-                            form.name = nameInput.getValue();
-                        }
+                            if(pictureInput.files !== null && pictureInput.files.length > 0)
+                            {
+                                form.picture = pictureInput.files[0];
+                            }
 
-                        const descriptionInput = document.getElementById("profile-description") as FormInputElement;
+                            const nameInput = document.getElementById("profile-name") as FormInputElement;
 
-                        if(descriptionInput.getValue().length > 0)
-                        {
-                            form.description = descriptionInput.getValue();
-                        }
+                            if(nameInput.getValue().length > 0)
+                            {
+                                form.name = nameInput.getValue();
+                            }
 
-                        const locationInput = document.getElementById("profile-location") as FormInputElement;
+                            const descriptionInput = document.getElementById("profile-description") as FormInputElement;
 
-                        if(locationInput.getValue().length > 0)
-                        {
-                            form.location = locationInput.getValue();
-                        }
+                            if(descriptionInput.getValue().length > 0)
+                            {
+                                form.description = descriptionInput.getValue();
+                            }
 
-                        const websiteInput = document.getElementById("profile-website") as FormInputElement;
+                            const locationInput = document.getElementById("profile-location") as FormInputElement;
 
-                        if(websiteInput.getValue().length > 0)
-                        {
-                            form.website = websiteInput.getValue();
-                        }
+                            if(locationInput.getValue().length > 0)
+                            {
+                                form.location = locationInput.getValue();
+                            }
 
-                        try
-                        {
-                            await sendProfileForm(form);
-                            stateManager.setStatusMessage("Información actualizada.");
-                            props.success();
-                        }
-                        catch(err)
-                        {
-                            stateManager.setStatusMessage("Ocurrió un error inesperado.");
-                        }
-                    })();
+                            const websiteInput = document.getElementById("profile-website") as FormInputElement;
 
-                    setLoading(true);
-                }}>
+                            if(websiteInput.getValue().length > 0)
+                            {
+                                form.website = websiteInput.getValue();
+                            }
+
+                            try
+                            {
+                                await sendProfileForm(form);
+                                stateManager.setStatusMessage("Información actualizada.");
+                                props.success();
+                            }
+                            catch(err)
+                            {
+                                stateManager.setStatusMessage("Ocurrió un error inesperado.");
+                            }
+                        })();
+
+                        setLoading(true);
+                    }}
+                >
                     Guardar
                 </Button>
             </div>
@@ -161,25 +170,33 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 
                         <div className="veil">
                             <div className="buttons-container">
-                                <ImageButton title="Agregar foto" onClick={(ev) =>
-                                {
-                                    const input = document.getElementById("profile-form-banner") as HTMLInputElement;
+                                <ImageButton
+                                    title="Agregar foto"
+                                    onClick={(ev) =>
+                                    {
+                                        const input = document.getElementById("profile-form-banner") as HTMLInputElement;
 
-                                    input.click();
-                                }}>
+                                        input.click();
+                                    }}
+                                >
                                     <i className="fa-solid fa-camera"></i>
                                 </ImageButton>
 
-                                <ImageButton title="Eliminar foto" onClick={(ev) =>
-                                {
-                                    setData((currentData) =>
+                                <ImageButton
+                                    title="Eliminar foto"
+                                    onClick={(ev) =>
                                     {
-                                        return {
-                                            ...currentData,
-                                            banner: ""
-                                        };
-                                    });
-                                }}>
+                                        setData(
+                                            (currentData) =>
+                                            {
+                                                return {
+                                                    ...currentData,
+                                                    banner: ""
+                                                };
+                                            }
+                                        );
+                                    }}
+                                >
                                     <i className="fa-solid fa-xmark"></i>
                                 </ImageButton>
 
@@ -199,12 +216,15 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                         }
 
                         <div className="veil">
-                            <ImageButton title="Agregar foto" onClick={(ev) =>
-                            {
-                                const input = document.getElementById("profile-form-picture") as HTMLInputElement;
+                            <ImageButton
+                                title="Agregar foto"
+                                onClick={(ev) =>
+                                {
+                                    const input = document.getElementById("profile-form-picture") as HTMLInputElement;
 
-                                input.click();
-                            }}>
+                                    input.click();
+                                }}
+                            >
                                 <i className="fa-solid fa-camera"></i>
                             </ImageButton>
 
@@ -217,25 +237,50 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             </div>
 
             <div className="profile-form-inputs">
-                <FormInput id="profile-name" title="Nombre" value={data.name} limit={50} onChange={() =>
-                {
-                    props.somethingHasBeenTouched();
-                }} />
+                <FormInput
+                    id="profile-name"
+                    title="Nombre"
+                    value={data.name}
+                    limit={50}
+                    onChange={() =>
+                    {
+                        props.somethingHasBeenTouched();
+                    }}
+                />
             
-                <FormInput id="profile-description" title="Biografía" value={data.description} textarea limit={160} onChange={() =>
-                {
-                    props.somethingHasBeenTouched();
-                }} />
+                <FormInput
+                    id="profile-description"
+                    title="Biografía"
+                    value={data.description}
+                    textarea
+                    limit={160}
+                    onChange={() =>
+                    {
+                        props.somethingHasBeenTouched();
+                    }}
+                />
                 
-                <FormInput id="profile-location" title="Ubicación" value={data.location} limit={30} onChange={() =>
-                {
-                    props.somethingHasBeenTouched();
-                }} />
+                <FormInput
+                    id="profile-location"
+                    title="Ubicación"
+                    value={data.location}
+                    limit={30}
+                    onChange={() =>
+                    {
+                        props.somethingHasBeenTouched();
+                    }}
+                />
 
-                <FormInput id="profile-website" title="Sitio web" value={data.website} limit={100} onChange={() =>
-                {
-                    props.somethingHasBeenTouched();
-                }} />
+                <FormInput
+                    id="profile-website"
+                    title="Sitio web"
+                    value={data.website}
+                    limit={100}
+                    onChange={() =>
+                    {
+                        props.somethingHasBeenTouched();
+                    }}
+                />
             </div>
         </div>
 
@@ -310,14 +355,18 @@ async function sendProfileForm(form: ProfileDataForm): Promise<void>
 
     const sendProfileURL = `${process.env.REACT_APP_SERVER}/api/profile/edit-profile`;
 
-    const response = await fetch(sendProfileURL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data),
-        credentials: "include"
-    });
+    const response = await fetch(
+        sendProfileURL,
+        {
+            method: "POST",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+            credentials: "include"
+        }
+    );
 
     if(response.status === 200)
     {
