@@ -8,13 +8,15 @@ type UpdatingState<StateType> = {
 
 function UpdateState<StateType>(setState: SetStateFunction<StateType>, value: UpdatingState<StateType>)
 {
-    setState((state) =>
-    {
-        return {
-            ...state,
-            ...value
-        };
-    });
+    setState(
+        (state) =>
+        {
+            return {
+                ...state,
+                ...value
+            };
+        }
+    );
 }
 
 export default UpdateState;
