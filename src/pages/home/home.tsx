@@ -14,9 +14,13 @@ const Home: React.FunctionComponent<Props> = (props) =>
             <span className="title">Inicio</span>
         </PageHeader>
 
-        <CheepList name="home" arguments={{
-            timeline: true
-        }} />
+        <CheepList
+            name="home"
+            arguments={
+            {
+                timeline: true
+            }}
+        />
     </div>;
 };
 
