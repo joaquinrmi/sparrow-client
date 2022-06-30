@@ -6,12 +6,16 @@ import Button, { ButtonStyle } from "../../../../components/button";
 import ModalForm from "../../../../components/modal_form";
 
 import "./second_page.scss";
+import SignupError from "../../signup_error";
 
 export interface Props
 {
     signupData: SignupForm;
+    error: SignupError;
+
     changePage(page: number, data: SignupFormSet): void;
     sendForm(data: SignupFormSet): Promise<void>;
+    setError(error: SignupError): void;
 }
 
 const HANDLE_ERROR_MESSAGE = `El nombre de usuario solo puede contener letras minúsculas, números y los signos "_" y "." y una longitud entre 4 y 15 caracteres.`;
@@ -46,9 +50,6 @@ const checkEnableButton = (handleInput: FormInputElement, passwordInput: FormInp
 const SecondPage: React.FunctionComponent<Props> = (props) =>
 {
     const [ enableButton, setEnableButton ] = useState(false);
-    const [ handleError, setHandleError ] = useState("");
-    const [ passwordError, setPasswordError ] = useState("");
-    const [ repasswordError, setRepasswordError ] = useState("");
 
     useEffect(
         () =>
@@ -75,16 +76,28 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
             {
                 if(handleInput.getValue().length < 4 || !handleInput.getValue().match(HANDLE_REGEX))
                 {
-                    setHandleError(HANDLE_ERROR_MESSAGE);
+                    props.setError(
+                        {
+                            handle: HANDLE_ERROR_MESSAGE
+                        }
+                    );
                 }
                 else
                 {
-                    setHandleError("");
+                    props.setError(
+                        {
+                            handle: undefined
+                        }
+                    );
                 }
             }
             else
             {
-                setHandleError("");
+                props.setError(
+                    {
+                        handle: undefined
+                    }
+                );
             }
         };
 
@@ -94,20 +107,36 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
 
             if(passwordInput.getValue().length < 8 || passwordInput.getValue().length > 20)
             {
-                setPasswordError(PASSWORD_ERROR_MESSAGE);
+                props.setError(
+                    {
+                        password: PASSWORD_ERROR_MESSAGE
+                    }
+                );
             }
             else
             {
-                setPasswordError("");
+                props.setError(
+                    {
+                        password: undefined
+                    }
+                );
             }
 
             if(repasswordInput.getValue().length > 0 && passwordInput.getValue() !== repasswordInput.getValue())
             {
-                setRepasswordError(REPASSWORD_ERROR_MESSAGE);
+                props.setError(
+                        {
+                            repassword: REPASSWORD_ERROR_MESSAGE
+                        }
+                    );
             }
             else
             {
-                setRepasswordError("");
+                props.setError(
+                        {
+                            repassword: undefined
+                        }
+                    );
             }
         };
 
@@ -117,11 +146,19 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
 
             if(repasswordInput.getValue().length > 0 && passwordInput.getValue() !== repasswordInput.getValue())
             {
-                setRepasswordError(REPASSWORD_ERROR_MESSAGE);
+                props.setError(
+                        {
+                            repassword: REPASSWORD_ERROR_MESSAGE
+                        }
+                    );
             }
             else
             {
-                setRepasswordError("");
+                props.setError(
+                        {
+                            repassword: undefined
+                        }
+                    );
             }
         };
 
@@ -167,11 +204,11 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
             <h1>Termina el registro</h1>
 
             <div className="form-elements">
-                <FormInput id="signup-handle" title="Nombre de usuario" value={props.signupData.handle} errorMessage={handleError} />
+                <FormInput id="signup-handle" title="Nombre de usuario" value={props.signupData.handle} errorMessage={props.error.handle} />
 
-                <FormInput id="signup-password" type={FormInputType.Password} title="Contraseña" value={props.signupData.password} errorMessage={passwordError} />
+                <FormInput id="signup-password" type={FormInputType.Password} title="Contraseña" value={props.signupData.password} errorMessage={props.error.password} />
 
-                <FormInput id="signup-repassword" type={FormInputType.Password} title="Reingresa la contraseña" value={props.signupData.repassword} errorMessage={repasswordError} />
+                <FormInput id="signup-repassword" type={FormInputType.Password} title="Reingresa la contraseña" value={props.signupData.repassword} errorMessage={props.error.repassword} />
             </div>
         </section>
 
