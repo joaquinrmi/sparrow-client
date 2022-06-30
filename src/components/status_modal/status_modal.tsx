@@ -15,31 +15,37 @@ const StatusModal: React.FunctionComponent<Props> = (props) =>
 
     const data = state.statusMessage;
 
-    useEffect(() =>
-    {
-        if(data.message.length === 0)
+    useEffect(
+        () =>
         {
-            return;
-        }
-
-        const modal = document.getElementById(props.id) as HTMLDivElement;
-
-        modal.classList.remove("hide");
-        modal.classList.add("show");
-
-        setTimeout(() =>
-        {
-            modal.classList.remove("show");
-            setTimeout(() =>
+            if(data.message.length === 0)
             {
-                modal.classList.add("hide");
-                stateManager.setStatusMessage("");
-            },
-            300);
+                return;
+            }
+
+            const modal = document.getElementById(props.id) as HTMLDivElement;
+
+            modal.classList.remove("hide");
+            modal.classList.add("show");
+
+            setTimeout(
+                () =>
+                {
+                    modal.classList.remove("show");
+                    setTimeout(
+                        () =>
+                        {
+                            modal.classList.add("hide");
+                            stateManager.setStatusMessage("");
+                        },
+                        300
+                    );
+                },
+                6_000
+            );
         },
-        6_000);
-    },
-    [ data.message ]);
+        [ data.message ]
+    );
 
     return <div id={props.id} className={`status-modal ${data.message.length > 0 ? "show" : "hide"}`}>
         <div className="modal-body">
