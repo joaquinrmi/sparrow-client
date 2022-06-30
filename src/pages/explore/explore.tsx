@@ -12,9 +12,13 @@ const Explore: React.FunctionComponent<Props> = (props) =>
             <span className="title">Explorar</span>
         </PageHeader>
 
-        <CheepList name="explore" arguments={{
-            explore: true
-        }} />
+        <CheepList
+            name="explore"
+            arguments={
+            {
+                explore: true
+            }}
+        />
     </div>;
 };
 
