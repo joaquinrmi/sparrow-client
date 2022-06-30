@@ -5,7 +5,8 @@ import ProfileData from "./profile_data";
 
 interface SparrowState
 {
-    location: {
+    location:
+    {
         profile: LocationState;
         innerProfile: LocationState;
         relations: LocationState;
@@ -13,10 +14,12 @@ interface SparrowState
         mainAsideSearch: LocationState;
         mainAsideGallery: LocationState;
     };
-    profile: {
+    profile:
+    {
         data: ProfileData;
     };
-    cheepLists: {
+    cheepLists:
+    {
         home: CheepListState;
         explore: CheepListState;
         profileCheeps: CheepListState;
@@ -29,7 +32,8 @@ interface SparrowState
         quotes: CheepListState;
         userGallery: CheepListState;
     };
-    userLists: {
+    userLists:
+    {
         following: UserListState;
         followers: UserListState;
         likes: UserListState;
@@ -37,14 +41,17 @@ interface SparrowState
         asideRecommended: UserListState;
         recommended: UserListState;
     };
-    cheepPage?: {
+    cheepPage?:
+    {
         data: CheepData;
     },
-    cheepGalleryModal?: {
+    cheepGalleryModal?:
+    {
         data: CheepData;
         photoIndex: number;
     },
-    cheepEditor: {
+    cheepEditor:
+    {
         responseTarget?: CheepData;
         targetCheep?: CheepData;
     };
@@ -55,30 +62,36 @@ interface SparrowState
         positionY: number;
         onRecheep(): void;
     };
-    moreOptionsMenu?: {
+    moreOptionsMenu?:
+    {
         targetCheep: CheepData;
         active: boolean;
         positionX: number;
         positionY: number;
         onDelete(): void;
     };
-    accountMenu?: {
+    accountMenu?:
+    {
         positionX: number;
         positionY: number;
     };
-    closeConfirmation: {
+    closeConfirmation:
+    {
         open: boolean;
         discart(): void;
     };
-    unfollowConfirmation: {
+    unfollowConfirmation:
+    {
         open: boolean;
         userHandle: string;
         unfollow(): void;
     };
-    mainAside: {
+    mainAside:
+    {
         userHandle: string;
     };
-    statusMessage: {
+    statusMessage:
+    {
         message: string;
     };
 }
