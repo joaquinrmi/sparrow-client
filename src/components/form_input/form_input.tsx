@@ -24,42 +24,12 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
 {
     const [ currentLength, setCurrentLength ] = useState<number>(props.value ? props.value.length : 0);
 
-    useEffect(() =>
-    {
-        const element = document.getElementById(props.id) as FormInputElement;
-        const inputElement = document.getElementById(`input-${props.id}`) as HTMLInputElement;
+    useEffect(
+        () =>
+        {
+            const element = document.getElementById(props.id) as FormInputElement;
+            const inputElement = document.getElementById(`input-${props.id}`) as HTMLInputElement;
 
-        if(inputElement.value.length > 0)
-        {
-            element.classList.add("static");
-        }
-        else
-        {
-            element.classList.remove("static");
-        }
-
-        element.getValue = () =>
-        {
-            return inputElement.value;
-        };
-
-        element.onclick = () =>
-        {
-            inputElement.focus();
-        };
-
-        inputElement.onfocus = () =>
-        {
-            element.classList.add("active");
-        }
-
-        inputElement.addEventListener("focusout", () =>
-        {
-            element.classList.remove("active");
-        });
-
-        inputElement.onchange = () =>
-        {
             if(inputElement.value.length > 0)
             {
                 element.classList.add("static");
@@ -68,41 +38,73 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
             {
                 element.classList.remove("static");
             }
-        };
 
-        inputElement.addEventListener("keydown", (ev) =>
-        {
-            if(props.limit !== undefined)
+            element.getValue = () =>
             {
-                if(inputElement.value.length === props.limit)
+                return inputElement.value;
+            };
+
+            element.onclick = () =>
+            {
+                inputElement.focus();
+            };
+
+            inputElement.onfocus = () =>
+            {
+                element.classList.add("active");
+            }
+
+            inputElement.addEventListener("focusout", () =>
+            {
+                element.classList.remove("active");
+            });
+
+            inputElement.onchange = () =>
+            {
+                if(inputElement.value.length > 0)
                 {
-                    if(ev.key !== "Backspace" && ev.key !== "Delete")
+                    element.classList.add("static");
+                }
+                else
+                {
+                    element.classList.remove("static");
+                }
+            };
+
+            inputElement.addEventListener("keydown", (ev) =>
+            {
+                if(props.limit !== undefined)
+                {
+                    if(inputElement.value.length === props.limit)
                     {
-                        ev.stopPropagation();
-                        ev.preventDefault();
+                        if(ev.key !== "Backspace" && ev.key !== "Delete")
+                        {
+                            ev.stopPropagation();
+                            ev.preventDefault();
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        inputElement.addEventListener("input", (ev) =>
-        {
-            if(props.limit !== undefined)
+            inputElement.addEventListener("input", (ev) =>
             {
-                if(inputElement.value.length > props.limit)
+                if(props.limit !== undefined)
                 {
-                    inputElement.value = inputElement.value.substring(0, props.limit);
+                    if(inputElement.value.length > props.limit)
+                    {
+                        inputElement.value = inputElement.value.substring(0, props.limit);
+                    }
+
+                    setCurrentLength(inputElement.value.length);
                 }
 
-                setCurrentLength(inputElement.value.length);
-            }
-
-            if(props.onChange)
-            {
-                props.onChange();
-            }
-        });
-    });
+                if(props.onChange)
+                {
+                    props.onChange();
+                }
+            });
+        }
+    );
 
     let className = "form-input";
 
@@ -133,15 +135,13 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                 null
             }
 
-            {
-                props.options !== undefined ?
+            {props.options !== undefined ?
                 <div className="arrow-container">
                     <i className="fa-solid fa-angle-down"></i>
                 </div> :
                 null
             }
-            {
-                props.options !== undefined ?
+            {props.options !== undefined ?
                 <select name="" id={`input-${props.id}`} defaultValue={props.value ? props.value : ""}>
                     {props.options.map((value, index) =>
                     {
@@ -157,8 +157,7 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
             }
         </div>
 
-        {
-            props.errorMessage !== undefined ?
+        {props.errorMessage !== undefined ?
             <div className="input-error-message">
                 {props.errorMessage}
             </div> :
