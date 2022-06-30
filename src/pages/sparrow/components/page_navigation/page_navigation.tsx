@@ -18,10 +18,12 @@ const PageNavigation: React.FunctionComponent<Props> = (props) =>
 {
     return <div className="page-navigation">
         <div className="items-wrapper">
-            {props.items.map((item, index) =>
-            {
-                return <NavigationItem key={`${index}-item`} to={item.to}>{item.content}</NavigationItem>
-            })}
+            {props.items.map(
+                (item, index) =>
+                {
+                    return <NavigationItem key={`${index}-item`} to={item.to}>{item.content}</NavigationItem>
+                }
+            )}
         </div>
     </div>;
 };
