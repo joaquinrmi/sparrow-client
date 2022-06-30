@@ -28,12 +28,14 @@ export interface Props
 
 const Cheep: React.FunctionComponent<Props> = (props) =>
 {
-    const cheepData = getRelevantCheepData(props.data);
-
-    const [ cheepDate, setCheepDate ] = useState<string>(formatDate(cheepData.dateCreated));
-
     const userSession = useContext(SessionContext);
     const [ state, stateManager ] = useContext(StateContext);
+
+    const [ , refresh ] = useState<boolean>(false);
+
+    const cheepData = getRelevantCheepData(props.data);
+
+    const cheepDate = formatDate(cheepData.dateCreated);
 
     const like = cheepData.liked;
     const recheep = cheepData.recheepped;
@@ -43,7 +45,7 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
         {
             let interval = setInterval(() =>
             {
-                setCheepDate(formatDate(cheepData.dateCreated));
+                refresh((r) => !r);
             },
             2 * 60 * 1000);
 
