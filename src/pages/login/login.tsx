@@ -23,38 +23,40 @@ const Login: React.FunctionComponent = () =>
     const [ handleError, setHandleError ] = useState<string>("");
     const [ passwordError, setPasswordError ] = useState<string>("");
 
-    useEffect(() =>
-    {
-        const handleOrEmailInput = document.getElementById("login-handle-or-email") as FormInputElement;
-        const passwordInput = document.getElementById("login-password") as FormInputElement;
-
-        const checkEnableButton = () =>
+    useEffect(
+        () =>
         {
-            if(handleOrEmailInput.getValue().length > 0 && passwordInput.getValue().length > 0)
+            const handleOrEmailInput = document.getElementById("login-handle-or-email") as FormInputElement;
+            const passwordInput = document.getElementById("login-password") as FormInputElement;
+
+            const checkEnableButton = () =>
             {
-                setEnableButton(true);
-            }
-            else
+                if(handleOrEmailInput.getValue().length > 0 && passwordInput.getValue().length > 0)
+                {
+                    setEnableButton(true);
+                }
+                else
+                {
+                    setEnableButton(false);
+                }
+            };
+
+            handleOrEmailInput.onchange = () =>
             {
-                setEnableButton(false);
-            }
-        };
+                checkEnableButton();
 
-        handleOrEmailInput.onchange = () =>
-        {
-            checkEnableButton();
+                setHandleOrEmail(handleOrEmailInput.getValue());
+            };
 
-            setHandleOrEmail(handleOrEmailInput.getValue());
-        };
+            passwordInput.onchange = () =>
+            {
+                checkEnableButton();
 
-        passwordInput.onchange = () =>
-        {
-            checkEnableButton();
-
-            setPassword(passwordInput.getValue());
-        };
-    },
-    []);
+                setPassword(passwordInput.getValue());
+            };
+        },
+        []
+    );
 
     if(loading)
     {
@@ -91,38 +93,43 @@ const Login: React.FunctionComponent = () =>
     
                 <footer className="modal-form-bottom">
                     <div className="button-container">
-                        <Button stylePreset={ButtonStyle.Blue} disabled={!enableButton} onClick={async () =>
-                        {
-                            setLoading(true);
+                        <Button
+                            stylePreset={ButtonStyle.Blue}
+                            disabled={!enableButton}
+                            onClick={async () =>
+                            {
+                                setLoading(true);
 
-                            const handleOrEmailInput = document.getElementById("login-handle-or-email") as FormInputElement;
-                            const passwordInput = document.getElementById("login-password") as FormInputElement;
-    
-                            let form: LoginForm = {
-                                handleOrEmail: handleOrEmailInput.getValue(),
-                                password: passwordInput.getValue(),
-                                remember: true
-                            };
-    
-                            try
-                            {
-                                var userData = await login(form);
-                            }
-                            catch(err: any)
-                            {
-                                if(err.status === 401)
+                                const handleOrEmailInput = document.getElementById("login-handle-or-email") as FormInputElement;
+                                const passwordInput = document.getElementById("login-password") as FormInputElement;
+        
+                                let form: LoginForm =
                                 {
-                                    setErrorMessage("Combinación usuario-contraseña incorrecta.");
-                                    setHandleError("Revisa el nombre de usuario.");
-                                    setPasswordError("Revisa la contraseña.");
-                                    setLoading(false);
+                                    handleOrEmail: handleOrEmailInput.getValue(),
+                                    password: passwordInput.getValue(),
+                                    remember: true
+                                };
+        
+                                try
+                                {
+                                    var userData = await login(form);
+                                }
+                                catch(err: any)
+                                {
+                                    if(err.status === 401)
+                                    {
+                                        setErrorMessage("Combinación usuario-contraseña incorrecta.");
+                                        setHandleError("Revisa el nombre de usuario.");
+                                        setPasswordError("Revisa la contraseña.");
+                                        setLoading(false);
+                                    }
+
+                                    return;
                                 }
 
-                                return;
-                            }
-
-                            session.login(userData);
-                        }}>
+                                session.login(userData);
+                            }}
+                        >
                             Iniciar sesión
                         </Button>
                     </div>
