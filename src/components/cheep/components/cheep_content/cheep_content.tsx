@@ -11,41 +11,53 @@ export interface Props
 
 const CheepContent: React.FunctionComponent<Props> = (props) =>
 {
-    const tokens = useMemo(() =>
-    {
-        return parseText(props.content);
-    },
-    [ props.content ]);
+    const tokens = useMemo(
+        () =>
+        {
+            return parseText(props.content);
+        },
+        [ props.content ]
+    );
 
     return <>
-        {tokens.map((token, index) =>
-        {
-            switch(token.type)
+        {tokens.map(
+            (token, index) =>
             {
-            case TokenType.Plain:
-                return <span key={`${index}-text`}>{token.value}</span>;
-
-            case TokenType.Hashtag:
-                if(props.response)
+                switch(token.type)
                 {
-                    return <span key={`${index}-hashtag`} className="hashtag">
-                        {token.value}
-                    </span>;
-                }
-                else
-                {
-                    return <Link key={`${index}-hashtag`} className="hashtag" to={`/hashtag/${token.value.substring(1)}`}>
-                        {token.value}
-                    </Link>;
-                }
+                case TokenType.Plain:
+                    return <span key={`${index}-text`}>{token.value}</span>;
 
-            case TokenType.URL:
-                return <LinkParser key={`${index}-url`}
-                    href={token.value}
-                    className="link"
-                />;
+                case TokenType.Hashtag:
+                    if(props.response)
+                    {
+                        return <span
+                            key={`${index}-hashtag`}
+                            className="hashtag"
+                        >
+                            {token.value}
+                        </span>;
+                    }
+                    else
+                    {
+                        return <Link
+                            key={`${index}-hashtag`}
+                            className="hashtag"
+                            to={`/hashtag/${token.value.substring(1)}`}
+                        >
+                            {token.value}
+                        </Link>;
+                    }
+
+                case TokenType.URL:
+                    return <LinkParser
+                        key={`${index}-url`}
+                        href={token.value}
+                        className="link"
+                    />;
+                }
             }
-        })}
+        )}
     </>;
 };
 
