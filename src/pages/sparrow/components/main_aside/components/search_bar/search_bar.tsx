@@ -13,6 +13,8 @@ const SearchBar: React.FunctionComponent<Props> = (props) =>
 {
     const navigate = useNavigate();
 
+    const defaultValue = props.defaultValue;
+
     useEffect(
         () =>
         {
@@ -89,7 +91,7 @@ const SearchBar: React.FunctionComponent<Props> = (props) =>
             <i className="fa-solid fa-magnifying-glass"></i>
         </div>
 
-        <input type="text" defaultValue={props.defaultValue} placeholder="Buscar en Sparrow" />
+        <input key={defaultValue} type="text" defaultValue={defaultValue} placeholder="Buscar en Sparrow" />
     </div>;
 };
 
