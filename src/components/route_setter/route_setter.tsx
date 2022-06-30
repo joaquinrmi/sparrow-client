@@ -8,11 +8,13 @@ export interface Props
 
 const RouteSetter: React.FunctionComponent<Props> = (props) =>
 {
-    useEffect(() =>
-    {
-        props.onMatch();
-    },
-    [ props.id ]);
+    useEffect(
+        () =>
+        {
+            props.onMatch();
+        },
+        [ props.id ]
+    );
 
     return <></>;
 };
