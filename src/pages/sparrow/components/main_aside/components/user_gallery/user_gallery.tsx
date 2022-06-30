@@ -17,49 +17,56 @@ const UserGallery: React.FunctionComponent<Props> = (props) =>
 
     const listState = state.cheepLists.userGallery;
 
-    const photos = useMemo(() =>
-    {
-        const photos = new Array<PhotoData>();
-
-        if(listState.cheeps.length > 0 && listState.query.userHandle === props.userHandle)
+    const photos = useMemo(
+        () =>
         {
-            for(let i = 0; i < listState.cheeps.length && photos.length < 7; ++i)
+            const photos = new Array<PhotoData>();
+
+            if(listState.cheeps.length > 0 && listState.query.userHandle === props.userHandle)
             {
-                const cheep = listState.cheeps[i];
-                
-                for(let j = 0; j < cheep.gallery.length; ++j)
+                for(let i = 0; i < listState.cheeps.length && photos.length < 7; ++i)
                 {
-                    photos.push({
-                        url: cheep.gallery[j],
-                        authorHandle: cheep.author.handle,
-                        cheepId: cheep.id,
-                        index: j + 1
-                    });
+                    const cheep = listState.cheeps[i];
+                    
+                    for(let j = 0; j < cheep.gallery.length; ++j)
+                    {
+                        photos.push(
+                            {
+                                url: cheep.gallery[j],
+                                authorHandle: cheep.author.handle,
+                                cheepId: cheep.id,
+                                index: j + 1
+                            }
+                        );
+                    }
                 }
             }
-        }
 
-        return photos;
-    },
-    [ listState.cheeps ]);
+            return photos;
+        },
+        [ listState.cheeps ]
+    );
 
-    useEffect(() =>
-    {
-        (async () =>
+    useEffect(
+        () =>
         {
-            if(props.userHandle !== listState.query.userHandle)
+            (async () =>
             {
-                const query: SearchCheepsQuery = {
-                    userHandle: props.userHandle,
-                    onlyGallery: true
-                };
+                if(props.userHandle !== listState.query.userHandle)
+                {
+                    const query: SearchCheepsQuery =
+                    {
+                        userHandle: props.userHandle,
+                        onlyGallery: true
+                    };
 
-                const cheeps = await loadCheeps(query, true);
+                    const cheeps = await loadCheeps(query, true);
 
-                stateManager.loadCheepList("userGallery", query, cheeps.nextTime, cheeps.cheeps);
-            }
-        })();
-    });
+                    stateManager.loadCheepList("userGallery", query, cheeps.nextTime, cheeps.cheeps);
+                }
+            })();
+        }
+    );
 
     if(photos.length !== 0 && listState.query.userHandle === props.userHandle)
     {
