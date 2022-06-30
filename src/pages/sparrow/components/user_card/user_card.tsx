@@ -24,15 +24,19 @@ const UserCard: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
-    return <div id={props.id} className="user-card" onClick={(ev) =>
-    {
-        const element = document.getElementById(props.id) as HTMLDivElement;
-
-        if(element !== null)
+    return <div
+        id={props.id}
+        className="user-card"
+        onClick={(ev) =>
         {
-            navigate(`/${props.data.handle}`);
-        }
-    }}>
+            const element = document.getElementById(props.id) as HTMLDivElement;
+
+            if(element !== null)
+            {
+                navigate(`/${props.data.handle}`);
+            }
+        }}
+    >
         <div className="left-column">
             <UserPicture userHandle={props.data.handle} userName={props.data.name} picture={props.data.picture} />
         </div>
@@ -64,17 +68,25 @@ const UserCard: React.FunctionComponent<Props> = (props) =>
                             userHandle={props.data.handle}
                             onFollow={() =>
                             {
-                                stateManager.updateUserCard(props.listName, props.index, {
-                                    ...props.data,
-                                    following: true
-                                });
+                                stateManager.updateUserCard(
+                                    props.listName,
+                                    props.index,
+                                    {
+                                        ...props.data,
+                                        following: true
+                                    }
+                                );
                             }}
                             onUnfollow={() =>
                             {
-                                stateManager.updateUserCard(props.listName, props.index, {
-                                    ...props.data,
-                                    following: false
-                                });
+                                stateManager.updateUserCard(
+                                    props.listName,
+                                    props.index,
+                                    {
+                                        ...props.data,
+                                        following: false
+                                    }
+                                );
                             }}
                         /> :
                         null
