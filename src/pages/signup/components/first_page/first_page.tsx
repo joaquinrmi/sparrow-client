@@ -25,55 +25,63 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
     const [ enableNext, setEnableNext ] = useState(false);
     const [ emailError, setEmailError ] = useState("");
 
-    useEffect(() =>
-    {
-        const nameInput = document.getElementById("signup-name") as FormInputElement;
-        const emailInput = document.getElementById("signup-email") as FormInputElement;
-
-        const checkEnableNext = () =>
+    useEffect(
+        () =>
         {
-            if(nameInput.getValue().trim().length === 0)
+            const nameInput = document.getElementById("signup-name") as FormInputElement;
+            const emailInput = document.getElementById("signup-email") as FormInputElement;
+
+            const checkEnableNext = () =>
             {
-                setEnableNext(false);
-                return;
-            }
+                if(nameInput.getValue().trim().length === 0)
+                {
+                    setEnableNext(false);
+                    return;
+                }
 
-            const email = emailInput.getValue();
-            const match = email.match(EMAIL_REGEX);
+                const email = emailInput.getValue();
+                const match = email.match(EMAIL_REGEX);
 
-            if(match === null || match.length !== 1)
-            {
-                setEnableNext(false);
-                return;
-            }
+                if(match === null || match.length !== 1)
+                {
+                    setEnableNext(false);
+                    return;
+                }
 
-            setEnableNext(true);
-        };
+                setEnableNext(true);
+            };
 
-        checkEnableNext();
-
-        nameInput.addEventListener("change", () =>
-        {
-            checkEnableNext();
-        });
-
-        emailInput.addEventListener("change", () =>
-        {
             checkEnableNext();
 
-            const email = emailInput.getValue();
-            const match = email.match(EMAIL_REGEX);
+            nameInput.addEventListener(
+                "change",
+                () =>
+                {
+                    checkEnableNext();
+                }
+            );
 
-            if(email.length > 0 && (match === null || match.length !== 1))
-            {
-                setEmailError(EMAIL_ERROR_MESSAGE);
-            }
-            else
-            {
-                setEmailError("");
-            }
-        });
-    });
+            emailInput.addEventListener(
+                "change",
+                () =>
+                {
+                    checkEnableNext();
+
+                    const email = emailInput.getValue();
+                    const match = email.match(EMAIL_REGEX);
+
+                    if(email.length > 0 && (match === null || match.length !== 1))
+                    {
+                        setEmailError(EMAIL_ERROR_MESSAGE);
+                    }
+                    else
+                    {
+                        setEmailError("");
+                    }
+                }
+            );
+        }
+    );
 
     return <ModalForm className="signup-form-modal">
         <header className="modal-form-top">
@@ -102,18 +110,25 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
 
         <footer className="modal-form-bottom">
             <div className="button-container">
-                <Button stylePreset={ButtonStyle.Blue} disabled={!enableNext} onClick={(ev) =>
-                {
-                    const nameInput = document.getElementById("signup-name") as FormInputElement;
-                    const emailInput = document.getElementById("signup-email") as FormInputElement;
-                    const dateInput = document.getElementById("signup-date-input") as DateInputElement;
+                <Button
+                    stylePreset={ButtonStyle.Blue}
+                    disabled={!enableNext}
+                    onClick={(ev) =>
+                    {
+                        const nameInput = document.getElementById("signup-name") as FormInputElement;
+                        const emailInput = document.getElementById("signup-email") as FormInputElement;
+                        const dateInput = document.getElementById("signup-date-input") as DateInputElement;
 
-                    props.changePage(2, {
-                        name: nameInput.getValue(),
-                        email: emailInput.getValue(),
-                        birthdate: new Date(dateInput.getYear(), dateInput.getMonth(), dateInput.getDay())
-                    });
-                }}>
+                        props.changePage(
+                            2,
+                            {
+                                name: nameInput.getValue(),
+                                email: emailInput.getValue(),
+                                birthdate: new Date(dateInput.getYear(), dateInput.getMonth(), dateInput.getDay())
+                            }
+                        );
+                    }}
+                >
                     Siguiente
                 </Button>
             </div>
