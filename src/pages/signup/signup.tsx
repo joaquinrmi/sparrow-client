@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FirstPage from "./components/first_page";
 import SignupForm from "./signup_form";
 import SignupFormSet from "./signup_form_set";
@@ -10,24 +10,40 @@ import login from "../../login";
 import SessionContext from "../../session_context";
 import CreateUserForm from "./create_user_form";
 import UserSession from "../../user_session";
+import SignupError from "./signup_error";
 
 import "./signup.scss";
 
 const Signup: React.FunctionComponent = () =>
 {
+    const userSession = useContext(SessionContext);
+
     const [ state, setSate ] = useState<SignupState>(
         {
             sendForm: false,
             currentPage: 1,
-            signupData: {
+            signupData:
+            {
                 name: "",
                 email: "",
                 birthdate: new Date(),
                 handle: "",
                 password: "",
                 repassword: ""
-            }
+            },
+            error: {}
         }
+    );
+
+    useEffect(
+        () =>
+        {
+            if(state.sendForm)
+            {
+                sendSignupForm(state.signupData, userSession);
+            }
+        },
+        [ state.sendForm ]
     );
 
     const changePage = (page: number, data: SignupFormSet) =>
@@ -47,11 +63,28 @@ const Signup: React.FunctionComponent = () =>
                     {
                         ...currentState.signupData,
                         ...data
+                    },
+                    error:
+                    {
+                        ...currentState.error
                     }
                 };
             }
         );
     };
+
+    const setError = (error: SignupError) =>
+    {
+        setSate(
+            (currentState) =>
+            {
+                return {
+                    ...currentState,
+                    error: error
+                };
+            }
+        );
+    }
 
     const sendForm = async (data: SignupFormSet) =>
     {        
@@ -65,36 +98,35 @@ const Signup: React.FunctionComponent = () =>
                     {
                         ...currentState.signupData,
                         ...data
+                    },
+                    error:
+                    {
+                        ...currentState.error
                     }
                 };
             }
         );
     };
 
-    return <SessionContext.Consumer>{(session) =>
+    let content: React.ReactNode;
+
+    if(state.sendForm)
     {
-        let content: any;
+        return <LoadingPage />;
+    }
+    else if(state.currentPage === 1)
+    {
+        content = <FirstPage signupData={state.signupData} error={state.error} changePage={changePage} setError={setError} />;
+    }
+    else
+    {
+        content = <SecondPage signupData={state.signupData} changePage={changePage} sendForm={sendForm} />;
+    }
 
-        if(state.sendForm)
-        {
-            sendSignupForm(state.signupData, session);
-
-            return <LoadingPage />;
-        }
-        else if(state.currentPage === 1)
-        {
-            content = <FirstPage signupData={state.signupData} changePage={changePage} />;
-        }
-        else
-        {
-            content = <SecondPage signupData={state.signupData} changePage={changePage} sendForm={sendForm} />;
-        }
-
-        return <Modal id="signup-modal" className="signup-modal" closeRequest={() =>
-        {}}>
-            {content}
-        </Modal>;
-    }}</SessionContext.Consumer>
+    return <Modal id="signup-modal" className="signup-modal" closeRequest={() =>
+    {}}>
+        {content}
+    </Modal>;
 };
 
 async function sendSignupForm(signupData: SignupForm, session: UserSession)
@@ -162,6 +194,7 @@ interface SignupState
     sendForm: boolean;
     currentPage: number;
     signupData: SignupForm;
+    error: SignupError;
 }
 
 export default Signup;
