@@ -2,7 +2,8 @@ import CheepData from "../cheep_data";
 
 function processCheep(data: any, processResponseTarget?: boolean): CheepData
 {
-    const result: CheepData = {
+    const result: CheepData =
+    {
         id: data.id,
         author: data.author,
         dateCreated: new Date(data.dateCreated),
