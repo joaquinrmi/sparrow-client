@@ -18,19 +18,22 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
     const [ state, stateManager ] = useContext(StateContext);
     const navigate = useNavigate();
 
-    useEffect(() =>
-    {
-        return () =>
+    useEffect(
+        () =>
         {
-            if(props.onClose)
+            return () =>
             {
-                props.onClose();
-            }
+                if(props.onClose)
+                {
+                    props.onClose();
+                }
 
-            stateManager.setEditorTargetCheep(undefined);
-            stateManager.setEditorResponseTarget(undefined);
-        };
-    }, [ props.onClose ]);
+                stateManager.setEditorTargetCheep(undefined);
+                stateManager.setEditorResponseTarget(undefined);
+            };
+        },
+        [ props.onClose ]
+    );
 
     const closeRequest = () =>
     {
