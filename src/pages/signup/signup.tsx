@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import FirstPage from "./components/first_page";
 import SignupForm from "./signup_form";
 import SignupFormSet from "./signup_form_set";
@@ -16,18 +15,20 @@ import "./signup.scss";
 
 const Signup: React.FunctionComponent = () =>
 {
-    const [ state, setSate ] = useState<SignupState>({
-        sendForm: false,
-        currentPage: 1,
-        signupData: {
-            name: "",
-            email: "",
-            birthdate: new Date(),
-            handle: "",
-            password: "",
-            repassword: ""
+    const [ state, setSate ] = useState<SignupState>(
+        {
+            sendForm: false,
+            currentPage: 1,
+            signupData: {
+                name: "",
+                email: "",
+                birthdate: new Date(),
+                handle: "",
+                password: "",
+                repassword: ""
+            }
         }
-    });
+    );
 
     const changePage = (page: number, data: SignupFormSet) =>
     {
@@ -36,35 +37,39 @@ const Signup: React.FunctionComponent = () =>
             page = 1;
         }
 
-        setSate((currentState) =>
-        {
-            return {
-                sendForm: false,
-                currentPage: page,
-                signupData: {
-                    ...currentState.signupData,
-                    ...data
-                }
-            };
-        });
+        setSate(
+            (currentState) =>
+            {
+                return {
+                    sendForm: false,
+                    currentPage: page,
+                    signupData:
+                    {
+                        ...currentState.signupData,
+                        ...data
+                    }
+                };
+            }
+        );
     };
 
     const sendForm = async (data: SignupFormSet) =>
     {        
-        setSate((currentState) =>
-        {
-            return {
-                sendForm: true,
-                currentPage: currentState.currentPage,
-                signupData: {
-                    ...currentState.signupData,
-                    ...data
-                }
-            };
-        });
+        setSate(
+            (currentState) =>
+            {
+                return {
+                    sendForm: true,
+                    currentPage: currentState.currentPage,
+                    signupData:
+                    {
+                        ...currentState.signupData,
+                        ...data
+                    }
+                };
+            }
+        );
     };
-
-    const navigate = useNavigate();
 
     return <SessionContext.Consumer>{(session) =>
     {
@@ -94,7 +99,8 @@ const Signup: React.FunctionComponent = () =>
 
 async function sendSignupForm(signupData: SignupForm, session: UserSession)
 {
-    const form: CreateUserForm = {
+    const form: CreateUserForm =
+    {
         handle: signupData.handle,
         email: signupData.email,
         password: signupData.password,
@@ -106,16 +112,18 @@ async function sendSignupForm(signupData: SignupForm, session: UserSession)
     {
         const signupURL = `${process.env.REACT_APP_SERVER}/api/user/create`;
 
-        const response = await fetch(signupURL,
-        {
-            method: "POST",
-            headers:
+        const response = await fetch(
+            signupURL,
             {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(form),
-            credentials: "include"
-        });
+                method: "POST",
+                headers:
+                {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(form),
+                credentials: "include"
+            }
+        );
 
         if(response.status === 201)
         {
@@ -123,27 +131,29 @@ async function sendSignupForm(signupData: SignupForm, session: UserSession)
 
             try
             {
-                var userData = await login({
-                    handleOrEmail: handle,
-                    password: form.password,
-                    remember: true
-                });
+                var userData = await login(
+                    {
+                        handleOrEmail: handle,
+                        password: form.password,
+                        remember: true
+                    }
+                );
             }
             catch(err)
             {
-                return console.error(err);
+                return;
             }
 
             session.login(userData);
         }
         else
         {
-            console.error(await response.json());
+            return;
         }
     }
     else
     {
-        console.error("The server URL is not defined.");
+        return;
     }
 }
 
