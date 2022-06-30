@@ -41,59 +41,67 @@ const DateInput: React.FunctionComponent<Props> = (props) =>
     const [ days, setDays ] = useState([ ...FULL_DAYS ]);
     const [ years ] = useState([ ...FULL_YEARS ]);
 
-    useEffect(() =>
-    {
-        const yearInput = document.getElementById(`${props.id}-year`) as FormInputElement;
-        const monthInput = document.getElementById(`${props.id}-month`) as FormInputElement;
-        const dayInput = document.getElementById(`${props.id}-day`) as FormInputElement;
-
-        const element = document.getElementById(props.id) as DateInputElement;
-
-        element.getYear = () =>
+    useEffect(
+        () =>
         {
-            return Number(yearInput.getValue());
-        };
+            const yearInput = document.getElementById(`${props.id}-year`) as FormInputElement;
+            const monthInput = document.getElementById(`${props.id}-month`) as FormInputElement;
+            const dayInput = document.getElementById(`${props.id}-day`) as FormInputElement;
 
-        element.getMonth = () =>
-        {
-            return Months[monthInput.getValue()];
-        };
+            const element = document.getElementById(props.id) as DateInputElement;
 
-        element.getDay = () =>
-        {
-            return Number(dayInput.getValue());
-        };
-
-        const changeDayCount = () =>
-        {
-            let month = Months[monthInput.getValue()];
-            let year = Number(yearInput.getValue());
-
-            let dayCount = 0;
-
-            if(month === FULL_MONTHS.length - 1)
+            element.getYear = () =>
             {
-                dayCount = 31;
-            }
-            else
+                return Number(yearInput.getValue());
+            };
+
+            element.getMonth = () =>
             {
-                dayCount = new Date(year, month + 1, 0).getDate();
-            }
+                return Months[monthInput.getValue()];
+            };
 
-            setDays(FULL_DAYS.slice(0, dayCount));
-        };
+            element.getDay = () =>
+            {
+                return Number(dayInput.getValue());
+            };
 
-        monthInput.addEventListener("change", () =>
-        {
-            changeDayCount();
-        });
+            const changeDayCount = () =>
+            {
+                let month = Months[monthInput.getValue()];
+                let year = Number(yearInput.getValue());
 
-        yearInput.addEventListener("change", () =>
-        {
-            changeDayCount();
-        });
-    },
-    []);
+                let dayCount = 0;
+
+                if(month === FULL_MONTHS.length - 1)
+                {
+                    dayCount = 31;
+                }
+                else
+                {
+                    dayCount = new Date(year, month + 1, 0).getDate();
+                }
+
+                setDays(FULL_DAYS.slice(0, dayCount));
+            };
+
+            monthInput.addEventListener(
+                "change",
+                () =>
+                {
+                    changeDayCount();
+                }
+            );
+
+            yearInput.addEventListener(
+                "change",
+                () =>
+                {
+                    changeDayCount();
+                }
+            );
+        },
+        []
+    );
 
     let initYear = years[0];
     let initMonth = months[0];
