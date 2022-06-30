@@ -20,41 +20,54 @@ const CheepOptionsMenu: React.FunctionComponent<Props> = (props) =>
     }
 
     return <>
-        <div className="cheep-options-menu-container" onClick={() =>
-        {
-            stateManager.closeCheepOptionsMenu();
-        }}></div>
-
-        <div className="cheep-options-menu" style={{
-            top: menuData.positionY + 10,
-            left: menuData.positionX - 100
-        }}>
-            <div className="option erase" onClick={(ev) =>
+        <div
+            className="cheep-options-menu-container"
+            onClick={() =>
             {
-                ev.stopPropagation();
-
                 stateManager.closeCheepOptionsMenu();
+            }}
+        ></div>
 
-                (async () =>
+        <div
+            className="cheep-options-menu"
+            style={
+            {
+                top: menuData.positionY + 10,
+                left: menuData.positionX - 100
+            }}
+        >
+            <div
+                className="option erase"
+                onClick={(ev) =>
                 {
-                    const deleteCheepURL = `${process.env.REACT_APP_SERVER}/api/cheep/delete?cheepId=${menuData.targetCheep.id}`;
+                    ev.stopPropagation();
 
-                    const response = await fetch(deleteCheepURL, {
-                        method: "POST",
-                        credentials: "include"
-                    });
+                    stateManager.closeCheepOptionsMenu();
 
-                    if(response.status === 200)
+                    (async () =>
                     {
-                        stateManager.setStatusMessage("Se eliminó el cheep.");
-                        menuData.onDelete();
-                    }
-                    else
-                    {
-                        stateManager.setStatusMessage("Ocurrió un error al eliminar el cheep.");
-                    }
-                })();
-            }}>
+                        const deleteCheepURL = `${process.env.REACT_APP_SERVER}/api/cheep/delete?cheepId=${menuData.targetCheep.id}`;
+
+                        const response = await fetch(
+                            deleteCheepURL,
+                            {
+                                method: "POST",
+                                credentials: "include"
+                            }
+                        );
+
+                        if(response.status === 200)
+                        {
+                            stateManager.setStatusMessage("Se eliminó el cheep.");
+                            menuData.onDelete();
+                        }
+                        else
+                        {
+                            stateManager.setStatusMessage("Ocurrió un error al eliminar el cheep.");
+                        }
+                    })();
+                }}
+            >
                 <div className="icon">
                     <i className="fa-solid fa-trash-can"></i>
                 </div>
