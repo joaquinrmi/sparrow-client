@@ -80,14 +80,18 @@ const Signup: React.FunctionComponent = () =>
             {
                 return {
                     ...currentState,
-                    error: error
+                    error:
+                    {
+                        ...currentState.error,
+                        ...error
+                    }
                 };
             }
         );
     }
 
     const sendForm = async (data: SignupFormSet) =>
-    {        
+    {
         setSate(
             (currentState) =>
             {
@@ -120,7 +124,7 @@ const Signup: React.FunctionComponent = () =>
     }
     else
     {
-        content = <SecondPage signupData={state.signupData} changePage={changePage} sendForm={sendForm} />;
+        content = <SecondPage signupData={state.signupData} error={state.error} changePage={changePage} sendForm={sendForm} setError={setError} />;
     }
 
     return <Modal id="signup-modal" className="signup-modal" closeRequest={() =>
