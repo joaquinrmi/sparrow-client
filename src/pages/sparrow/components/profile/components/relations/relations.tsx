@@ -43,22 +43,38 @@ const Relations: React.FunctionComponent<Props> = (props) =>
             }
         ]} />
 
-        <Router currentRoute={state.location.relations.currentRoute} routes={{
-            following: <UserList id="following-user-list" name="following" type={UserListType.Following} target={props.handle} />,
+        <Router
+            currentRoute={state.location.relations.currentRoute}
+            routes={
+            {
+                following: <UserList id="following-user-list" name="following" type={UserListType.Following} target={props.handle} />,
 
-            followers: <UserList id="follower-user-list" name="followers" type={UserListType.Followers} target={props.handle} />
-        }} />
+                followers: <UserList id="follower-user-list" name="followers" type={UserListType.Followers} target={props.handle} />
+            }}
+        />
 
         <Routes>
-            <Route path={`/:userHandle/following`} element={<RouteSetter id="following-relations" onMatch={() =>
-            {
-                stateManager.navigate("relations", "following");
-            }} />} />
+            <Route
+                path={`/:userHandle/following`}
+                element={<RouteSetter
+                    id="following-relations"
+                    onMatch={() =>
+                    {
+                        stateManager.navigate("relations", "following");
+                    }}
+                />}
+            />
 
-            <Route path={`/:userHandle/followers`} element={<RouteSetter id="followers-relations" onMatch={() =>
-            {
-                stateManager.navigate("relations", "followers");
-            }} />} />
+            <Route
+                path={`/:userHandle/followers`}
+                element={<RouteSetter
+                    id="followers-relations"
+                    onMatch={() =>
+                    {
+                        stateManager.navigate("relations", "followers");
+                    }}
+                />}
+            />
         </Routes>
     </div>;
 };
