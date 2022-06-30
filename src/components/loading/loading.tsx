@@ -24,14 +24,30 @@ const Loading: React.FunctionComponent<Props> = (props) =>
     const length = 2 * Math.PI * RADIUS;
     const offset = length - (props.status ? props.status * length / 100 : 0);
 
-    return <svg className={`loading ${props.static ? "static" : "animated"}`} width={size} height={size} style={{
-        transform: `scale(${scale}, ${scale})`
-    }}>
+    return <svg
+        className={`loading ${props.static ? "static" : "animated"}`}
+        width={size}
+        height={size}
+        style={{
+            transform: `scale(${scale}, ${scale})`
+        }}
+    >
         <circle cx="50%" cy="50%" r={RADIUS} strokeWidth={thickness} stroke={LIGHT_BLUE} fill="none"></circle>
 
-        <circle className="status-circle" cx="50%" cy="50%" r={RADIUS} strokeWidth={thickness} stroke={BLUE} fill="none" style={props.static ? {
-            strokeDashoffset: `${offset}px`
-        } : {}}></circle>
+        <circle
+            className="status-circle"
+            cx="50%"
+            cy="50%"
+            r={RADIUS}
+            strokeWidth={thickness}
+            stroke={BLUE}
+            fill="none"
+            style={props.static ?
+                {
+                    strokeDashoffset: `${offset}px`
+                } :
+                {}}
+            ></circle>
     </svg>;
 };
 
