@@ -50,14 +50,16 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
     const [ passwordError, setPasswordError ] = useState("");
     const [ repasswordError, setRepasswordError ] = useState("");
 
-    useEffect(() =>
-    {
-        const handleInput = document.getElementById("signup-handle") as FormInputElement;
-        const passwordInput = document.getElementById("signup-password") as FormInputElement;
-        const repasswordInput = document.getElementById("signup-repassword") as FormInputElement;
+    useEffect(
+        () =>
+        {
+            const handleInput = document.getElementById("signup-handle") as FormInputElement;
+            const passwordInput = document.getElementById("signup-password") as FormInputElement;
+            const repasswordInput = document.getElementById("signup-repassword") as FormInputElement;
 
-        checkEnableButton(handleInput, passwordInput, repasswordInput, setEnableButton);
-    });
+            checkEnableButton(handleInput, passwordInput, repasswordInput, setEnableButton);
+        }
+    );
 
     useEffect(() =>
     {
@@ -127,11 +129,14 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
 
         goBackButton.onclick = () =>
         {
-            props.changePage(1, {
-                handle: handleInput.getValue(),
-                password: passwordInput.getValue(),
-                repassword: repasswordInput.getValue()
-            });
+            props.changePage(
+                1,
+                {
+                    handle: handleInput.getValue(),
+                    password: passwordInput.getValue(),
+                    repassword: repasswordInput.getValue()
+                }
+            );
         };
     },
     []);
@@ -142,11 +147,13 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
         const passwordInput = document.getElementById("signup-password") as FormInputElement;
         const repasswordInput = document.getElementById("signup-repassword") as FormInputElement;
         
-        props.sendForm({
-            handle: handleInput.getValue(),
-            password: passwordInput.getValue(),
-            repassword: repasswordInput.getValue()
-        });
+        props.sendForm(
+            {
+                handle: handleInput.getValue(),
+                password: passwordInput.getValue(),
+                repassword: repasswordInput.getValue()
+            }
+        );
     };
 
     return <ModalForm className="signup-form-modal">
