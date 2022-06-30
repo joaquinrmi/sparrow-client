@@ -14,32 +14,34 @@ export interface Props
 
 const Modal: React.FunctionComponent<Props> = (props) =>
 {
-    useEffect(() =>
-    {
-        const modal = document.getElementById(props.id) as HTMLDivElement;
-
-        modal.onclick = (ev) =>
+    useEffect(
+        () =>
         {
-            if(ev.target === modal)
+            const modal = document.getElementById(props.id) as HTMLDivElement;
+
+            modal.onclick = (ev) =>
             {
-                props.closeRequest();
-            }
-        };
+                if(ev.target === modal)
+                {
+                    props.closeRequest();
+                }
+            };
 
-        if(props.changeBodyOverflow)
-        {
-            document.body.style.overflow = "hidden";
-        }
-
-        return () =>
-        {
             if(props.changeBodyOverflow)
             {
-                document.body.style.overflow = "auto";
+                document.body.style.overflow = "hidden";
             }
-        };
-    },
-    []);
+
+            return () =>
+            {
+                if(props.changeBodyOverflow)
+                {
+                    document.body.style.overflow = "auto";
+                }
+            };
+        },
+        []
+    );
 
     return <div id={props.id} className={`modal ${props.className ? props.className : ""}`}>
         <div className="modal-body">
