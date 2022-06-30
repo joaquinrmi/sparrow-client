@@ -27,7 +27,8 @@ const CloseConfirmation: React.FunctionComponent<Props> = (props) =>
         closeRequest={() =>
         {
             stateManager.closeCloseConfirmation();
-        }} />;
+        }}
+    />;
 };
 
 export default CloseConfirmation;
