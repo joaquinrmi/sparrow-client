@@ -19,23 +19,27 @@ const ProfileFormModal: React.FunctionComponent<Props> = (props) =>
 
     const closeRequest = () =>
     {
-        setHasChanged((hasChanged) =>
-        {
-            if(hasChanged)
+        setHasChanged(
+            (hasChanged) =>
             {
-                stateManager.openCloseConfirmation(() =>
+                if(hasChanged)
                 {
-                    stateManager.closeCloseConfirmation();
+                    stateManager.openCloseConfirmation(
+                        () =>
+                        {
+                            stateManager.closeCloseConfirmation();
+                            navigate(-1);
+                        }
+                    );
+                }
+                else
+                {
                     navigate(-1);
-                });
-            }
-            else
-            {
-                navigate(-1);
-            }
+                }
 
-            return hasChanged;
-        });
+                return hasChanged;
+            }
+        );
     };
 
     return <Modal id="profile-form-modal" className="profile-form-modal" changeBodyOverflow closeRequest={closeRequest}>
