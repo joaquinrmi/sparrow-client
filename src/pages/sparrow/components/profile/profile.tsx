@@ -9,6 +9,7 @@ import Router from "../../../../components/router";
 import RouteSetter from "../../../../components/route_setter";
 import ButtonContainer from "../../../../components/button_container";
 import FollowButton from "../follow_button";
+import LinkParser from "../../../../components/link_parser";
 
 import MONTHS from "../../../../months";
 import SessionContext from "../../../../session_context";
@@ -16,7 +17,6 @@ import StateContext from "../../state_context";
 import Relations from "./components/relations";
 
 import "./profile.scss";
-import LinkParser from "../../../../components/link_parser";
 
 export interface Props
 {
@@ -30,56 +30,65 @@ const Profile: React.FunctionComponent<Props> = (props) =>
 
     const navigate = useNavigate();
 
-    useEffect(() =>
-    {
-        (async () =>
+    useEffect(
+        () =>
         {
-            const getProfileURL = `${process.env.REACT_APP_SERVER}/api/profile/get?handle=${props.handle}`;
-
-            const response = await fetch(getProfileURL, {
-                method: "GET",
-                credentials: "include"
-            });
-
-            if(response.status === 200)
+            (async () =>
             {
-                const data = await response.json();
+                const getProfileURL = `${process.env.REACT_APP_SERVER}/api/profile/get?handle=${props.handle}`;
 
-                if(data === null)
+                const response = await fetch(
+                    getProfileURL,
+                    {
+                        method: "GET",
+                        credentials: "include"
+                    }
+                );
+
+                if(response.status === 200)
                 {
-                    stateManager.setProfileState({
-                        handle: undefined,
-                        name: "",
-                        picture: "",
-                        joinDate: new Date(),
-                        followingCount: 0,
-                        followersCount: 0,
-                        cheepCount: 0,
-                        following: false
-                    });
+                    const data = await response.json();
+
+                    if(data === null)
+                    {
+                        stateManager.setProfileState(
+                            {
+                                handle: undefined,
+                                name: "",
+                                picture: "",
+                                joinDate: new Date(),
+                                followingCount: 0,
+                                followersCount: 0,
+                                cheepCount: 0,
+                                following: false
+                            }
+                        );
+                    }
+                    else
+                    {
+                        stateManager.setProfileState(
+                            {
+                                handle: data.handle,
+                                name: data.name,
+                                picture: data.picture,
+                                banner: data.banner,
+                                description: data.description,
+                                joinDate: new Date(data.joinDate),
+                                birthdate: data.birthdate === undefined ? undefined : new Date(data.birthdate),
+                                location: data.location,
+                                website: data.website,
+                                followingCount: data.followingCount,
+                                followersCount: data.followerCount,
+                                cheepCount: data.cheepCount,
+                                following: data.following
+                            }
+                        );
+                    }
                 }
-                else
-                {
-                    stateManager.setProfileState({
-                        handle: data.handle,
-                        name: data.name,
-                        picture: data.picture,
-                        banner: data.banner,
-                        description: data.description,
-                        joinDate: new Date(data.joinDate),
-                        birthdate: data.birthdate === undefined ? undefined : new Date(data.birthdate),
-                        location: data.location,
-                        website: data.website,
-                        followingCount: data.followingCount,
-                        followersCount: data.followerCount,
-                        cheepCount: data.cheepCount,
-                        following: data.following
-                    });
-                }
-            }
-        })();
-    },
-    [ props.handle ]);
+            })();
+        },
+        [ props.handle ]
+    );
 
     let content: React.ReactNode;
     if(state.profile.data.handle !== undefined && (state.profile.data.handle.length === 0 || props.handle !== state.profile.data.handle))
@@ -143,10 +152,14 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                 <div className="options-container">
                     <ButtonContainer>
                         {userSession.user.handle === props.handle ?
-                            <Button className="follow-button" stylePreset={ButtonStyle.White} onClick={() =>
-                            {
-                                navigate("/settings/profile");
-                            }}>
+                            <Button
+                                className="follow-button"
+                                stylePreset={ButtonStyle.White}
+                                onClick={() =>
+                                {
+                                    navigate("/settings/profile");
+                                }}
+                            >
                                 Editar perfil
                             </Button> :
 
@@ -156,17 +169,21 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                                 userHandle={state.profile.data.handle}
                                 onFollow={() =>
                                 {
-                                    stateManager.setProfileState({
-                                        ...state.profile.data,
-                                        following: true
-                                    });
+                                    stateManager.setProfileState(
+                                        {
+                                            ...state.profile.data,
+                                            following: true
+                                        }
+                                    );
                                 }}
                                 onUnfollow={() =>
                                 {
-                                    stateManager.setProfileState({
-                                        ...state.profile.data,
-                                        following: false
-                                    });
+                                    stateManager.setProfileState(
+                                        {
+                                            ...state.profile.data,
+                                            following: false
+                                        }
+                                    );
                                 }}
                             />
                         }
@@ -247,56 +264,98 @@ const Profile: React.FunctionComponent<Props> = (props) =>
             <ProfileNavigation userHandle={state.profile.data.handle} />
 
             <Router currentRoute={state.location["innerProfile"].currentRoute} routes={{
-                cheeps: <CheepList name="profileCheeps" arguments={{
-                    userHandle: state.profile.data.handle,
-                    responses: false
-                }} />,
+                cheeps: <CheepList
+                    name="profileCheeps"
+                    arguments={
+                    {
+                        userHandle: state.profile.data.handle,
+                        responses: false
+                    }}
+                />,
 
-                withReplies: <CheepList name="profileWithReplies" arguments={{
-                    userHandle: state.profile.data.handle,
-                    responses: true
-                }} />,
+                withReplies: <CheepList
+                    name="profileWithReplies"
+                    arguments={
+                    {
+                        userHandle: state.profile.data.handle,
+                        responses: true
+                    }}
+                />,
 
-                media: <CheepList name="profileMedia" arguments={{
-                    userHandle: state.profile.data.handle,
-                    onlyGallery: true
-                }} />,
+                media: <CheepList
+                    name="profileMedia"
+                    arguments={
+                    {
+                        userHandle: state.profile.data.handle,
+                        onlyGallery: true
+                    }}
+                />,
 
-                likes: <CheepList name="profileLikes" arguments={{
-                    userHandle: state.profile.data.handle,
-                    likes: true
-                }} />,
+                likes: <CheepList
+                    name="profileLikes"
+                    arguments={
+                    {
+                        userHandle: state.profile.data.handle,
+                        likes: true
+                    }}
+                />,
             }} />
 
             <Routes>
-                <Route path="/:userHandle" element={<RouteSetter id="cheeps" onMatch={() =>
-                {
-                    stateManager.navigate("innerProfile", "cheeps");
-                }} />} />
+                <Route
+                    path="/:userHandle"
+                    element={<RouteSetter
+                        id="cheeps"
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("innerProfile", "cheeps");
+                        }}
+                    />}
+                />
 
-                <Route path="/:userHandle/with-replies" element={<RouteSetter id="withReplies" onMatch={() =>
-                {
-                    stateManager.navigate("innerProfile", "withReplies");
-                }} />} />
+                <Route
+                    path="/:userHandle/with-replies"
+                    element={<RouteSetter
+                        id="withReplies"
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("innerProfile", "withReplies");
+                        }}
+                    />}
+                />
 
-                <Route path="/:userHandle/media" element={<RouteSetter id="media" onMatch={() =>
-                {
-                    stateManager.navigate("innerProfile", "media");
-                }} />} />
+                <Route
+                    path="/:userHandle/media"
+                    element={<RouteSetter
+                        id="media"
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("innerProfile", "media");
+                        }}
+                    />}
+                />
 
-                <Route path="/:userHandle/likes" element={<RouteSetter id="likes" onMatch={() =>
-                {
-                    stateManager.navigate("innerProfile", "likes");
-                }} />} />
+                <Route
+                    path="/:userHandle/likes"
+                    element={<RouteSetter
+                        id="likes"
+                        onMatch={() =>
+                        {
+                            stateManager.navigate("innerProfile", "likes");
+                        }}
+                    />}
+                />
             </Routes>
         </>;
     }
 
     return <>
-        <Router currentRoute={state.location["profile"].currentRoute} routes={{
-            main: <>
-                <PageHeader>
-                    {
+        <Router
+            currentRoute={state.location["profile"].currentRoute}
+            routes={
+            {
+                main: <>
+                    <PageHeader>{
                         state.profile.data.handle === undefined || (state.profile.data.handle !== undefined && state.profile.data.handle.length === 0) ?
                         <>
                             <span className="title">
@@ -312,32 +371,50 @@ const Profile: React.FunctionComponent<Props> = (props) =>
                                 {state.profile.data.cheepCount} Cheeps
                             </span>
                         </>
-                    }
-                </PageHeader>
+                    }</PageHeader>
 
-                {content}
-            </>,
+                    {content}
+                </>,
 
-            relations: <Relations handle={state.profile.data.handle || ""} name={state.profile.data.name} />
-        }} />
+                relations: <Relations handle={state.profile.data.handle || ""} name={state.profile.data.name} />
+            }}
+        />
 
         <Routes>
             <Route path="/compose/cheep" element={<></>} />
 
-            <Route path="/:userHandle/following" element={<RouteSetter id="following" onMatch={() =>
-            {
-                stateManager.navigate("profile", "relations");
-            }} />} />
+            <Route
+                path="/:userHandle/following"
+                element={<RouteSetter
+                    id="following"
+                    onMatch={() =>
+                    {
+                        stateManager.navigate("profile", "relations");
+                    }}
+                />}
+            />
 
-            <Route path="/:userHandle/followers" element={<RouteSetter id="followers" onMatch={() =>
-            {
-                stateManager.navigate("profile", "relations");
-            }} />} />
+            <Route
+                path="/:userHandle/followers"
+                element={<RouteSetter
+                    id="followers"
+                    onMatch={() =>
+                    {
+                        stateManager.navigate("profile", "relations");
+                    }}
+                />}
+            />
 
-            <Route path="/:userHandle/*" element={<RouteSetter id="main" onMatch={() =>
-            {
-                stateManager.navigate("profile", "main");
-            }} />} />
+            <Route
+                path="/:userHandle/*"
+                element={<RouteSetter
+                    id="main"
+                    onMatch={() =>
+                    {
+                        stateManager.navigate("profile", "main");
+                    }}
+                />}
+            />
         </Routes>
     </>;
 };
