@@ -13,9 +13,9 @@ import postCheep from "./post_cheep";
 import ResponseErrorType from "../../../../response_error_type";
 import CheepData from "../../../../cheep_data";
 import Cheep from "../../../../components/cheep";
+import StateContext from "../../state_context";
 
 import "./cheep_editor.scss";
-import StateContext from "../../state_context";
 
 export interface Props
 {
@@ -80,7 +80,6 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                 }
                 catch(err)
                 {
-                    console.log(err);
                     setLoadingPictures(false);
                     return;
                 }
@@ -88,13 +87,15 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
 
             setLoadingPictures(false);
             setButtonEnabled(true);
-            setGallery((currentGallery) =>
-            {
-                return [
-                    ...currentGallery,
-                    ...imageUrls
-                ];
-            });
+            setGallery(
+                (currentGallery) =>
+                {
+                    return [
+                        ...currentGallery,
+                        ...imageUrls
+                    ];
+                }
+            );
         };
     });
 
@@ -125,29 +126,36 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                 <div className="editor-left">
                     <UserPicture notClickeable userHandle={userSession.user.handle} userName={userSession.user.name} picture={userSession.user.picture} />
                 </div>
+
                 <div className="editor-right">
                     <div className="editor-elements">
                         <div className={`text-editor-container ${props.targetCheep || gallery.length > 0 ? "mini" : ""}`}>
-                            <TextEditor id={`${props.id}-editor`} maxLength={280} setStatus={(status) =>
-                            {
-                                if(status > 0)
+                            <TextEditor
+                                id={`${props.id}-editor`}
+                                maxLength={280}
+                                setStatus={(status) =>
                                 {
-                                    setButtonEnabled(true);
-                                }
-                                else
-                                {
-                                    setGallery((gallery) =>
+                                    if(status > 0)
                                     {
-                                        if(gallery.length === 0)
-                                        {
-                                            setButtonEnabled(false);
-                                        }
+                                        setButtonEnabled(true);
+                                    }
+                                    else
+                                    {
+                                        setGallery(
+                                            (gallery) =>
+                                            {
+                                                if(gallery.length === 0)
+                                                {
+                                                    setButtonEnabled(false);
+                                                }
 
-                                        return gallery;
-                                    });
-                                }
-                                setStatus(status);
-                            }} />
+                                                return gallery;
+                                            }
+                                        );
+                                    }
+                                    setStatus(status);
+                                }}
+                            />
                         </div>
 
                         {gallery.length > 0 || loadingPictures ?
@@ -191,6 +199,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                 input.click();
                             }}>
                                 <i className="fa-solid fa-image"></i>
+
                                 <input id={`${props.id}-gallery-input`} type="file" multiple />
                             </div>
 
@@ -200,66 +209,70 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                         </div>
 
                         <ButtonContainer className="cheep-button-container">
-                            <Button stylePreset={ButtonStyle.Blue} disabled={!buttonEnabled} onClick={async () =>
-                            {
-                                if(loadingCheep)
+                            <Button
+                                stylePreset={ButtonStyle.Blue}
+                                disabled={!buttonEnabled}
+                                onClick={async () =>
                                 {
-                                    return;
-                                }
-
-                                setLoadingCheep(true);
-
-                                const editor = document.getElementById(`${props.id}-editor`) as TextEditorElement;
-
-                                const data: CreateCheepData = {};
-
-                                if(editor.getText().length > 0)
-                                {
-                                    data.content = editor.getText();
-                                }
-
-                                if(gallery.length > 0)
-                                {
-                                    data.gallery = gallery;
-                                }
-
-                                if(props.responseTarget !== undefined)
-                                {
-                                    data.responseTarget = props.responseTarget.id;
-                                }
-
-                                if(props.targetCheep !== undefined)
-                                {
-                                    data.quoteTarget = props.targetCheep.id;
-                                }
-
-                                let cheepId: number;
-                                try
-                                {
-                                    cheepId = await postCheep(data);
-                                    stateManager.setStatusMessage("¡Se publicó el cheep!");
-                                    navigation(-1);
-                                }
-                                catch(err: any)
-                                {
-                                    switch(err.error)
+                                    if(loadingCheep)
                                     {
-                                    case ResponseErrorType.InvalidCheepContent:
-                                        stateManager.setStatusMessage("El cheep no puede estar vacío.");
-                                        break;
-
-                                    case ResponseErrorType.InvalidForm:
-                                        stateManager.setStatusMessage("El contenido el cheep es inválido.");
-                                        break;
-
-                                    case ResponseErrorType.InternalServerError:
-                                        stateManager.setStatusMessage("Ocurrió un error en el servidor.");
-                                        break;
+                                        return;
                                     }
-                                }
 
-                                setLoadingCheep(false);
-                            }}>
+                                    setLoadingCheep(true);
+
+                                    const editor = document.getElementById(`${props.id}-editor`) as TextEditorElement;
+
+                                    const data: CreateCheepData = {};
+
+                                    if(editor.getText().length > 0)
+                                    {
+                                        data.content = editor.getText();
+                                    }
+
+                                    if(gallery.length > 0)
+                                    {
+                                        data.gallery = gallery;
+                                    }
+
+                                    if(props.responseTarget !== undefined)
+                                    {
+                                        data.responseTarget = props.responseTarget.id;
+                                    }
+
+                                    if(props.targetCheep !== undefined)
+                                    {
+                                        data.quoteTarget = props.targetCheep.id;
+                                    }
+
+                                    let cheepId: number;
+                                    try
+                                    {
+                                        cheepId = await postCheep(data);
+                                        stateManager.setStatusMessage("¡Se publicó el cheep!");
+                                        navigation(-1);
+                                    }
+                                    catch(err: any)
+                                    {
+                                        switch(err.error)
+                                        {
+                                        case ResponseErrorType.InvalidCheepContent:
+                                            stateManager.setStatusMessage("El cheep no puede estar vacío.");
+                                            break;
+
+                                        case ResponseErrorType.InvalidForm:
+                                            stateManager.setStatusMessage("El contenido el cheep es inválido.");
+                                            break;
+
+                                        case ResponseErrorType.InternalServerError:
+                                            stateManager.setStatusMessage("Ocurrió un error en el servidor.");
+                                            break;
+                                        }
+                                    }
+
+                                    setLoadingCheep(false);
+                                }}
+                            >
                                 Cheepear
                             </Button>
                         </ButtonContainer>
