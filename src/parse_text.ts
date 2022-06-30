@@ -15,7 +15,6 @@ export interface Token
     value: string;
 }
 
-
 function parseText(text: string): Array<Token>
 {
     if(text.length === 0)
@@ -61,23 +60,29 @@ function parseText(text: string): Array<Token>
             toAdd = element[0];
         }
 
-        result.push({
-            type: TokenType.Plain,
-            value: text.substring(lastIndex, start)
-        });
+        result.push(
+            {
+                type: TokenType.Plain,
+                value: text.substring(lastIndex, start)
+            }
+        );
 
-        result.push({
-            type: type,
-            value: toAdd
-        });
+        result.push(
+            {
+                type: type,
+                value: toAdd
+            }
+        );
 
         lastIndex = start + toAdd.length;
     }
 
-    result.push({
-        type: TokenType.Plain,
-        value: text.substring(lastIndex)
-    });
+    result.push(
+        {
+            type: TokenType.Plain,
+            value: text.substring(lastIndex)
+        }
+    );
 
     return result;
 }
