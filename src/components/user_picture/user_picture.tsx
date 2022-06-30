@@ -14,9 +14,13 @@ export interface Props
 const UserPicture: React.FunctionComponent<Props> = (props) =>
 {
     let content = <>
-        <div className="cheep-picture" style={{
-            backgroundImage: `url(${props.picture})`
-        }} title={`Foto de perfil de @${props.userName}`} />
+        <div
+            className="cheep-picture"
+            style={{
+                backgroundImage: `url(${props.picture})`
+            }}
+            title={`Foto de perfil de @${props.userName}`}
+        />
     </>;
 
     if(props.notClickeable)
@@ -27,10 +31,14 @@ const UserPicture: React.FunctionComponent<Props> = (props) =>
     }
     else
     {
-        return <Link className="user-picture-container" to={`/${props.userHandle}`} onClick={(ev) =>
-        {
-            ev.stopPropagation();
-        }}>
+        return <Link
+            className="user-picture-container"
+            to={`/${props.userHandle}`}
+            onClick={(ev) =>
+            {
+                ev.stopPropagation();
+            }}
+        >
             {content}
 
             <div className="veil"></div>
