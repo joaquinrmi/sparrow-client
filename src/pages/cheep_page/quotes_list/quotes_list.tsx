@@ -16,9 +16,13 @@ const QuotesList: React.FunctionComponent<Props> = (props) =>
             </div>
         </PageHeader>
 
-        <CheepList name="quotes" arguments={{
-            quoteTarget: props.cheepId
-        }} hideResponseTarget />
+        <CheepList
+            name="quotes"
+            arguments={{
+                quoteTarget: props.cheepId
+            }}
+            hideResponseTarget
+        />
     </div>;
 };
 
