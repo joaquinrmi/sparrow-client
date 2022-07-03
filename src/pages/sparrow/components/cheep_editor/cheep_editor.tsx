@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import UserPicture from "../../../../components/user_picture";
 import SessionContext from "../../../../session_context";
 import Button, { ButtonStyle } from "../../../../components/button";
@@ -23,6 +22,8 @@ export interface Props
     responseTarget?: CheepData;
     targetCheep?: CheepData;
     inPage?: boolean;
+
+    onCheep?(): void;
 }
 
 export interface CheepEditorElement extends HTMLDivElement
@@ -37,11 +38,10 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
     const [ gallery, setGallery ] = useState<Array<string>>([]);
     const [ loadingPictures, setLoadingPictures ] = useState<boolean>(false);
     const [ loadingCheep, setLoadingCheep ] = useState<boolean>(false);
+    const [ created, setCreated ] = useState<number>(0);
 
     const userSession = useContext(SessionContext);
     const [ state, stateManager ] = useContext(StateContext);
-
-    const navigation = useNavigate();
 
     useEffect(() =>
     {
@@ -113,7 +113,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
         };
     })
 
-    return <div id={props.id} className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
+    return <div key={created} id={props.id} className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
         {props.inPage && props.responseTarget ?
             <div className="response-message">
                 En respuesta a <span className="user">@{props.responseTarget.author.handle}</span>
@@ -249,8 +249,14 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                                     try
                                     {
                                         cheepId = await postCheep(data);
+                                        setCreated((created) => created + 1);
+                                        setStatus(0);
                                         stateManager.setStatusMessage("¡Se publicó el cheep!");
-                                        navigation(-1);
+                                        
+                                        if(props.onCheep !== undefined)
+                                        {
+                                            props.onCheep();
+                                        }
                                     }
                                     catch(err: any)
                                     {
