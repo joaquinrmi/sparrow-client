@@ -66,7 +66,14 @@ const CheepEditorModal: React.FunctionComponent<Props> = (props) =>
                     null
                 }
 
-                <CheepEditor id="cheep-editor-modal" responseTarget={state.cheepEditor.responseTarget ? state.cheepEditor.responseTarget : undefined} targetCheep={state.cheepEditor.targetCheep} />
+                <CheepEditor
+                    id="cheep-editor-modal"
+                    responseTarget={state.cheepEditor.responseTarget ? state.cheepEditor.responseTarget : undefined}
+                    targetCheep={state.cheepEditor.targetCheep}
+                    onCheep={() =>
+                    {
+                        navigate(-1);
+                    }} />
             </div>
         </ModalForm>
     </Modal>;
