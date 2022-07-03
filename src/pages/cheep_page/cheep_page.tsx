@@ -235,7 +235,7 @@ const CheepPage: React.FunctionComponent<Props> = (props) =>
                     </div>
 
                     <div className="reply-container">
-                        <CheepEditor id="cheep-editor-page" responseTarget={cheepData.responseOf ? cheepData.responseOf : undefined} inPage />
+                        <CheepEditor id="cheep-editor-page" responseTarget={cheepData} inPage />
                     </div>
                 </div>
             </section>
