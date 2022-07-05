@@ -68,7 +68,7 @@ const UserGallery: React.FunctionComponent<Props> = (props) =>
         }
     );
 
-    if(photos.length !== 0 && listState.query.userHandle === props.userHandle)
+    if(photos.length > 1 && listState.query.userHandle === props.userHandle)
     {
         let firstDivision: React.ReactNode;
         let secondDivision: React.ReactNode;
