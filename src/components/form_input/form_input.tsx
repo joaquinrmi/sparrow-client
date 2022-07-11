@@ -5,6 +5,7 @@ import "./form_input.scss";
 export interface Props
 {
     id: string;
+    name?: string;
     title: string;
     type?: FormInputType;
     value?: string;
@@ -142,7 +143,7 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                 null
             }
             {props.options !== undefined ?
-                <select name="" id={`input-${props.id}`} defaultValue={props.value ? props.value : ""}>
+                <select name={props.name} id={`input-${props.id}`} defaultValue={props.value ? props.value : ""}>
                     {props.options.map((value, index) =>
                     {
                         return <option key={`option-${index}`}>{value}</option>;
@@ -150,8 +151,8 @@ const FormInput: React.FunctionComponent<Props> = (props) =>
                 </select> :
                 <div className="input-container">
                     {props.textarea ?
-                        <textarea id={`input-${props.id}`} defaultValue={props.value ? props.value : ""} rows={3} /> :
-                        <input id={`input-${props.id}`} type={props.type !== undefined ? props.type : "text"} defaultValue={props.value ? props.value : ""} />
+                        <textarea id={`input-${props.id}`} name={props.name} defaultValue={props.value ? props.value : ""} rows={3} /> :
+                        <input id={`input-${props.id}`} name={props.name} type={props.type !== undefined ? props.type : "text"} defaultValue={props.value ? props.value : ""} />
                     }
                 </div>
             }
