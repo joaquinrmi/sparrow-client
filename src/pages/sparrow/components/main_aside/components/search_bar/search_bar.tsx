@@ -9,6 +9,11 @@ export interface Props
     defaultValue?: string;
 }
 
+interface SearchBarElement extends HTMLFormElement
+{
+    keywords: HTMLInputElement;
+}
+
 const SearchBar: React.FunctionComponent<Props> = (props) =>
 {
     const navigate = useNavigate();
@@ -59,40 +64,36 @@ const SearchBar: React.FunctionComponent<Props> = (props) =>
         [ props.id ]
     );
 
-    return <div
+    return <form
         id={props.id}
         className="search-bar-container"
-        onKeyDown={(ev) =>
+        onSubmit={(ev) =>
         {
-            const element = document.getElementById(props.id) as HTMLDivElement;
-            if(element === null)
+            ev.preventDefault();
+
+            const form = ev.target as SearchBarElement;
+
+            if(!form.keywords)
             {
                 return;
             }
 
-            const inputElement = element.querySelector("input") as HTMLInputElement;
-            if(inputElement === null)
+            if(form.keywords.value.trim().length === 0)
             {
                 return;
             }
 
-            if(inputElement.value.trim().length === 0)
-            {
-                return;
-            }
-
-            if(ev.key === "Enter")
-            {
-                navigate(`/search?q=${inputElement.value}`);
-            }
+            navigate(`/search?q=${form.keywords.value}`);
         }}
     >
         <div className="icon">
             <i className="fa-solid fa-magnifying-glass"></i>
         </div>
 
-        <input key={defaultValue} type="text" defaultValue={defaultValue} placeholder="Buscar en Sparrow" />
-    </div>;
+        <input key={defaultValue} name="keywords" type="text" defaultValue={defaultValue} placeholder="Buscar en Sparrow" />
+
+        <input type="submit" className="invisible" />
+    </form>;
 };
 
 export default SearchBar;
