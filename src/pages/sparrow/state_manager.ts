@@ -299,7 +299,7 @@ class StateManager
         }
     }
 
-    openCheepOptionsMenu(targetCheep: CheepData, active: boolean, position: [ number, number ], onDelete: () => void): void
+    openCheepOptionsMenu(listName: CheepListName, cheepIndex: number, active: boolean, position: [ number, number ], onDelete: () => void): void
     {
         if(this.setState)
         {
@@ -308,7 +308,9 @@ class StateManager
                 const newState = { ...state };
 
                 newState.moreOptionsMenu = {
-                    targetCheep: targetCheep,
+                    listName: listName,
+                    cheepIndex: cheepIndex,
+                    targetCheep: state.cheepLists[listName].cheeps[cheepIndex],
                     active: active,
                     positionX: position[0],
                     positionY: position[1],
