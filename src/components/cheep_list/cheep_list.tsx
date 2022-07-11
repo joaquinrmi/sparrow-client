@@ -125,6 +125,11 @@ const CheepList: React.FunctionComponent<Props> = (props) =>
             {listState.cheeps.map(
                 (data, index) =>
                 {
+                    if(data.deleted)
+                    {
+                        return <div key={`${index}-cheep`} className="cheep-deleted"></div>;
+                    }
+
                     return <Cheep id={`${index}-cheep-${props.name}`} index={index} listName={props.name} key={`${index}-cheep`} data={data} />;
                 }
             )}
