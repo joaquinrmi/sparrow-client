@@ -64,6 +64,8 @@ interface SparrowState
     };
     moreOptionsMenu?:
     {
+        listName: CheepListName;
+        cheepIndex: number;
         targetCheep: CheepData;
         active: boolean;
         positionX: number;
