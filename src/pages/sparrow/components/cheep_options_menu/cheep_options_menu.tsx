@@ -59,6 +59,7 @@ const CheepOptionsMenu: React.FunctionComponent<Props> = (props) =>
                         if(response.status === 200)
                         {
                             stateManager.setStatusMessage("Se eliminó el cheep.");
+                            stateManager.deleteCheep(menuData.listName, menuData.cheepIndex);
                             menuData.onDelete();
                         }
                         else
