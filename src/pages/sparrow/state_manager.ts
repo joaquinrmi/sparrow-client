@@ -65,6 +65,28 @@ class StateManager
         }
     }
 
+    deleteCheep(listName: CheepListName, cheepIndex: number): void
+    {
+        if(this.setState)
+        {
+            this.setState((state) =>
+            {
+                const newState = { ...state };
+
+                const cheeps = newState.cheepLists[listName].cheeps;
+
+                if(cheepIndex >= cheeps.length)
+                {
+                    return state;
+                }
+
+                cheeps[cheepIndex].deleted = true;
+
+                return newState;
+            });
+        }
+    }
+
     setLoadMore(listName: CheepListName, loadMore: boolean): void
     {
         if(this.setState)
