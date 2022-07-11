@@ -18,6 +18,16 @@ export interface Props
     success(): void;
 }
 
+interface ProfileFormElement extends HTMLFormElement
+{
+    banner: HTMLInputElement;
+    picture: HTMLInputElement;
+    userName: HTMLInputElement;
+    description: HTMLInputElement;
+    location: HTMLInputElement;
+    website: HTMLInputElement;
+}
+
 const ProfileForm: React.FunctionComponent<Props> = (props) =>
 {
     const [ state, stateManager ] = useContext(StateContext);
@@ -76,7 +86,76 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
         [ props ]
     );
 
-    return <ModalForm className="profile-form">
+    const sendForm = async (formElement: ProfileFormElement) =>
+    {
+        setLoading(true);
+
+        let form: ProfileDataForm = {};
+
+        const bannerInput = formElement.banner;
+        const pictureInput = formElement.picture;
+        const nameInput = formElement.userName;
+        const descriptionInput = formElement.description;
+        const locationInput = formElement.location;
+        const websiteInput = formElement.website;
+
+        if(!bannerInput || !pictureInput || !nameInput || !descriptionInput || !locationInput || !websiteInput) 
+        {
+            return;
+        }
+
+        if(bannerInput.files !== null && bannerInput.files.length > 0)
+        {
+            form.banner = bannerInput.files[0];
+        }
+
+        if(pictureInput.files !== null && pictureInput.files.length > 0)
+        {
+            form.picture = pictureInput.files[0];
+        }
+
+        if(nameInput.value.length > 0)
+        {
+            form.name = nameInput.value;
+        }
+
+        if(descriptionInput.value.length > 0)
+        {
+            form.description = descriptionInput.value;
+        }
+
+        if(locationInput.value.length > 0)
+        {
+            form.location = locationInput.value;
+        }
+
+        if(websiteInput.value.length > 0)
+        {
+            form.website = websiteInput.value;
+        }
+
+        try
+        {
+            await sendProfileForm(form);
+            stateManager.setStatusMessage("Información actualizada.");
+            props.success();
+        }
+        catch(err)
+        {
+            stateManager.setStatusMessage("Ocurrió un error inesperado.");
+        }
+    };
+
+    return <ModalForm
+        id="edit-profile-form"
+        className="profile-form"
+        onSubmit={(ev) =>
+        {
+            ev.preventDefault();
+
+            sendForm(ev.target as ProfileFormElement);
+        }}
+    >
         <div className="modal-form-top">
             <div className="modal-form-close-button" onClick={props.closeRequest}>
                 <i className="fa-solid fa-xmark"></i>
@@ -91,65 +170,12 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                     stylePreset={ButtonStyle.Black}
                     onClick={() =>
                     {
-                        (async () =>
+                        const form = document.getElementById("edit-profile-form") as ProfileFormElement;
+
+                        if(form !== null)
                         {
-                            let form: ProfileDataForm = {};
-
-                            const bannerInput = document.getElementById("profile-form-banner") as HTMLInputElement;
-
-                            if(bannerInput.files !== null && bannerInput.files.length > 0)
-                            {
-                                form.banner = bannerInput.files[0];
-                            }
-
-                            const pictureInput = document.getElementById("profile-form-picture") as HTMLInputElement;
-
-                            if(pictureInput.files !== null && pictureInput.files.length > 0)
-                            {
-                                form.picture = pictureInput.files[0];
-                            }
-
-                            const nameInput = document.getElementById("profile-name") as FormInputElement;
-
-                            if(nameInput.getValue().length > 0)
-                            {
-                                form.name = nameInput.getValue();
-                            }
-
-                            const descriptionInput = document.getElementById("profile-description") as FormInputElement;
-
-                            if(descriptionInput.getValue().length > 0)
-                            {
-                                form.description = descriptionInput.getValue();
-                            }
-
-                            const locationInput = document.getElementById("profile-location") as FormInputElement;
-
-                            if(locationInput.getValue().length > 0)
-                            {
-                                form.location = locationInput.getValue();
-                            }
-
-                            const websiteInput = document.getElementById("profile-website") as FormInputElement;
-
-                            if(websiteInput.getValue().length > 0)
-                            {
-                                form.website = websiteInput.getValue();
-                            }
-
-                            try
-                            {
-                                await sendProfileForm(form);
-                                stateManager.setStatusMessage("Información actualizada.");
-                                props.success();
-                            }
-                            catch(err)
-                            {
-                                stateManager.setStatusMessage("Ocurrió un error inesperado.");
-                            }
-                        })();
-
-                        setLoading(true);
+                            sendForm(form);
+                        }
                     }}
                 >
                     Guardar
@@ -200,7 +226,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                                     <i className="fa-solid fa-xmark"></i>
                                 </ImageButton>
 
-                                <input type="file" id="profile-form-banner" className="hidden" />
+                                <input name="banner" type="file" id="profile-form-banner" className="hidden" />
                             </div>
                         </div>
                     </div>
@@ -228,7 +254,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                                 <i className="fa-solid fa-camera"></i>
                             </ImageButton>
 
-                            <input type="file" id="profile-form-picture" className="hidden" />
+                            <input name="picture" type="file" id="profile-form-picture" className="hidden" />
                         </div>
                     </div>
 
@@ -239,6 +265,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             <div className="profile-form-inputs">
                 <FormInput
                     id="profile-name"
+                    name="userName"
                     title="Nombre"
                     value={data.name}
                     limit={50}
@@ -250,6 +277,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
             
                 <FormInput
                     id="profile-description"
+                    name="description"
                     title="Biografía"
                     value={data.description}
                     textarea
@@ -262,6 +290,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
                 
                 <FormInput
                     id="profile-location"
+                    name="location"
                     title="Ubicación"
                     value={data.location}
                     limit={30}
@@ -273,6 +302,7 @@ const ProfileForm: React.FunctionComponent<Props> = (props) =>
 
                 <FormInput
                     id="profile-website"
+                    name="website"
                     title="Sitio web"
                     value={data.website}
                     limit={100}
