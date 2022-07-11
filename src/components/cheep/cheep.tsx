@@ -137,7 +137,10 @@ const Cheep: React.FunctionComponent<Props> = (props) =>
                     const x = rect.left + window.scrollX;
                     const y = rect.top + window.scrollY;
 
-                    stateManager.openCheepOptionsMenu(props.data, true, [ x, y ], () => {});
+                    if(props.listName !== undefined && props.index !== undefined)
+                    {
+                        stateManager.openCheepOptionsMenu(props.listName, props.index, true, [ x, y ], () => {});
+                    }                    
                 }}>
                     <i className="fa-solid fa-ellipsis"></i>
                 </div> :
