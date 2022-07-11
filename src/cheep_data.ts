@@ -1,5 +1,6 @@
 interface CheepData
 {
+    deleted?: boolean;
     id: number;
     author:
     {
