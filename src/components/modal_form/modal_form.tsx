@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEventHandler } from "react";
 
 import "./modal_form.scss";
 
@@ -6,13 +6,18 @@ export interface Props
 {
     children?: React.ReactNode;
     className?: string;
+
+    onSubmit?: FormEventHandler<HTMLFormElement>;
 }
 
 const ModalForm: React.FunctionComponent<Props> = (props) =>
 {
-    return <div className={`modal-form ${props.className ? props.className : ""}`}>
+    return <form
+        className={`modal-form ${props.className ? props.className : ""}`}
+        onSubmit={props.onSubmit}
+    >
         {props.children}
-    </div>;
+    </form>;
 };
 
 export default ModalForm;
