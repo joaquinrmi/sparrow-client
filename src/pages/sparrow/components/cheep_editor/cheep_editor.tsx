@@ -113,7 +113,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
         };
     })
 
-    return <div key={created} id={props.id} className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
+    return <form key={created} id={props.id} className={`cheep-editor ${props.inPage ? "in-page" : ""}`}>
         {props.inPage && props.responseTarget ?
             <div className="response-message">
                 En respuesta a <span className="user">@{props.responseTarget.author.handle}</span>
@@ -286,7 +286,7 @@ const CheepEditor: React.FunctionComponent<Props> = (props) =>
                 </div>
             </div>
         </section>
-    </div>
+    </form>
 };
 
 export default CheepEditor;
