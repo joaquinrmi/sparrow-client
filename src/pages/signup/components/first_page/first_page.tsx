@@ -96,7 +96,32 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
         }
     );
 
-    return <ModalForm className="signup-form-modal">
+    const nextPage = () =>
+    {
+        const nameInput = document.getElementById("signup-name") as FormInputElement;
+        const emailInput = document.getElementById("signup-email") as FormInputElement;
+        const dateInput = document.getElementById("signup-date-input") as DateInputElement;
+
+        props.changePage(
+            2,
+            {
+                name: nameInput.getValue(),
+                email: emailInput.getValue(),
+                birthdate: new Date(dateInput.getYear(), dateInput.getMonth(), dateInput.getDay())
+            }
+        );
+    };
+
+    return <ModalForm
+        id="signup-first-page"
+        className="signup-form-modal"
+        onSubmit={(ev) =>
+        {
+            ev.preventDefault();
+
+            nextPage();
+        }}
+    >
         <header className="modal-form-top">
             <Link to="/" id="signup-close-button" className="modal-form-close-button">
                 <i className="fa-solid fa-xmark"></i>
@@ -126,26 +151,17 @@ const FirstPage: React.FunctionComponent<Props> = (props) =>
                 <Button
                     stylePreset={ButtonStyle.Blue}
                     disabled={!enableNext}
-                    onClick={(ev) =>
+                    onClick={() =>
                     {
-                        const nameInput = document.getElementById("signup-name") as FormInputElement;
-                        const emailInput = document.getElementById("signup-email") as FormInputElement;
-                        const dateInput = document.getElementById("signup-date-input") as DateInputElement;
-
-                        props.changePage(
-                            2,
-                            {
-                                name: nameInput.getValue(),
-                                email: emailInput.getValue(),
-                                birthdate: new Date(dateInput.getYear(), dateInput.getMonth(), dateInput.getDay())
-                            }
-                        );
+                        nextPage();
                     }}
                 >
                     Siguiente
                 </Button>
             </div>
         </footer>
+
+        <input type="submit" className="invisible" disabled={!enableNext} />
     </ModalForm>;
 };
 
