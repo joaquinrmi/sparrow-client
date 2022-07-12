@@ -193,7 +193,16 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
         );
     };
 
-    return <ModalForm className="signup-form-modal">
+    return <ModalForm
+        id="signup-second-page"
+        className="signup-form-modal"
+        onSubmit={(ev) =>
+        {
+            ev.preventDefault();
+
+            sendForm();
+        }}
+    >
         <header className="modal-form-top">
             <div id="signup-go-back-button" className="modal-form-close-button">
                 <i className="fa-solid fa-arrow-left"></i>
@@ -219,6 +228,8 @@ const SecondPage: React.FunctionComponent<Props> = (props) =>
                 </Button>
             </div>
         </footer>
+
+        <input type="submit" className="invisible" />
     </ModalForm>;
 };
 
